@@ -9,7 +9,7 @@
     </parent>
 
     <artifactId>polaris-flash-cards-domain</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>${project.version}</version>
     <name>polaris-flash-cards-domain</name>
     <description>polaris-flash-cards-domain</description>
 
