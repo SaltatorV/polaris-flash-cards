@@ -6,14 +6,11 @@ import java.util.List;
 
 class FlashcardReview {
     private List<Flashcard> flashcards;
+    private int currentFlashcardIndex;
     private long startTime;
 
     public FlashcardReview(List<Flashcard> flashcards) {
         this.flashcards = flashcards;
-    }
-
-    public int flashcardCount() {
-        return flashcards.size();
     }
 
     public void begin() {
@@ -24,5 +21,18 @@ class FlashcardReview {
         return LocalDateTime.ofInstant(
                 Instant.ofEpochMilli(startTime),
                 java.time.ZoneId.systemDefault());
+    }
+
+    public int flashcardCount() {
+        return flashcards.size();
+    }
+
+    public String next() {
+        String question = flashcards
+                .get(currentFlashcardIndex)
+                .getQuestion();
+
+        currentFlashcardIndex++;
+        return question;
     }
 }
