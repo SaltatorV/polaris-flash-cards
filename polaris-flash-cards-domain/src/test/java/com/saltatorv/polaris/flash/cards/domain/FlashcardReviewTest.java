@@ -72,7 +72,6 @@ class FlashcardReviewTest {
         //given
         FlashcardReview review = buildFlashcardReview()
                 .addFlashcard("Question-1", "Answer-1")
-                .addFlashcard("Question-2", "Answer-2")
                 .create();
 
         //when
