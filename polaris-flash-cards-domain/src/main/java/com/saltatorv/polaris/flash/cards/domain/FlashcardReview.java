@@ -28,6 +28,10 @@ class FlashcardReview {
     }
 
     public String next() {
+        if (currentFlashcardIndex >= flashcardCount()) {
+            throw new RuntimeException("No more questions left");
+        }
+
         String question = flashcards
                 .get(currentFlashcardIndex)
                 .getQuestion();
