@@ -86,6 +86,80 @@ class FlashcardReviewTest {
         //then
     }
 
+    @Test
+    public void testShouldMarkFlashcardAsCorrect() {
+        //given
+        FlashcardReview review = buildFlashcardReview()
+                .addFlashcard("Question-1", "Answer-1")
+                .addFlashcard("Question-2", "Answer-2")
+                .create();
+
+        review.begin();
+        review.next();
+
+        //when
+        review.markFlashcardAsCorrect();
+        review.next();
+
+        //then
+        assertEquals(1, review.getCorrectAnswers());
+    }
+
+    @Test
+    public void testShouldNotMarkFlashcardAsAnsweredIfReviewNotProceedNextQuestion() {
+        //given
+        FlashcardReview review = buildFlashcardReview()
+                .addFlashcard("Question-1", "Answer-1")
+                .addFlashcard("Question-2", "Answer-2")
+                .create();
+
+        review.begin();
+        review.next();
+
+        //when
+        review.markFlashcardAsCorrect();
+
+        //then
+        assertEquals(0, review.getCorrectAnswers());
+    }
+
+    @Test
+    public void testShouldNotMarkFlashcardAsAnsweredIfReviewNotProceedNextQuestion2() {
+        //given
+        FlashcardReview review = buildFlashcardReview()
+                .addFlashcard("Question-1", "Answer-1")
+                .addFlashcard("Question-2", "Answer-2")
+                .create();
+
+        review.begin();
+        review.next();
+
+        //when
+        review.markFlashcardAsIncorrect();
+
+        //then
+        assertEquals(0, review.getIncorrectAnswers());
+    }
+
+    @Test
+    public void testShouldMarkFlashcardAsFailure() {
+        //given
+        FlashcardReview review = buildFlashcardReview()
+                .addFlashcard("Question-1", "Answer-1")
+                .addFlashcard("Question-2", "Answer-2")
+                .create();
+
+        review.begin();
+        review.next();
+
+        //when
+        review.markFlashcardAsIncorrect();
+        review.next();
+
+        //then
+        assertEquals(1, review.getIncorrectAnswers());
+    }
+
     private LocalDateTime getCurrentDate() {
         return LocalDateTime.now();
     }

@@ -39,4 +39,29 @@ class FlashcardReview {
         currentFlashcardIndex++;
         return question;
     }
+
+    public void markFlashcardAsCorrect() {
+        flashcards.get(currentFlashcardIndex).markAsSuccess();
+    }
+
+    public void markFlashcardAsIncorrect() {
+        flashcards.get(currentFlashcardIndex).markAsFailure();
+    }
+
+    public int getCorrectAnswers() {
+        int correctAnswers = 0;
+        for (int i = 0; i < currentFlashcardIndex; i++) {
+            if (flashcards.get(i).isSuccessfulAnswer()) {
+                correctAnswers++;
+            }
+        }
+
+        return correctAnswers;
+    }
+
+    public int getIncorrectAnswers() {
+        int answeredQuestions = Math.max(0, currentFlashcardIndex - 1);
+
+        return answeredQuestions - getCorrectAnswers();
+    }
 }
