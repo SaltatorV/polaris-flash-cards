@@ -2,7 +2,9 @@ package com.saltatorv.polaris.flash.cards.domain;
 
 import org.junit.jupiter.api.Test;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 import static com.saltatorv.polaris.flash.cards.domain.FlashcardReviewBuilder.buildFlashcardReview;
 import static org.junit.jupiter.api.Assertions.*;
@@ -22,6 +24,7 @@ class FlashcardReviewTest {
 
         //then
         assertEquals(2, review.flashcardCount());
+        assertEquals(getNotConfiguredDate(), review.getStartDate());
     }
 
     @Test
@@ -42,11 +45,7 @@ class FlashcardReviewTest {
     @Test
     public void testShouldGetFirstQuestion() {
         //given
-        FlashcardReview review = buildFlashcardReview()
-                .addFlashcard("Question-1", "Answer-1")
-                .addFlashcard("Question-2", "Answer-2")
-                .create();
-        review.begin();
+        FlashcardReview review = prepareAndBeginReview();
 
         //when
         String question = review.next();
@@ -58,12 +57,7 @@ class FlashcardReviewTest {
     @Test
     public void testShouldGetAppropriateQuestionAccordingToNextMethodCall() {
         //given
-        FlashcardReview review = buildFlashcardReview()
-                .addFlashcard("Question-1", "Answer-1")
-                .addFlashcard("Question-2", "Answer-2")
-                .create();
-
-        review.begin();
+        FlashcardReview review = prepareAndBeginReview();
 
         //when
         review.next();
@@ -91,11 +85,7 @@ class FlashcardReviewTest {
     @Test
     public void testShouldThrowExceptionWhenTryGetNextQuestionWhenThereIsNoQuestionsLeft() {
         //given
-        FlashcardReview review = buildFlashcardReview()
-                .addFlashcard("Question-1", "Answer-1")
-                .addFlashcard("Question-2", "Answer-2")
-                .create();
-        review.begin();
+        FlashcardReview review = prepareAndBeginReview();
 
         //when
         review.next();
@@ -108,12 +98,7 @@ class FlashcardReviewTest {
     @Test
     public void testShouldMarkFlashcardAsCorrect() {
         //given
-        FlashcardReview review = buildFlashcardReview()
-                .addFlashcard("Question-1", "Answer-1")
-                .addFlashcard("Question-2", "Answer-2")
-                .create();
-
-        review.begin();
+        FlashcardReview review = prepareAndBeginReview();
         review.next();
 
         //when
@@ -127,12 +112,7 @@ class FlashcardReviewTest {
     @Test
     public void testShouldNotMarkFlashcardAsAnsweredIfReviewNotProceedNextQuestion() {
         //given
-        FlashcardReview review = buildFlashcardReview()
-                .addFlashcard("Question-1", "Answer-1")
-                .addFlashcard("Question-2", "Answer-2")
-                .create();
-
-        review.begin();
+        FlashcardReview review = prepareAndBeginReview();
         review.next();
 
         //when
@@ -145,12 +125,7 @@ class FlashcardReviewTest {
     @Test
     public void testShouldNotMarkFlashcardAsAnsweredIfReviewNotProceedNextQuestion2() {
         //given
-        FlashcardReview review = buildFlashcardReview()
-                .addFlashcard("Question-1", "Answer-1")
-                .addFlashcard("Question-2", "Answer-2")
-                .create();
-
-        review.begin();
+        FlashcardReview review = prepareAndBeginReview();
         review.next();
 
         //when
@@ -163,12 +138,7 @@ class FlashcardReviewTest {
     @Test
     public void testShouldMarkFlashcardAsFailure() {
         //given
-        FlashcardReview review = buildFlashcardReview()
-                .addFlashcard("Question-1", "Answer-1")
-                .addFlashcard("Question-2", "Answer-2")
-                .create();
-
-        review.begin();
+        FlashcardReview review = prepareAndBeginReview();
         review.next();
 
         //when
@@ -181,6 +151,21 @@ class FlashcardReviewTest {
 
     private LocalDateTime getCurrentDate() {
         return LocalDateTime.now();
+    }
+
+    private LocalDateTime getNotConfiguredDate() {
+        return LocalDateTime.ofInstant(
+                Instant.ofEpochMilli(0),
+                ZoneId.systemDefault());
+    }
+
+    private FlashcardReview prepareAndBeginReview() {
+        FlashcardReview review = buildFlashcardReview()
+                .addFlashcard("Question-1", "Answer-1")
+                .addFlashcard("Question-2", "Answer-2")
+                .create();
+        review.begin();
+        return review;
     }
 
 }
