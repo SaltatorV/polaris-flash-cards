@@ -2,13 +2,13 @@ package com.saltatorv.polaris.flash.cards.domain;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
-import java.util.HashMap;
+import java.util.List;
 
 class FlashcardReview {
-    private HashMap<String, String> flashcards;
+    private List<Flashcard> flashcards;
     private long startTime;
 
-    public FlashcardReview(HashMap<String, String> flashcards) {
+    public FlashcardReview(List<Flashcard> flashcards) {
         this.flashcards = flashcards;
     }
 

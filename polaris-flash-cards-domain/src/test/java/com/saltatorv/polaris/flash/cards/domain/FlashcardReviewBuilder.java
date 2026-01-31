@@ -1,21 +1,21 @@
 package com.saltatorv.polaris.flash.cards.domain;
 
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.List;
 
 class FlashcardReviewBuilder {
-    private HashMap<String, String> flashcards;
+    private List<Flashcard> flashcards;
 
     private FlashcardReviewBuilder() {
-        flashcards = new HashMap<>();
+        flashcards = new ArrayList<>();
     }
 
     static FlashcardReviewBuilder buildFlashcardReview() {
         return new FlashcardReviewBuilder();
     }
 
-
     FlashcardReviewBuilder addFlashcard(String question, String answer) {
-        flashcards.put(question, answer);
+        flashcards.add(new Flashcard(question, answer));
         return this;
     }
 
