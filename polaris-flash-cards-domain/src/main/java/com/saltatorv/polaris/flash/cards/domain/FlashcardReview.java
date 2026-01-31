@@ -11,6 +11,7 @@ class FlashcardReview {
 
     public FlashcardReview(List<Flashcard> flashcards) {
         this.flashcards = flashcards;
+        startTime = 0;
     }
 
     public void begin() {
@@ -28,6 +29,10 @@ class FlashcardReview {
     }
 
     public String next() {
+        if (startTime == 0) {
+            throw new RuntimeException("Review not started");
+        }
+
         if (currentFlashcardIndex >= flashcardCount()) {
             throw new RuntimeException("No more questions left");
         }

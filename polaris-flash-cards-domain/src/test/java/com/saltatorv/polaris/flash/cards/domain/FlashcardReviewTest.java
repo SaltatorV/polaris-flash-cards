@@ -46,6 +46,7 @@ class FlashcardReviewTest {
                 .addFlashcard("Question-1", "Answer-1")
                 .addFlashcard("Question-2", "Answer-2")
                 .create();
+        review.begin();
 
         //when
         String question = review.next();
@@ -62,6 +63,8 @@ class FlashcardReviewTest {
                 .addFlashcard("Question-2", "Answer-2")
                 .create();
 
+        review.begin();
+
         //when
         review.next();
         String question = review.next();
@@ -71,12 +74,28 @@ class FlashcardReviewTest {
     }
 
     @Test
+    public void testShouldNotPassNextQuestionWhenReviewNotStarted() {
+        //given
+        FlashcardReview review = buildFlashcardReview()
+                .addFlashcard("Question-1", "Answer-1")
+                .addFlashcard("Question-2", "Answer-2")
+                .create();
+
+        //when
+        assertThrows(RuntimeException.class, review::next);
+
+        //then
+
+    }
+
+    @Test
     public void testShouldThrowExceptionWhenTryGetNextQuestionWhenThereIsNoQuestionsLeft() {
         //given
         FlashcardReview review = buildFlashcardReview()
                 .addFlashcard("Question-1", "Answer-1")
                 .addFlashcard("Question-2", "Answer-2")
                 .create();
+        review.begin();
 
         //when
         review.next();
