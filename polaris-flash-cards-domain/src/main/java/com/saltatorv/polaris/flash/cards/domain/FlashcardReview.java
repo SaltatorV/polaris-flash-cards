@@ -5,7 +5,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 class FlashcardReview {
-    private List<Flashcard> flashcards;
+    private final List<Flashcard> flashcards;
+
     private int currentFlashcardIndex;
     private long startTime;
     private long finishTime;
