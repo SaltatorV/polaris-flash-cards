@@ -3,6 +3,7 @@ package com.saltatorv.polaris.flash.cards.domain;
 import java.util.List;
 import java.util.Locale;
 
+@Generated
 class FlashcardMetadata {
     private final String source;
     private final List<String> tags;
