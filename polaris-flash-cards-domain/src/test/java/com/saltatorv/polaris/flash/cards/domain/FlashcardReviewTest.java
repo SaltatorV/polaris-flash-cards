@@ -43,6 +43,22 @@ class FlashcardReviewTest {
     }
 
     @Test
+    public void testShouldThrowExceptionWhenTryBeginReviewTwice() {
+        //given
+        FlashcardReview review = buildFlashcardReview()
+                .addFlashcard("Question-1", "Answer-1")
+                .addFlashcard("Question-2", "Answer-2")
+                .create();
+
+        //when
+        review.begin();
+        assertThrows(RuntimeException.class, review::begin);
+
+        //then
+
+    }
+
+    @Test
     public void testShouldGenerateEndDateWhenReviewIsFinished() {
         //given
         FlashcardReview review = prepareAndBeginReview();
@@ -53,6 +69,34 @@ class FlashcardReviewTest {
 
         //then
         assertTrue(review.getStartDate().isBefore(review.getFinishDate()));
+    }
+
+    @Test
+    public void testShouldThrowExceptionWhenTryFinishReviewTwice() {
+        //given
+        FlashcardReview review = prepareAndBeginReview();
+
+        //when
+        review.finish();
+        assertThrows(RuntimeException.class, review::finish);
+
+        //then
+
+    }
+
+    @Test
+    public void testShouldThrowExceptionWhenTryFinishNotStartedReview() {
+        //given
+        FlashcardReview review = buildFlashcardReview()
+                .addFlashcard("Question-1", "Answer-1")
+                .addFlashcard("Question-2", "Answer-2")
+                .create();
+
+        //when
+        assertThrows(RuntimeException.class, review::finish);
+
+        //then
+
     }
 
     @Test
@@ -105,6 +149,19 @@ class FlashcardReviewTest {
         assertThrows(RuntimeException.class, review::next);
 
         //then
+    }
+
+    @Test
+    public void testShouldThrowExceptionWhenTryGetNextQuestionWhenReviewFinished() {
+        //given
+        FlashcardReview review = prepareAndBeginReview();
+        review.finish();
+
+        //when
+        assertThrows(RuntimeException.class, review::next);
+
+        //then
+
     }
 
     @Test

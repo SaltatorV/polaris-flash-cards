@@ -13,13 +13,24 @@ class FlashcardReview {
     FlashcardReview(List<Flashcard> flashcards) {
         this.flashcards = flashcards;
         startTime = 0;
+        finishTime = 0;
     }
 
     void begin() {
+        if (startTime != 0) {
+            throw new RuntimeException("Review already started");
+        }
         startTime = System.currentTimeMillis();
     }
 
     void finish() {
+        if(startTime == 0) {
+            throw new RuntimeException("Review not started");
+        }
+
+        if (finishTime != 0) {
+            throw new RuntimeException("Review already finished");
+        }
         finishTime = System.currentTimeMillis();
     }
 
@@ -38,6 +49,10 @@ class FlashcardReview {
     String next() {
         if (startTime == 0) {
             throw new RuntimeException("Review not started");
+        }
+
+        if (finishTime != 0) {
+            throw new RuntimeException("Review already finished");
         }
 
         if (currentFlashcardIndex >= flashcardCount()) {
