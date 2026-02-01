@@ -1,5 +1,6 @@
 package com.saltatorv.polaris.flash.cards.domain;
 
+@Generated
 class FlashcardBlueprint {
     private final String question;
     private final String answer;
