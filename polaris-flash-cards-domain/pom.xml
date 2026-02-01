@@ -32,6 +32,37 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>org.pitest</groupId>
+                <artifactId>pitest-maven</artifactId>
+                <version>${pitest.version}</version>
+                <executions>
+                    <execution>
+                        <id>pit-report</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>mutationCoverage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <targetClasses>
+                        <param>com.saltatorv.polaris.flash.cards.domain*</param>
+                    </targetClasses>
+                    <targetTests>
+                        <param>com.saltatorv.polaris.flash.cards.domain*</param>
+                    </targetTests>
+                    <excludedMethods>
+                        <excludedMethod>equals</excludedMethod>
+                        <excludedMethod>hashCode</excludedMethod>
+                        <excludedMethod>toString</excludedMethod>
+                        <excludedMethod>get*</excludedMethod>
+                    </excludedMethods>
+                    <mutators>
+                        <mutator>STRONGER</mutator>
+                    </mutators>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 
