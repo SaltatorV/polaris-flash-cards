@@ -8,27 +8,34 @@ class FlashcardReview {
     private List<Flashcard> flashcards;
     private int currentFlashcardIndex;
     private long startTime;
+    private long finishTime;
 
-    public FlashcardReview(List<Flashcard> flashcards) {
+    FlashcardReview(List<Flashcard> flashcards) {
         this.flashcards = flashcards;
         startTime = 0;
     }
 
-    public void begin() {
+    void begin() {
         startTime = System.currentTimeMillis();
     }
 
-    public LocalDateTime getStartDate() {
-        return LocalDateTime.ofInstant(
-                Instant.ofEpochMilli(startTime),
-                java.time.ZoneId.systemDefault());
+    void finish() {
+        finishTime = System.currentTimeMillis();
     }
 
-    public int flashcardCount() {
+    LocalDateTime getStartDate() {
+        return calculateDate(startTime);
+    }
+
+    LocalDateTime getFinishDate() {
+        return calculateDate(finishTime);
+    }
+
+    int flashcardCount() {
         return flashcards.size();
     }
 
-    public String next() {
+    String next() {
         if (startTime == 0) {
             throw new RuntimeException("Review not started");
         }
@@ -45,15 +52,15 @@ class FlashcardReview {
         return question;
     }
 
-    public void markFlashcardAsCorrect() {
+    void markFlashcardAsCorrect() {
         flashcards.get(currentFlashcardIndex).markAsSuccess();
     }
 
-    public void markFlashcardAsIncorrect() {
+    void markFlashcardAsIncorrect() {
         flashcards.get(currentFlashcardIndex).markAsFailure();
     }
 
-    public int getCorrectAnswers() {
+    int getCorrectAnswers() {
         int correctAnswers = 0;
         for (int i = 0; i < currentFlashcardIndex; i++) {
             if (flashcards.get(i).isSuccessfulAnswer()) {
@@ -64,9 +71,15 @@ class FlashcardReview {
         return correctAnswers;
     }
 
-    public int getIncorrectAnswers() {
+    int getIncorrectAnswers() {
         int answeredQuestions = Math.max(0, currentFlashcardIndex - 1);
 
         return answeredQuestions - getCorrectAnswers();
+    }
+
+    private LocalDateTime calculateDate(Long timeInMilliseconds) {
+        return LocalDateTime.ofInstant(
+                Instant.ofEpochMilli(timeInMilliseconds),
+                java.time.ZoneId.systemDefault());
     }
 }

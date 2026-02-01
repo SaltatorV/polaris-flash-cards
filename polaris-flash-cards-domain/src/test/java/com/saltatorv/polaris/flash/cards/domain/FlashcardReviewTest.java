@@ -43,6 +43,19 @@ class FlashcardReviewTest {
     }
 
     @Test
+    public void testShouldGenerateEndDateWhenReviewIsFinished() {
+        //given
+        FlashcardReview review = prepareAndBeginReview();
+
+        //when
+        waitSomeTime();
+        review.finish();
+
+        //then
+        assertTrue(review.getStartDate().isBefore(review.getFinishDate()));
+    }
+
+    @Test
     public void testShouldGetFirstQuestion() {
         //given
         FlashcardReview review = prepareAndBeginReview();
@@ -165,6 +178,14 @@ class FlashcardReviewTest {
                 .create();
         review.begin();
         return review;
+    }
+
+    private void waitSomeTime() {
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }
