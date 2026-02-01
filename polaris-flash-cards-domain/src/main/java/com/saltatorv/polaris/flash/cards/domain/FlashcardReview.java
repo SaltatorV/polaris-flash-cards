@@ -17,20 +17,15 @@ class FlashcardReview {
     }
 
     void begin() {
-        if (startTime != 0) {
-            throw new RuntimeException("Review already started");
-        }
+        ensureReviewIsNotAlreadyStarted();
+
         startTime = System.currentTimeMillis();
     }
 
     void finish() {
-        if(startTime == 0) {
-            throw new RuntimeException("Review not started");
-        }
+        ensureReviewIsStarted();
+        ensureReviewIsNotFinished();
 
-        if (finishTime != 0) {
-            throw new RuntimeException("Review already finished");
-        }
         finishTime = System.currentTimeMillis();
     }
 
@@ -47,17 +42,9 @@ class FlashcardReview {
     }
 
     String next() {
-        if (startTime == 0) {
-            throw new RuntimeException("Review not started");
-        }
-
-        if (finishTime != 0) {
-            throw new RuntimeException("Review already finished");
-        }
-
-        if (currentFlashcardIndex >= flashcardCount()) {
-            throw new RuntimeException("No more questions left");
-        }
+        ensureReviewIsStarted();
+        ensureReviewIsNotFinished();
+        ensureThereAreFlashcardsLeft();
 
         String question = flashcards
                 .get(currentFlashcardIndex)
@@ -96,5 +83,29 @@ class FlashcardReview {
         return LocalDateTime.ofInstant(
                 Instant.ofEpochMilli(timeInMilliseconds),
                 java.time.ZoneId.systemDefault());
+    }
+
+    private void ensureReviewIsNotAlreadyStarted() {
+        if (startTime != 0) {
+            throw new RuntimeException("Review already started");
+        }
+    }
+
+    private void ensureReviewIsStarted() {
+        if (startTime == 0) {
+            throw new RuntimeException("Review not started");
+        }
+    }
+
+    private void ensureReviewIsNotFinished() {
+        if (finishTime != 0) {
+            throw new RuntimeException("Review already finished");
+        }
+    }
+
+    private void ensureThereAreFlashcardsLeft() {
+        if (currentFlashcardIndex >= flashcardCount()) {
+            throw new RuntimeException("No more questions left");
+        }
     }
 }
