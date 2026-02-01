@@ -29,6 +29,11 @@
                         <goals>
                             <goal>report</goal>
                         </goals>
+                        <configuration>
+                            <outputDirectory>
+                                ${project.build.directory}/quality/jacoco
+                            </outputDirectory>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
@@ -46,6 +51,9 @@
                     </execution>
                 </executions>
                 <configuration>
+                    <reportsDirectory>
+                        ${project.build.directory}/quality/pitest
+                    </reportsDirectory>
                     <targetClasses>
                         <param>com.saltatorv.polaris.flash.cards.domain*</param>
                     </targetClasses>
