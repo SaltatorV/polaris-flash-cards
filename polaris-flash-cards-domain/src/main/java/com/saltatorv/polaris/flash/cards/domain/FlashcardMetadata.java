@@ -4,9 +4,9 @@ import java.util.List;
 import java.util.Locale;
 
 class FlashcardMetadata {
-    private String source;
-    private List<String> tags;
-    private Locale language;
+    private final String source;
+    private final List<String> tags;
+    private final Locale language;
 
     public FlashcardMetadata(String source, List<String> tags, Locale language) {
         this.source = source;
