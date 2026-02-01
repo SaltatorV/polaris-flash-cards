@@ -31,7 +31,7 @@
                         </goals>
                         <configuration>
                             <outputDirectory>
-                                ${project.build.directory}/quality/jacoco
+                                ${project.build.directory}/quality/domain/jacoco
                             </outputDirectory>
                         </configuration>
                     </execution>
@@ -52,7 +52,7 @@
                 </executions>
                 <configuration>
                     <reportsDirectory>
-                        ${project.build.directory}/quality/pitest
+                        ${project.build.directory}/quality/domain/pitest
                     </reportsDirectory>
                     <targetClasses>
                         <param>com.saltatorv.polaris.flash.cards.domain*</param>
