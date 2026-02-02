@@ -1,6 +1,6 @@
-package com.saltatorv.polaris.flash.cards.domain;
+package com.saltatorv.polaris.flash.cards.domain.exception;
 
-class FlashcardReviewAlreadyStartedDomainException extends DomainException {
+public class FlashcardReviewAlreadyStartedDomainException extends DomainException {
 
     private final static String MESSAGE = "Review already started";
 

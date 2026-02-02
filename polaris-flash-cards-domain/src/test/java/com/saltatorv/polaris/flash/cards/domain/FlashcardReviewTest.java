@@ -1,5 +1,9 @@
 package com.saltatorv.polaris.flash.cards.domain;
 
+import com.saltatorv.polaris.flash.cards.domain.exception.FlashcardReviewAlreadyFinishedDomainException;
+import com.saltatorv.polaris.flash.cards.domain.exception.FlashcardReviewAlreadyStartedDomainException;
+import com.saltatorv.polaris.flash.cards.domain.exception.FlashcardReviewNotStartedDomainException;
+import com.saltatorv.polaris.flash.cards.domain.exception.NoMoreQuestionsInFlashcardReviewDomainException;
 import org.junit.jupiter.api.Test;
 
 import java.time.Instant;

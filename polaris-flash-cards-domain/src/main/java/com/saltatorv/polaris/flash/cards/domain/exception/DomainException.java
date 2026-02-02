@@ -1,4 +1,6 @@
-package com.saltatorv.polaris.flash.cards.domain;
+package com.saltatorv.polaris.flash.cards.domain.exception;
+
+import com.saltatorv.polaris.flash.cards.domain.Generated;
 
 @Generated
 public class DomainException extends RuntimeException {

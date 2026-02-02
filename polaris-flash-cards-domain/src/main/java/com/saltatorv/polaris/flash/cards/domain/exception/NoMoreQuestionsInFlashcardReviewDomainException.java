@@ -1,6 +1,6 @@
-package com.saltatorv.polaris.flash.cards.domain;
+package com.saltatorv.polaris.flash.cards.domain.exception;
 
-class NoMoreQuestionsInFlashcardReviewDomainException extends DomainException {
+public class NoMoreQuestionsInFlashcardReviewDomainException extends DomainException {
 
     private final static String MESSAGE = "No more questions left";
 
