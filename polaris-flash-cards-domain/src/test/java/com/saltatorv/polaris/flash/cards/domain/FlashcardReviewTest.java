@@ -52,7 +52,7 @@ class FlashcardReviewTest {
 
         //when
         review.begin();
-        assertThrows(RuntimeException.class, review::begin);
+        assertThrows(FlashcardReviewAlreadyStartedDomainException.class, review::begin);
 
         //then
 
@@ -78,7 +78,7 @@ class FlashcardReviewTest {
 
         //when
         review.finish();
-        assertThrows(RuntimeException.class, review::finish);
+        assertThrows(FlashcardReviewAlreadyFinishedDomainException.class, review::finish);
 
         //then
 
@@ -93,7 +93,7 @@ class FlashcardReviewTest {
                 .create();
 
         //when
-        assertThrows(RuntimeException.class, review::finish);
+        assertThrows(FlashcardReviewNotStartedDomainException.class, review::finish);
 
         //then
 
@@ -132,7 +132,7 @@ class FlashcardReviewTest {
                 .create();
 
         //when
-        assertThrows(RuntimeException.class, review::next);
+        assertThrows(FlashcardReviewNotStartedDomainException.class, review::next);
 
         //then
 
@@ -146,7 +146,7 @@ class FlashcardReviewTest {
         //when
         review.next();
         review.next();
-        assertThrows(RuntimeException.class, review::next);
+        assertThrows(NoMoreQuestionsInFlashcardReviewDomainException.class, review::next);
 
         //then
     }
@@ -158,7 +158,7 @@ class FlashcardReviewTest {
         review.finish();
 
         //when
-        assertThrows(RuntimeException.class, review::next);
+        assertThrows(FlashcardReviewAlreadyFinishedDomainException.class, review::next);
 
         //then
 

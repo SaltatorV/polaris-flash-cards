@@ -88,25 +88,25 @@ class FlashcardReview {
 
     private void ensureReviewIsNotAlreadyStarted() {
         if (startTime != 0) {
-            throw new RuntimeException("Review already started");
+            throw new FlashcardReviewAlreadyStartedDomainException();
         }
     }
 
     private void ensureReviewIsStarted() {
         if (startTime == 0) {
-            throw new RuntimeException("Review not started");
+            throw new FlashcardReviewNotStartedDomainException();
         }
     }
 
     private void ensureReviewIsNotFinished() {
         if (finishTime != 0) {
-            throw new RuntimeException("Review already finished");
+            throw new FlashcardReviewAlreadyFinishedDomainException();
         }
     }
 
     private void ensureThereAreFlashcardsLeft() {
         if (currentFlashcardIndex >= flashcardCount()) {
-            throw new RuntimeException("No more questions left");
+            throw new NoMoreQuestionsInFlashcardReviewDomainException();
         }
     }
 }
