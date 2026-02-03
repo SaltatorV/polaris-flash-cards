@@ -1,32 +1,33 @@
 package com.saltatorv.polaris.flash.cards.domain;
 
 class Flashcard {
-    private String question;
-    private String answer;
-    private boolean isSuccess;
+    private final String question;
+    private final String definition;
+    private Answer answer;
 
-    Flashcard(String question, String answer) {
+    Flashcard(String question, String definition) {
         this.question = question;
-        this.answer = answer;
+        this.definition = definition;
+        this.answer = Answer.NOT_ANSWERED;
     }
 
     void markAsSuccess() {
-        isSuccess = true;
+        this.answer = Answer.CORRECT;
     }
 
     void markAsFailure() {
-        isSuccess = false;
+        this.answer = Answer.INCORRECT;
     }
 
     String getQuestion() {
         return question;
     }
 
-    String getAnswer() {
-        return answer;
+    String getDefinition() {
+        return definition;
     }
 
     boolean isSuccessfulAnswer() {
-        return isSuccess;
+        return this.answer.isSuccessfulAnswer();
     }
 }
