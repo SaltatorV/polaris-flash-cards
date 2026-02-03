@@ -16,7 +16,7 @@ class FlashcardBlueprint {
         return new Flashcard(question, answer);
     }
 
-    public FlashcardMetadata getMetadata() {
+    FlashcardMetadata getMetadata() {
         return metadata;
     }
 }

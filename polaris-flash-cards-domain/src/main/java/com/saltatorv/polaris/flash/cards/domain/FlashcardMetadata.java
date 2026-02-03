@@ -9,21 +9,21 @@ class FlashcardMetadata {
     private final List<String> tags;
     private final Locale language;
 
-    public FlashcardMetadata(String source, List<String> tags, Locale language) {
+    FlashcardMetadata(String source, List<String> tags, Locale language) {
         this.source = source;
         this.tags = tags;
         this.language = language;
     }
 
-    public String getSource() {
+    String getSource() {
         return source;
     }
 
-    public List<String> getTags() {
+    List<String> getTags() {
         return tags;
     }
 
-    public String getLanguage() {
+    String getLanguage() {
         return language.getLanguage();
     }
 }
