@@ -35,6 +35,7 @@
 
     <modules>
         <module>polaris-flash-cards-domain</module>
+        <module>polaris-flash-cards-application</module>
     </modules>
 
 
