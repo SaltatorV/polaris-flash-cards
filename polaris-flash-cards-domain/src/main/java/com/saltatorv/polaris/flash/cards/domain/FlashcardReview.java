@@ -16,8 +16,12 @@ class FlashcardReview {
     private long startTime;
     private long finishTime;
 
-    FlashcardReview(List<Flashcard> flashcards) {
-        this.flashcards = flashcards;
+    FlashcardReview(List<FlashcardBlueprint> flashcardBlueprints) {
+        this.flashcards = flashcardBlueprints
+                .stream()
+                .map(FlashcardBlueprint::createFlashcard)
+                .toList();
+        currentFlashcardIndex = 0;
         startTime = 0;
         finishTime = 0;
     }

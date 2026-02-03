@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 class FlashcardReviewBuilder {
-    private List<Flashcard> flashcards;
+    private List<FlashcardBlueprint> flashcardBlueprints;
 
     private FlashcardReviewBuilder() {
-        flashcards = new ArrayList<>();
+        flashcardBlueprints = new ArrayList<>();
     }
 
     static FlashcardReviewBuilder buildFlashcardReview() {
@@ -15,11 +15,12 @@ class FlashcardReviewBuilder {
     }
 
     FlashcardReviewBuilder addFlashcard(String question, String answer) {
-        flashcards.add(new Flashcard(question, answer));
+        flashcardBlueprints.add(new FlashcardBlueprint(question, answer,
+                new FlashcardMetadata("source", List.of("tag"), java.util.Locale.ENGLISH)));
         return this;
     }
 
     FlashcardReview create() {
-        return new FlashcardReview(flashcards);
+        return new FlashcardReview(flashcardBlueprints);
     }
 }
