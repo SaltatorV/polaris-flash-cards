@@ -2,9 +2,9 @@ package com.saltatorv.polaris.flash.cards.domain.shared;
 
 import java.util.UUID;
 
-public class FlashcardBlueprintId extends Id {
+public class FlashcardBlueprintId extends Id<UUID> {
 
-    private FlashcardBlueprintId(UUID id) {
+    public FlashcardBlueprintId(UUID id) {
         super(id);
     }
 

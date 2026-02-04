@@ -2,13 +2,11 @@ package com.saltatorv.polaris.flash.cards.domain.shared;
 
 import com.saltatorv.polaris.flash.cards.domain.Generated;
 
-import java.util.UUID;
-
 @Generated
-class Id {
-    private final UUID id;
+class Id<T> {
+    private final T id;
 
-    Id(UUID id) {
+    Id(T id) {
         this.id = id;
     }
 

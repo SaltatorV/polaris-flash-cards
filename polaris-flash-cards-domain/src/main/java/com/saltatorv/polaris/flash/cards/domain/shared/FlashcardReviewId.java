@@ -5,7 +5,7 @@ import com.saltatorv.polaris.flash.cards.domain.Generated;
 import java.util.UUID;
 
 @Generated
-public class FlashcardReviewId extends Id {
+public class FlashcardReviewId extends Id<UUID> {
     private FlashcardReviewId(UUID id) {
         super(id);
     }
