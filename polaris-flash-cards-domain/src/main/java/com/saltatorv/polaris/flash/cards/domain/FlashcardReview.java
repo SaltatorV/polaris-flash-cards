@@ -10,7 +10,7 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.List;
 
-class FlashcardReview {
+public class FlashcardReview {
     private final FlashcardReviewId id;
     private final List<Flashcard> flashcards;
 
@@ -18,7 +18,7 @@ class FlashcardReview {
     private long startTime;
     private long finishTime;
 
-    FlashcardReview(List<FlashcardBlueprint> flashcardBlueprints) {
+    public FlashcardReview(List<FlashcardBlueprint> flashcardBlueprints) {
         this.id = FlashcardReviewId.generate();
 
         this.flashcards = flashcardBlueprints
@@ -30,32 +30,32 @@ class FlashcardReview {
         this.finishTime = 0;
     }
 
-    void begin() {
+    public void begin() {
         ensureReviewIsNotAlreadyStarted();
 
         startTime = System.currentTimeMillis();
     }
 
-    void finish() {
+    public void finish() {
         ensureReviewIsStarted();
         ensureReviewIsNotFinished();
 
         finishTime = System.currentTimeMillis();
     }
 
-    LocalDateTime getStartDate() {
+    public LocalDateTime getStartDate() {
         return calculateDate(startTime);
     }
 
-    LocalDateTime getFinishDate() {
+    public LocalDateTime getFinishDate() {
         return calculateDate(finishTime);
     }
 
-    int flashcardCount() {
+    public int flashcardCount() {
         return flashcards.size();
     }
 
-    String next() {
+    public String next() {
         ensureReviewIsStarted();
         ensureReviewIsNotFinished();
         ensureThereAreFlashcardsLeft();
@@ -68,15 +68,15 @@ class FlashcardReview {
         return question;
     }
 
-    void markFlashcardAsCorrect() {
+    public void markFlashcardAsCorrect() {
         flashcards.get(currentFlashcardIndex).markAsSuccess();
     }
 
-    void markFlashcardAsIncorrect() {
+    public void markFlashcardAsIncorrect() {
         flashcards.get(currentFlashcardIndex).markAsFailure();
     }
 
-    int getCorrectAnswers() {
+    public int getCorrectAnswers() {
         int correctAnswers = 0;
         for (int i = 0; i < currentFlashcardIndex; i++) {
             if (flashcards.get(i).isSuccessfulAnswer()) {
@@ -87,7 +87,7 @@ class FlashcardReview {
         return correctAnswers;
     }
 
-    int getIncorrectAnswers() {
+    public int getIncorrectAnswers() {
         int answeredQuestions = Math.max(0, currentFlashcardIndex - 1);
 
         return answeredQuestions - getCorrectAnswers();
