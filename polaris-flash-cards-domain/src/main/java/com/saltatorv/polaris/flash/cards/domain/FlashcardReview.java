@@ -4,12 +4,14 @@ import com.saltatorv.polaris.flash.cards.domain.exception.FlashcardReviewAlready
 import com.saltatorv.polaris.flash.cards.domain.exception.FlashcardReviewAlreadyStartedDomainException;
 import com.saltatorv.polaris.flash.cards.domain.exception.FlashcardReviewNotStartedDomainException;
 import com.saltatorv.polaris.flash.cards.domain.exception.NoMoreQuestionsInFlashcardReviewDomainException;
+import com.saltatorv.polaris.flash.cards.domain.shared.FlashcardReviewId;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.List;
 
 class FlashcardReview {
+    private final FlashcardReviewId id;
     private final List<Flashcard> flashcards;
 
     private int currentFlashcardIndex;
@@ -17,13 +19,15 @@ class FlashcardReview {
     private long finishTime;
 
     FlashcardReview(List<FlashcardBlueprint> flashcardBlueprints) {
+        this.id = FlashcardReviewId.generate();
+
         this.flashcards = flashcardBlueprints
                 .stream()
                 .map(FlashcardBlueprint::createFlashcard)
                 .toList();
-        currentFlashcardIndex = 0;
-        startTime = 0;
-        finishTime = 0;
+        this.currentFlashcardIndex = 0;
+        this.startTime = 0;
+        this.finishTime = 0;
     }
 
     void begin() {
