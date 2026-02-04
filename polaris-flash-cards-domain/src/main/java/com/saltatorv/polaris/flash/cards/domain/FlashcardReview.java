@@ -93,6 +93,10 @@ public class FlashcardReview {
         return answeredQuestions - getCorrectAnswers();
     }
 
+    public FlashcardReviewId getId() {
+        return id;
+    }
+
     private LocalDateTime calculateDate(Long timeInMilliseconds) {
         return LocalDateTime.ofInstant(
                 Instant.ofEpochMilli(timeInMilliseconds),
