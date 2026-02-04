@@ -11,4 +11,11 @@
     <artifactId>polaris-flash-cards-application</artifactId>
     <name>polaris-flash-cards-application</name>
     <description>polaris-flash-cards-application</description>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.saltatorv</groupId>
+            <artifactId>polaris-flash-cards-domain</artifactId>
+        </dependency>
+    </dependencies>
 </project>
