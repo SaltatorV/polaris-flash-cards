@@ -4,26 +4,26 @@ import java.util.List;
 import java.util.Locale;
 
 @Generated
-class FlashcardMetadata {
+public class FlashcardMetadata {
     private final String source;
     private final List<String> tags;
     private final Locale language;
 
-    FlashcardMetadata(String source, List<String> tags, Locale language) {
+    public FlashcardMetadata(String source, List<String> tags, Locale language) {
         this.source = source;
         this.tags = tags;
         this.language = language;
     }
 
-    String getSource() {
+    public String getSource() {
         return source;
     }
 
-    List<String> getTags() {
+    public List<String> getTags() {
         return tags;
     }
 
-    String getLanguage() {
+    public String getLanguage() {
         return language.getLanguage();
     }
 }
