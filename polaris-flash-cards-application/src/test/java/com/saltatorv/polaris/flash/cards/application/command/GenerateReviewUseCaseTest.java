@@ -21,7 +21,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class GenerateReviewUseCaseTest {
+public class GenerateReviewUseCaseTest {
     private List<FlashcardBlueprint> blueprints;
     @Mock
     private FlashcardReviewRepository flashcardReviewRepository;
