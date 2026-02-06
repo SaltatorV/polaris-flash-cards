@@ -77,9 +77,14 @@ public class FlashcardReview {
     }
 
     public int getIncorrectAnswers() {
-        int answeredQuestions = Math.max(0, currentFlashcardIndex - 1);
+        int incorrectAnswers = 0;
+        for (int i = 0; i < currentFlashcardIndex; i++) {
+            if (flashcards.get(i).isIncorrectAnswer()) {
+                incorrectAnswers++;
+            }
+        }
 
-        return answeredQuestions - getCorrectAnswers();
+        return incorrectAnswers;
     }
 
     public LocalDateTime getStartDate() {

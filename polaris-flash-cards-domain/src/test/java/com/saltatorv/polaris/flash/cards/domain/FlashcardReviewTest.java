@@ -239,6 +239,35 @@ class FlashcardReviewTest {
         assertEquals(1, review.getIncorrectAnswers());
     }
 
+    @Test
+    public void testShouldMarkQuestionsAsCorrectOrIncorrect() {
+        //given
+        FlashcardReview review = buildFlashcardReview()
+                .addFlashcard("Question-1", "Answer-1")
+                .addFlashcard("Question-2", "Answer-2")
+                .addFlashcard("Question-3", "Answer-3")
+                .addFlashcard("Question-4", "Answer-4")
+                .addFlashcard("Question-5", "Answer-5")
+                .addFlashcard("Question-6", "Answer-6")
+                .addFlashcard("Question-7", "Answer-7")
+                .create();
+
+        review.begin();
+
+        //when
+        incorrectAnswer(review);
+        correctAnswer(review);
+        incorrectAnswer(review);
+        incorrectAnswer(review);
+        correctAnswer(review);
+        correctAnswer(review);
+        correctAnswer(review);
+
+        //then
+        assertEquals(4, review.getCorrectAnswers());
+        assertEquals(3, review.getIncorrectAnswers());
+    }
+
     private LocalDateTime getCurrentDate() {
         return LocalDateTime.now();
     }
@@ -263,6 +292,20 @@ class FlashcardReviewTest {
             Thread.sleep(100);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    private void correctAnswer(FlashcardReview review) {
+        review.markFlashcardAsCorrect();
+        if (review.flashcardCount() > review.getIncorrectAnswers() + review.getCorrectAnswers()) {
+            review.next();
+        }
+    }
+
+    private void incorrectAnswer(FlashcardReview review) {
+        review.markFlashcardAsIncorrect();
+        if (review.flashcardCount() > review.getIncorrectAnswers() + review.getCorrectAnswers()) {
+            review.next();
         }
     }
 

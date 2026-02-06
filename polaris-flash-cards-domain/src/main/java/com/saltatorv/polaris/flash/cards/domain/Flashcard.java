@@ -30,4 +30,8 @@ class Flashcard {
     boolean isSuccessfulAnswer() {
         return this.answer.isSuccessfulAnswer();
     }
+
+    boolean isIncorrectAnswer() {
+        return this.answer == Answer.INCORRECT;
+    }
 }
