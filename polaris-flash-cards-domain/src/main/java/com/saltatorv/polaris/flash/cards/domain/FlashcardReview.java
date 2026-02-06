@@ -44,18 +44,6 @@ public class FlashcardReview {
         finishTime = System.currentTimeMillis();
     }
 
-    public LocalDateTime getStartDate() {
-        return calculateDate(startTime);
-    }
-
-    public LocalDateTime getFinishDate() {
-        return calculateDate(finishTime);
-    }
-
-    public int flashcardCount() {
-        return flashcards.size();
-    }
-
     public String next() {
         ensureReviewIsStarted();
         ensureReviewIsNotFinished();
@@ -92,6 +80,18 @@ public class FlashcardReview {
         int answeredQuestions = Math.max(0, currentFlashcardIndex - 1);
 
         return answeredQuestions - getCorrectAnswers();
+    }
+
+    public LocalDateTime getStartDate() {
+        return calculateDate(startTime);
+    }
+
+    public LocalDateTime getFinishDate() {
+        return calculateDate(finishTime);
+    }
+
+    public int flashcardCount() {
+        return flashcards.size();
     }
 
     public FlashcardReviewId getId() {
