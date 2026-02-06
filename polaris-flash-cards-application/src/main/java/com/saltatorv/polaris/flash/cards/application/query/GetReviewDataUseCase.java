@@ -14,11 +14,6 @@ class GetReviewDataUseCase {
         this.flashcardReviewRepository = flashcardReviewRepository;
     }
 
-    public FlashcardReviewId getId(FlashcardReviewId id) {
-        FlashcardReview review = getReview(id);
-
-        return review.getId();
-    }
     public int flashcardCount(FlashcardReviewId id) {
         FlashcardReview review = getReview(id);
 
