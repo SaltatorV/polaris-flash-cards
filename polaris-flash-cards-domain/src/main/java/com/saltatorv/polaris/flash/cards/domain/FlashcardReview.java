@@ -31,6 +31,7 @@ public class FlashcardReview {
     }
 
     public void begin() {
+        ensureReviewIsNotFinished();
         ensureReviewIsNotAlreadyStarted();
 
         startTime = System.currentTimeMillis();
