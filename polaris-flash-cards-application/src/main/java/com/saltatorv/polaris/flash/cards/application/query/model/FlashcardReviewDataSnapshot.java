@@ -23,6 +23,10 @@ public class FlashcardReviewDataSnapshot {
         this.finishDate = finishDate;
     }
 
+    public FlashcardReviewId getId() {
+        return id;
+    }
+
     public int getCorrectAnswers() {
         return correctAnswers;
     }

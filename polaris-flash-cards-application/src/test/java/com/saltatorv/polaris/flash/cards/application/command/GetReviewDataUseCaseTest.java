@@ -117,6 +117,8 @@ public class GetReviewDataUseCaseTest {
     private void assertReviewDataContainsValidDataFromReview(int examTimeInMiliseconds,
                                                              int correctAnswers, int incorrectAnswers) {
 
+        assertEquals(reviewData.getId().getId(), review.getId().getId());
+
         assertEquals(reviewData.getFlashcardCount(), (correctAnswers + incorrectAnswers));
         assertEquals(reviewData.getCorrectAnswers(), correctAnswers);
         assertEquals(reviewData.getIncorrectAnswers(), incorrectAnswers);
