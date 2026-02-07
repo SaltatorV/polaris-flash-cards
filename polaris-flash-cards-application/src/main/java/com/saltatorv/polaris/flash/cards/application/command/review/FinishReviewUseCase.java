@@ -1,4 +1,4 @@
-package com.saltatorv.polaris.flash.cards.application.command;
+package com.saltatorv.polaris.flash.cards.application.command.review;
 
 import com.saltatorv.polaris.flash.cards.domain.FlashcardReview;
 import com.saltatorv.polaris.flash.cards.domain.FlashcardReviewRepository;
@@ -6,20 +6,20 @@ import com.saltatorv.polaris.flash.cards.domain.shared.FlashcardReviewId;
 
 import java.util.Optional;
 
-public class BeginReviewUseCase {
+public class FinishReviewUseCase {
     private final FlashcardReviewRepository flashcardReviewRepository;
 
-    BeginReviewUseCase(FlashcardReviewRepository flashcardReviewRepository) {
+    public FinishReviewUseCase(FlashcardReviewRepository flashcardReviewRepository) {
         this.flashcardReviewRepository = flashcardReviewRepository;
     }
 
-    public void beginReview(FlashcardReviewId id) {
+    public void finishReview(FlashcardReviewId id) {
         Optional<FlashcardReview> review = flashcardReviewRepository.findById(id);
         if (review.isEmpty()) {
             throw new IllegalArgumentException("Review not found");
         }
 
-        review.get().begin();
+        review.get().finish();
         flashcardReviewRepository.save(review.get());
     }
 }

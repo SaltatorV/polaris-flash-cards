@@ -1,9 +1,11 @@
-package com.saltatorv.polaris.flash.cards.application.command;
+package com.saltatorv.polaris.flash.cards.application.command.review;
 
 import com.saltatorv.polaris.flash.cards.domain.FlashcardBlueprint;
 import com.saltatorv.polaris.flash.cards.domain.FlashcardMetadata;
 import com.saltatorv.polaris.flash.cards.domain.FlashcardReview;
 import com.saltatorv.polaris.flash.cards.domain.FlashcardReviewRepository;
+import com.saltatorv.polaris.flash.cards.domain.exception.FlashcardReviewAlreadyFinishedDomainException;
+import com.saltatorv.polaris.flash.cards.domain.exception.FlashcardReviewAlreadyStartedDomainException;
 import com.saltatorv.polaris.flash.cards.domain.shared.FlashcardReviewId;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -21,32 +23,31 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class FinishReviewUseCaseTest {
+public class BeginReviewUseCaseTest {
 
     private FlashcardReview review;
 
     @Mock
     private FlashcardReviewRepository flashcardReviewRepository;
     @InjectMocks
-    private FinishReviewUseCase finishReviewUseCase;
+    private BeginReviewUseCase beginReviewUseCase;
 
     @BeforeEach
     public void setUp() {
         review = null;
     }
 
+
     @Test
-    public void testShouldFinishReview() {
+    public void testShouldBeginReview() {
         //given
         generateReviewForRepository();
-        beginReview();
 
         //when
-        finishReview();
+        beginReview();
 
         //then
-        assertReviewIsFinished();
-
+        assertReviewIsStarted();
     }
 
     @Test
@@ -54,19 +55,20 @@ public class FinishReviewUseCaseTest {
         //given
 
         //when
-        assertThrows(RuntimeException.class, this::finishReview);
+        assertThrows(RuntimeException.class, this::beginReview);
 
         //then
 
     }
 
     @Test
-    public void testShouldThrowExceptionWhenReviewNotStarted() {
+    public void testShouldThrowExceptionWhenReviewAlreadyStarted() {
         //given
         generateReviewForRepository();
+        beginReview();
 
         //when
-        assertThrows(RuntimeException.class, this::finishReview);
+        assertThrows(FlashcardReviewAlreadyStartedDomainException.class, this::beginReview);
 
         //then
 
@@ -80,17 +82,18 @@ public class FinishReviewUseCaseTest {
         finishReview();
 
         //when
-        assertThrows(RuntimeException.class, this::finishReview);
+        assertThrows(FlashcardReviewAlreadyFinishedDomainException.class, this::beginReview);
 
         //then
+
     }
 
     private void beginReview() {
-        review.begin();
+        beginReviewUseCase.beginReview(review.getId());
     }
 
     private void finishReview() {
-        finishReviewUseCase.finishReview(review.getId());
+        review.finish();
     }
 
     private void generateReviewForRepository() {
@@ -112,16 +115,16 @@ public class FinishReviewUseCaseTest {
 
         return blueprints;
     }
-    private void assertReviewIsFinished() {
+
+    private void assertReviewIsStarted() {
         long startDate = convertDateToEpochMilli(review.getStartDate());
         long endDate = convertDateToEpochMilli(review.getFinishDate());
 
         assertNotEquals(0, startDate);
-        assertNotEquals(0, endDate);
+        assertEquals(0, endDate);
     }
 
     private long convertDateToEpochMilli(java.time.LocalDateTime date) {
         return date.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
     }
-
 }

@@ -1,6 +1,6 @@
-package com.saltatorv.polaris.flash.cards.application.command;
+package com.saltatorv.polaris.flash.cards.application.command.review;
 
-import com.saltatorv.polaris.flash.cards.application.command.dto.FlashcardDto;
+import com.saltatorv.polaris.flash.cards.application.command.review.dto.FlashcardDto;
 import com.saltatorv.polaris.flash.cards.domain.*;
 import com.saltatorv.polaris.flash.cards.domain.exception.FlashcardReviewAlreadyFinishedDomainException;
 import com.saltatorv.polaris.flash.cards.domain.exception.FlashcardReviewNotStartedDomainException;
