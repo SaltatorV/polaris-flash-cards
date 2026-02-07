@@ -1,6 +1,6 @@
 package com.saltatorv.polaris.flash.cards.domain;
 
-class Flashcard {
+public class Flashcard {
     private final String question;
     private final String definition;
     private Answer answer;
@@ -19,19 +19,19 @@ class Flashcard {
         this.answer = Answer.INCORRECT;
     }
 
-    String getQuestion() {
+    public String getQuestion() {
         return question;
     }
 
-    String getDefinition() {
+    public String getDefinition() {
         return definition;
     }
 
-    boolean isSuccessfulAnswer() {
+    public boolean isSuccessfulAnswer() {
         return this.answer.isSuccessfulAnswer();
     }
 
-    boolean isIncorrectAnswer() {
+    public boolean isIncorrectAnswer() {
         return this.answer == Answer.INCORRECT;
     }
 }
