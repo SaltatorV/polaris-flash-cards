@@ -1,6 +1,6 @@
 package com.saltatorv.polaris.flash.cards.application.query;
 
-import com.saltatorv.polaris.flash.cards.application.query.model.FlashcardReviewDataSnapshot;
+import com.saltatorv.polaris.flash.cards.application.query.dto.FlashcardReviewDataDto;
 import com.saltatorv.polaris.flash.cards.domain.FlashcardReview;
 import com.saltatorv.polaris.flash.cards.domain.FlashcardReviewRepository;
 import com.saltatorv.polaris.flash.cards.domain.shared.FlashcardReviewId;
@@ -14,9 +14,9 @@ public class GetReviewDataUseCase {
         this.flashcardReviewRepository = flashcardReviewRepository;
     }
 
-    public FlashcardReviewDataSnapshot getReviewData(FlashcardReviewId id) {
+    public FlashcardReviewDataDto getReviewData(FlashcardReviewId id) {
         FlashcardReview review = getReview(id);
-        return new FlashcardReviewDataSnapshot(id, review.getCorrectAnswers(),
+        return new FlashcardReviewDataDto(id, review.getCorrectAnswers(),
                 review.getIncorrectAnswers(), review.flashcardCount(),
                 review.getStartDate(), review.getFinishDate());
     }

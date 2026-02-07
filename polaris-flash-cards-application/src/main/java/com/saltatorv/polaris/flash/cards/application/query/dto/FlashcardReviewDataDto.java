@@ -1,10 +1,10 @@
-package com.saltatorv.polaris.flash.cards.application.query.model;
+package com.saltatorv.polaris.flash.cards.application.query.dto;
 
 import com.saltatorv.polaris.flash.cards.domain.shared.FlashcardReviewId;
 
 import java.time.LocalDateTime;
 
-public class FlashcardReviewDataSnapshot {
+public class FlashcardReviewDataDto {
     private final FlashcardReviewId id;
     private final int correctAnswers;
     private final int incorrectAnswers;
@@ -12,9 +12,9 @@ public class FlashcardReviewDataSnapshot {
     private final LocalDateTime startDate;
     private final LocalDateTime finishDate;
 
-    public FlashcardReviewDataSnapshot(FlashcardReviewId id, int correctAnswers,
-                                       int incorrectAnswers, int flashcardCount,
-                                       LocalDateTime startDate, LocalDateTime finishDate) {
+    public FlashcardReviewDataDto(FlashcardReviewId id, int correctAnswers,
+                                  int incorrectAnswers, int flashcardCount,
+                                  LocalDateTime startDate, LocalDateTime finishDate) {
         this.id = id;
         this.correctAnswers = correctAnswers;
         this.incorrectAnswers = incorrectAnswers;

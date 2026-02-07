@@ -1,6 +1,6 @@
 package com.saltatorv.polaris.flash.cards.application.command;
 
-import com.saltatorv.polaris.flash.cards.application.query.model.FlashcardReviewDataSnapshot;
+import com.saltatorv.polaris.flash.cards.application.query.dto.FlashcardReviewDataDto;
 import com.saltatorv.polaris.flash.cards.application.query.GetReviewDataUseCase;
 import com.saltatorv.polaris.flash.cards.domain.FlashcardBlueprint;
 import com.saltatorv.polaris.flash.cards.domain.FlashcardMetadata;
@@ -24,7 +24,7 @@ import static org.mockito.Mockito.when;
 public class GetReviewDataUseCaseTest {
 
     private FlashcardReview review;
-    private FlashcardReviewDataSnapshot reviewData;
+    private FlashcardReviewDataDto reviewData;
 
     @Mock
     private FlashcardReviewRepository flashcardReviewRepository;
