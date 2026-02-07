@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-class GenerateReviewUseCase {
+public class GenerateReviewUseCase {
 
     private final FlashcardReviewRepository flashcardReviewRepository;
     private final FlashcardBlueprintRepository flashcardBlueprintRepository;
