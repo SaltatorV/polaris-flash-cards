@@ -126,10 +126,11 @@ class FlashcardReviewTest {
         FlashcardReview review = prepareAndBeginReview();
 
         //when
-        String question = review.next();
+        Flashcard question = review.next();
 
         //then
-        assertEquals("Question-1", question);
+        assertEquals("Question-1", question.getQuestion());
+        assertEquals("Answer-1", question.getDefinition());
     }
 
     @Test
@@ -139,10 +140,11 @@ class FlashcardReviewTest {
 
         //when
         review.next();
-        String question = review.next();
+        Flashcard question = review.next();
 
         //then
-        assertEquals("Question-2", question);
+        assertEquals("Question-2", question.getQuestion());
+        assertEquals("Answer-2", question.getDefinition());
     }
 
     @Test

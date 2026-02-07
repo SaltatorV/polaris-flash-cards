@@ -44,14 +44,13 @@ public class FlashcardReview {
         finishTime = System.currentTimeMillis();
     }
 
-    public String next() {
+    public Flashcard next() {
         ensureReviewIsStarted();
         ensureReviewIsNotFinished();
         ensureThereAreFlashcardsLeft();
 
-        String question = flashcards
-                .get(currentFlashcardIndex)
-                .getQuestion();
+        Flashcard question = flashcards
+                .get(currentFlashcardIndex);
 
         currentFlashcardIndex++;
         return question;
