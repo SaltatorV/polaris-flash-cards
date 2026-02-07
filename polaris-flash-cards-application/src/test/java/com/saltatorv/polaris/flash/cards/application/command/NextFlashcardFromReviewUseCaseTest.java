@@ -22,7 +22,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class NextFlashcardFromReviewUseCaseTest {
+public class NextFlashcardFromReviewUseCaseTest {
     private final static int FLASHCARDS_BLUEPRINTS_SIZE = 10;
 
     private FlashcardReview review;

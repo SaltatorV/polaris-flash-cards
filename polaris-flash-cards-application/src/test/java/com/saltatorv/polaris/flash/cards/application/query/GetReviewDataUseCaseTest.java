@@ -1,7 +1,6 @@
-package com.saltatorv.polaris.flash.cards.application.command;
+package com.saltatorv.polaris.flash.cards.application.query;
 
 import com.saltatorv.polaris.flash.cards.application.query.dto.FlashcardReviewDataDto;
-import com.saltatorv.polaris.flash.cards.application.query.GetReviewDataUseCase;
 import com.saltatorv.polaris.flash.cards.domain.FlashcardBlueprint;
 import com.saltatorv.polaris.flash.cards.domain.FlashcardMetadata;
 import com.saltatorv.polaris.flash.cards.domain.FlashcardReview;
