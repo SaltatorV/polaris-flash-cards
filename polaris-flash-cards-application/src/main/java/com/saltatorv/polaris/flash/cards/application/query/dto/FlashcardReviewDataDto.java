@@ -9,6 +9,7 @@ public class FlashcardReviewDataDto {
     private final int correctAnswers;
     private final int incorrectAnswers;
     private final int flashcardCount;
+    private final int notAnsweredCount;
     private final LocalDateTime startDate;
     private final LocalDateTime finishDate;
 
@@ -19,6 +20,7 @@ public class FlashcardReviewDataDto {
         this.correctAnswers = correctAnswers;
         this.incorrectAnswers = incorrectAnswers;
         this.flashcardCount = flashcardCount;
+        this.notAnsweredCount = flashcardCount - correctAnswers - incorrectAnswers;
         this.startDate = startDate;
         this.finishDate = finishDate;
     }
@@ -33,6 +35,10 @@ public class FlashcardReviewDataDto {
 
     public int getIncorrectAnswers() {
         return incorrectAnswers;
+    }
+
+    public int getNotAnsweredCount() {
+        return notAnsweredCount;
     }
 
     public int getFlashcardCount() {

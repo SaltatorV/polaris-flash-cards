@@ -119,9 +119,10 @@ public class GetReviewDataUseCaseTest {
 
         assertEquals(reviewData.getId().getId(), review.getId().getId());
 
-        assertEquals(reviewData.getFlashcardCount(), (correctAnswers + incorrectAnswers));
-        assertEquals(reviewData.getCorrectAnswers(), correctAnswers);
-        assertEquals(reviewData.getIncorrectAnswers(), incorrectAnswers);
+        assertEquals((correctAnswers + incorrectAnswers), reviewData.getFlashcardCount());
+        assertEquals(correctAnswers, reviewData.getCorrectAnswers());
+        assertEquals(incorrectAnswers, reviewData.getIncorrectAnswers());
+        assertEquals(0, reviewData.getNotAnsweredCount());
 
         long startDate = convertDateToEpochMilli(reviewData.getStartDate());
         long endDate = convertDateToEpochMilli(reviewData.getFinishDate());
