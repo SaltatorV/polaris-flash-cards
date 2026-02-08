@@ -9,7 +9,9 @@ import org.junit.jupiter.api.Test;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.List;
 
+import static com.saltatorv.polaris.flash.cards.domain.Answer.*;
 import static com.saltatorv.polaris.flash.cards.domain.FlashcardReviewBuilder.buildFlashcardReview;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -270,6 +272,27 @@ class FlashcardReviewTest {
         assertEquals(3, review.getIncorrectAnswers());
     }
 
+    @Test
+    public void testShouldGenerateSnapshotFromReview() {
+        //given
+        FlashcardReview review = buildFlashcardReview()
+                .addFlashcard("Question-1", "Answer-1")
+                .addFlashcard("Question-2", "Answer-2")
+                .addFlashcard("Question-3", "Answer-3")
+                .create();
+        review.begin();
+        correctAnswer(review);
+        incorrectAnswer(review);
+        waitSomeTime();
+        review.finish();
+        //when
+
+        FlashcardReviewSnapshot snapshot = review.generateSnapshot();
+
+        //then
+        assertGeneratedSnapshotIsValid(snapshot, review, List.of(CORRECT, INCORRECT, NOT_ANSWERED));
+    }
+
     private LocalDateTime getCurrentDate() {
         return LocalDateTime.now();
     }
@@ -308,6 +331,18 @@ class FlashcardReviewTest {
         review.markFlashcardAsIncorrect();
         if (review.flashcardCount() > review.getIncorrectAnswers() + review.getCorrectAnswers()) {
             review.next();
+        }
+    }
+
+    private void assertGeneratedSnapshotIsValid(FlashcardReviewSnapshot snapshot, FlashcardReview review, List<Answer> answers) {
+        assertEquals(review.getId().getId(), snapshot.getFlashcardReviewId());
+        assertEquals(review.getStartDate(), snapshot.getStartDate());
+        assertEquals(review.getFinishDate(), snapshot.getFinishDate());
+
+        List<FlashcardSnapshot> flashcardSnapshots = snapshot.getFlashcardSnapshots();
+
+        for (int i = 0; i < answers.size(); i++) {
+            assertEquals(answers.get(i), flashcardSnapshots.get(i).getAnswer());
         }
     }
 

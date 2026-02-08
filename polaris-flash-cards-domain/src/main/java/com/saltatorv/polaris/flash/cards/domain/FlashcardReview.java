@@ -8,6 +8,7 @@ import com.saltatorv.polaris.flash.cards.domain.shared.FlashcardReviewId;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 public class FlashcardReview {
@@ -28,6 +29,16 @@ public class FlashcardReview {
         this.currentFlashcardIndex = 0;
         this.startTime = 0;
         this.finishTime = 0;
+    }
+
+    public FlashcardReviewSnapshot generateSnapshot() {
+        List<FlashcardSnapshot> flashcardSnapshots = new ArrayList<>();
+
+        for (Flashcard flashcard : flashcards) {
+            flashcardSnapshots.add(flashcard.generateSnapshot());
+        }
+
+        return new FlashcardReviewSnapshot(id.getId(), getStartDate(), getFinishDate(), flashcardSnapshots);
     }
 
     public void begin() {
