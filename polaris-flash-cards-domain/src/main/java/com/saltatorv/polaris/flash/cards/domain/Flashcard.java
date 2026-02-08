@@ -1,11 +1,13 @@
 package com.saltatorv.polaris.flash.cards.domain;
 
 public class Flashcard {
+    private final String blueprintId;
     private final String question;
     private final String definition;
     private Answer answer;
 
-    Flashcard(String question, String definition) {
+    Flashcard(String blueprintId, String question, String definition) {
+        this.blueprintId = blueprintId;
         this.question = question;
         this.definition = definition;
         this.answer = Answer.NOT_ANSWERED;
@@ -33,5 +35,13 @@ public class Flashcard {
 
     public boolean isIncorrectAnswer() {
         return this.answer == Answer.INCORRECT;
+    }
+
+    public boolean isNotAnswered() {
+        return this.answer == Answer.NOT_ANSWERED;
+    }
+
+    public String getBlueprintId() {
+        return blueprintId;
     }
 }
