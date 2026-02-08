@@ -40,7 +40,6 @@
     <modules>
         <module>polaris-flash-cards-domain</module>
         <module>polaris-flash-cards-application</module>
-        <module>polaris-flash-cards-infrastructure</module>
     </modules>
 
 
