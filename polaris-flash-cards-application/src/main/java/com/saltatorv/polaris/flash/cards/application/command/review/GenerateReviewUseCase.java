@@ -7,11 +7,13 @@ import com.saltatorv.polaris.flash.cards.domain.FlashcardReview;
 import com.saltatorv.polaris.flash.cards.domain.FlashcardReviewRepository;
 import com.saltatorv.polaris.flash.cards.domain.shared.FlashcardBlueprintId;
 import com.saltatorv.polaris.flash.cards.domain.shared.FlashcardReviewId;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+@Service
 public class GenerateReviewUseCase {
 
     private final FlashcardReviewRepository flashcardReviewRepository;

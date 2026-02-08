@@ -4,9 +4,11 @@ import com.saltatorv.polaris.flash.cards.application.command.blueprint.dto.Flash
 import com.saltatorv.polaris.flash.cards.domain.FlashcardBlueprint;
 import com.saltatorv.polaris.flash.cards.domain.FlashcardBlueprintRepository;
 import com.saltatorv.polaris.flash.cards.domain.FlashcardMetadata;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class AddFlashcardBlueprintUseCase {
     private final FlashcardBlueprintRepository flashcardBlueprintRepository;
 

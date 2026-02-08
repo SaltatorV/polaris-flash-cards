@@ -3,9 +3,11 @@ package com.saltatorv.polaris.flash.cards.application.command.review;
 import com.saltatorv.polaris.flash.cards.domain.FlashcardReview;
 import com.saltatorv.polaris.flash.cards.domain.FlashcardReviewRepository;
 import com.saltatorv.polaris.flash.cards.domain.shared.FlashcardReviewId;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+@Service
 public class BeginReviewUseCase {
     private final FlashcardReviewRepository flashcardReviewRepository;
 
