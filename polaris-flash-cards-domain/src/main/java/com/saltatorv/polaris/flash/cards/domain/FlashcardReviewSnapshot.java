@@ -1,15 +1,15 @@
 package com.saltatorv.polaris.flash.cards.domain;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class FlashcardReviewSnapshot {
     private final String flashcardReviewId;
-    private final LocalDate startDate;
-    private final LocalDate finishDate;
+    private final LocalDateTime startDate;
+    private final LocalDateTime finishDate;
     private final List<FlashcardSnapshot> flashcardSnapshots;
 
-    public FlashcardReviewSnapshot(String flashcardReviewId, LocalDate startDate, LocalDate finishDate, List<FlashcardSnapshot> flashcardSnapshots) {
+    public FlashcardReviewSnapshot(String flashcardReviewId, LocalDateTime startDate, LocalDateTime finishDate, List<FlashcardSnapshot> flashcardSnapshots) {
         this.flashcardReviewId = flashcardReviewId;
         this.startDate = startDate;
         this.finishDate = finishDate;
@@ -20,11 +20,11 @@ public class FlashcardReviewSnapshot {
         return flashcardReviewId;
     }
 
-    public LocalDate getStartDate() {
+    public LocalDateTime getStartDate() {
         return startDate;
     }
 
-    public LocalDate getFinishDate() {
+    public LocalDateTime getFinishDate() {
         return finishDate;
     }
 
