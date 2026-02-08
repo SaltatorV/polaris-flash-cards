@@ -12,6 +12,13 @@
     <name>polaris-flash-cards-data-access</name>
 
     <dependencies>
+        <!-- POLARIS-FLASH-CARDS-->
+        <dependency>
+            <groupId>com.saltatorv</groupId>
+            <artifactId>polaris-flash-cards-domain</artifactId>
+        </dependency>
+
+        <!-- SPRING -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
