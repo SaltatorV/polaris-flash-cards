@@ -13,6 +13,10 @@ public class Flashcard {
         this.answer = Answer.NOT_ANSWERED;
     }
 
+    FlashcardSnapshot generateSnapshot() {
+        return new FlashcardSnapshot(blueprintId, answer);
+    }
+
     void markAsSuccess() {
         this.answer = Answer.CORRECT;
     }
