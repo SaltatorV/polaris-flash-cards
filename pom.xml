@@ -33,7 +33,6 @@
         <spring.boot.version>3.2.2</spring.boot.version>
 
         <!-- TESTING -->
-        <junit-jupiter.version>5.14.1</junit-jupiter.version>
         <jacoco.version>0.8.12</jacoco.version>
         <pitest.version>1.22.0</pitest.version>
         <pitest-junit5-plugin.version>1.2.3</pitest-junit5-plugin.version>
@@ -45,18 +44,10 @@
         <module>polaris-flash-cards-application</module>
     </modules>
 
-
     <dependencies>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-api</artifactId>
-            <version>${junit-jupiter.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-engine</artifactId>
-            <version>${junit-jupiter.version}</version>
+            <artifactId>junit-jupiter</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>
