@@ -8,20 +8,20 @@ import java.util.Locale;
 public class FlashcardBlueprintDataDto {
     private final FlashcardBlueprintId reviewId;
     private final String question;
-    private final String answer;
+    private final String definition;
     private final String source;
     private final List<String> tags;
-    private final Locale language;
+    private final String language;
 
     public FlashcardBlueprintDataDto(FlashcardBlueprintId reviewId, String question,
-                                     String answer, String source,
+                                     String definition, String source,
                                      List<String> tags, Locale language) {
         this.reviewId = reviewId;
         this.question = question;
-        this.answer = answer;
+        this.definition = definition;
         this.source = source;
         this.tags = tags;
-        this.language = language;
+        this.language = language.getLanguage();
     }
 
     public FlashcardBlueprintId getReviewId() {
@@ -32,8 +32,8 @@ public class FlashcardBlueprintDataDto {
         return question;
     }
 
-    public String getAnswer() {
-        return answer;
+    public String getDefinition() {
+        return definition;
     }
 
     public String getSource() {
