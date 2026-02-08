@@ -70,7 +70,7 @@ public class GenerateReviewUseCaseTest {
 
     private List<FlashcardBlueprintId> getRandomBlueprintIds(int size) {
         Collections.shuffle(blueprints);
-        return blueprints.subList(0, size).stream().map(FlashcardBlueprint::getReviewId).toList();
+        return blueprints.subList(0, size).stream().map(FlashcardBlueprint::getFlashcardBlueprintId).toList();
     }
 
     private void generateFlashcardBlueprints(int size) {
