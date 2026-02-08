@@ -6,17 +6,17 @@ import java.util.List;
 import java.util.Locale;
 
 public class FlashcardBlueprintDataDto {
-    private final FlashcardBlueprintId reviewId;
+    private final FlashcardBlueprintId flashcardBlueprintId;
     private final String question;
     private final String definition;
     private final String source;
     private final List<String> tags;
     private final String language;
 
-    public FlashcardBlueprintDataDto(FlashcardBlueprintId reviewId, String question,
+    public FlashcardBlueprintDataDto(FlashcardBlueprintId flashcardBlueprintId, String question,
                                      String definition, String source,
                                      List<String> tags, Locale language) {
-        this.reviewId = reviewId;
+        this.flashcardBlueprintId = flashcardBlueprintId;
         this.question = question;
         this.definition = definition;
         this.source = source;
@@ -24,8 +24,8 @@ public class FlashcardBlueprintDataDto {
         this.language = language.getLanguage();
     }
 
-    public FlashcardBlueprintId getReviewId() {
-        return reviewId;
+    public FlashcardBlueprintId getFlashcardBlueprintId() {
+        return flashcardBlueprintId;
     }
 
     public String getQuestion() {
@@ -44,7 +44,7 @@ public class FlashcardBlueprintDataDto {
         return tags;
     }
 
-    public Locale getLanguage() {
+    public String getLanguage() {
         return language;
     }
 }
