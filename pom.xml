@@ -29,6 +29,9 @@
         <!--POLARIS-FLASH-CARDS-->
         <polaris.flash.cards.domain.version>0.0.1-SNAPSHOT</polaris.flash.cards.domain.version>
 
+        <!-- SPRING -->
+        <spring.boot.version>3.2.2</spring.boot.version>
+
         <!-- TESTING -->
         <junit-jupiter.version>5.14.1</junit-jupiter.version>
         <jacoco.version>0.8.12</jacoco.version>
@@ -66,6 +69,16 @@
                 <artifactId>polaris-flash-cards-domain</artifactId>
                 <version>${polaris.flash.cards.domain.version}</version>
             </dependency>
+
+            <!-- SPRING -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring.boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
             <!--TESTING-->
             <dependency>
                 <groupId>org.mockito</groupId>
