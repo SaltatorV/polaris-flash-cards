@@ -13,11 +13,19 @@
     <description>polaris-flash-cards-application</description>
 
     <dependencies>
+        <!-- POLARIS-FLASH-CARDS -->
         <dependency>
             <groupId>com.saltatorv</groupId>
             <artifactId>polaris-flash-cards-domain</artifactId>
         </dependency>
 
+        <!-- SPRING -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+        </dependency>
+
+        <!-- TESTING -->
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
