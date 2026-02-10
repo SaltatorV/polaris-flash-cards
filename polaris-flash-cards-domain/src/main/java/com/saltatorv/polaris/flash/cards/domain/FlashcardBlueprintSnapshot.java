@@ -5,7 +5,7 @@ import com.saltatorv.polaris.flash.cards.domain.shared.FlashcardBlueprintId;
 import java.util.List;
 
 public class FlashcardBlueprintSnapshot {
-    private final FlashcardBlueprintId flashcardBlueprintId;
+    private final String flashcardBlueprintId;
     private final String question;
     private final String definition;
     private final String source;
@@ -13,7 +13,7 @@ public class FlashcardBlueprintSnapshot {
     private final String language;
 
     public FlashcardBlueprintSnapshot(FlashcardBlueprintId flashcardBlueprintId, String question, String definition, String source, List<String> tags, String language) {
-        this.flashcardBlueprintId = flashcardBlueprintId;
+        this.flashcardBlueprintId = flashcardBlueprintId.getId();
         this.question = question;
         this.definition = definition;
         this.source = source;
@@ -21,7 +21,7 @@ public class FlashcardBlueprintSnapshot {
         this.language = language;
     }
 
-    public FlashcardBlueprintId getFlashcardBlueprintId() {
+    public String getFlashcardBlueprintId() {
         return flashcardBlueprintId;
     }
 
