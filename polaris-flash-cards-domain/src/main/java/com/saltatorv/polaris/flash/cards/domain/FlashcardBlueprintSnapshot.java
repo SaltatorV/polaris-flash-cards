@@ -1,7 +1,5 @@
 package com.saltatorv.polaris.flash.cards.domain;
 
-import com.saltatorv.polaris.flash.cards.domain.shared.FlashcardBlueprintId;
-
 import java.util.List;
 
 public class FlashcardBlueprintSnapshot {
@@ -12,8 +10,8 @@ public class FlashcardBlueprintSnapshot {
     private final List<String> tags;
     private final String language;
 
-    public FlashcardBlueprintSnapshot(FlashcardBlueprintId flashcardBlueprintId, String question, String definition, String source, List<String> tags, String language) {
-        this.flashcardBlueprintId = flashcardBlueprintId.getId();
+    public FlashcardBlueprintSnapshot(String flashcardBlueprintId, String question, String definition, String source, List<String> tags, String language) {
+        this.flashcardBlueprintId = flashcardBlueprintId;
         this.question = question;
         this.definition = definition;
         this.source = source;

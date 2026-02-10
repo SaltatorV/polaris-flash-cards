@@ -17,7 +17,7 @@ public class FlashcardBlueprint {
     }
 
     public FlashcardBlueprintSnapshot generate() {
-        return new FlashcardBlueprintSnapshot(flashcardBlueprintId, question, answer, metadata.getSource(), metadata.getTags(), metadata.getLanguage());
+        return new FlashcardBlueprintSnapshot(flashcardBlueprintId.getId(), question, answer, metadata.getSource(), metadata.getTags(), metadata.getLanguage());
     }
 
     public Flashcard createFlashcard() {
