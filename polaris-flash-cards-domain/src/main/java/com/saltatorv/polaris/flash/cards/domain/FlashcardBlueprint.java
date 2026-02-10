@@ -16,6 +16,10 @@ public class FlashcardBlueprint {
         this.metadata = metadata;
     }
 
+    public FlashcardBlueprintSnapshot generate() {
+        return new FlashcardBlueprintSnapshot(flashcardBlueprintId, question, answer, metadata.getSource(), metadata.getTags(), metadata.getLanguage());
+    }
+
     public Flashcard createFlashcard() {
         return new Flashcard(flashcardBlueprintId.getId(), question, answer);
     }
