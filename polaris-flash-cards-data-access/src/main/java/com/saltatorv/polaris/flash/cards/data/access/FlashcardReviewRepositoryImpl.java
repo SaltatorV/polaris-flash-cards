@@ -25,8 +25,28 @@ class FlashcardReviewRepositoryImpl implements FlashcardReviewRepository {
 
     @Override
     public Optional<FlashcardReviewSnapshot> findById(FlashcardReviewId id) {
+        Optional<FlashcardReviewEntity> found =
+                sqlFlashcardReviewRepository.findById(id.getId());
 
-        return null;
+        if (found.isEmpty()) {
+            return Optional.empty();
+        }
+
+        FlashcardReviewEntity flashcardReviewEntity = found.get();
+
+        List<FlashcardSnapshot> flashcardSnapshots = new ArrayList<>();
+
+        for (FlashcardRevisionEntity revisionEntity : flashcardReviewEntity.getFlashcardRevisions()) {
+            flashcardSnapshots.add(new FlashcardSnapshot(revisionEntity.getFlashcardBlueprintId(),
+                    revisionEntity.getStatus()));
+        }
+
+        FlashcardReviewSnapshot flashcardReviewSnapshot = new FlashcardReviewSnapshot(flashcardReviewEntity.getId(),
+                flashcardReviewEntity.getStartDate(),
+                flashcardReviewEntity.getFinishDate(),
+                flashcardSnapshots);
+
+        return Optional.of(flashcardReviewSnapshot);
     }
 
     @Override
