@@ -20,11 +20,10 @@ public class FlashcardReviewEntity {
     public FlashcardReviewEntity() {
     }
 
-    public FlashcardReviewEntity(String id, LocalDateTime startDate, LocalDateTime finishDate, List<FlashcardRevisionEntity> flashcardRevisions) {
+    public FlashcardReviewEntity(String id, LocalDateTime startDate, LocalDateTime finishDate) {
         this.id = id;
         this.startDate = startDate;
         this.finishDate = finishDate;
-        this.flashcardRevisions = flashcardRevisions;
     }
 
     public String getId() {
@@ -41,5 +40,9 @@ public class FlashcardReviewEntity {
 
     public List<FlashcardRevisionEntity> getFlashcardRevisions() {
         return flashcardRevisions;
+    }
+
+    public void setFlashcardRevisions(List<FlashcardRevisionEntity> flashcardRevisions) {
+        this.flashcardRevisions = flashcardRevisions;
     }
 }
