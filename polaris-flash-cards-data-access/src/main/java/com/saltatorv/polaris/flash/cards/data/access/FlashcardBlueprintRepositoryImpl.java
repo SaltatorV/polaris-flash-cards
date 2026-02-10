@@ -22,7 +22,22 @@ class FlashcardBlueprintRepositoryImpl implements FlashcardBlueprintRepository {
 
     @Override
     public Optional<FlashcardBlueprintSnapshot> findById(FlashcardBlueprintId id) {
-        return Optional.empty();
+        Optional<FlashcardBlueprintEntity> found = sqlFlashcardBlueprintRepository.findById(id.getId());
+
+        if (found.isEmpty()) {
+            return Optional.empty();
+        }
+        FlashcardBlueprintEntity entity = found.get();
+
+        FlashcardBlueprintSnapshot snapshot = new FlashcardBlueprintSnapshot(
+                entity.getId(),
+                entity.getQuestion(),
+                entity.getDefinition(),
+                entity.getSource(),
+                List.of(entity.getTags().split(";")),
+                entity.getLanguage()
+        );
+        return Optional.of(snapshot);
     }
 
     @Override
