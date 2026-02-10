@@ -5,8 +5,12 @@ public class FlashcardSnapshot {
     private final String answer;
 
     public FlashcardSnapshot(String flashcardBlueprintId, Answer answer) {
+        this(flashcardBlueprintId, answer.name());
+    }
+
+    public FlashcardSnapshot(String flashcardBlueprintId, String answer) {
         this.flashcardBlueprintId = flashcardBlueprintId;
-        this.answer = answer.name();
+        this.answer = answer;
     }
 
     public String getFlashcardBlueprintId() {
