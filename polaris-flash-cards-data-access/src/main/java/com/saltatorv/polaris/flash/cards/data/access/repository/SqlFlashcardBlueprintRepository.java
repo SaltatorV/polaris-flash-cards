@@ -13,4 +13,6 @@ public interface SqlFlashcardBlueprintRepository extends Repository<FlashcardBlu
     void deleteById(String id);
 
     Iterable<FlashcardBlueprintEntity> findAll();
+
+    Iterable<FlashcardBlueprintEntity> findByIds(Iterable<String> ids);
 }

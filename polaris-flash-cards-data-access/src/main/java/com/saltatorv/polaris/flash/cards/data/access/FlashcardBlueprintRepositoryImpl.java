@@ -7,6 +7,7 @@ import com.saltatorv.polaris.flash.cards.domain.FlashcardBlueprintSnapshot;
 import com.saltatorv.polaris.flash.cards.domain.shared.FlashcardBlueprintId;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -64,6 +65,23 @@ class FlashcardBlueprintRepositoryImpl implements FlashcardBlueprintRepository {
 
     @Override
     public List<FlashcardBlueprintSnapshot> findByIds(List<FlashcardBlueprintId> ids) {
-        return List.of();
+        Iterable<FlashcardBlueprintEntity> entities =
+                sqlFlashcardBlueprintRepository.findByIds(
+                        ids.stream()
+                                .map(id -> id.getId()).toList());
+
+        List<FlashcardBlueprintSnapshot> snapshots = new ArrayList<>();
+
+        for (FlashcardBlueprintEntity entity : entities) {
+            snapshots.add(new FlashcardBlueprintSnapshot(
+                    entity.getId(),
+                    entity.getQuestion(),
+                    entity.getDefinition(),
+                    entity.getSource(),
+                    List.of(entity.getTags().split(";")),
+                    entity.getLanguage()));
+        }
+
+        return snapshots;
     }
 }
