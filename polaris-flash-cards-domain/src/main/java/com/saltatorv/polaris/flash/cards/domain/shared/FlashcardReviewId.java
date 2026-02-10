@@ -6,7 +6,7 @@ import java.util.UUID;
 
 @Generated
 public class FlashcardReviewId extends Id<UUID> {
-    private FlashcardReviewId(UUID id) {
+    public FlashcardReviewId(UUID id) {
         super(id);
     }
 
