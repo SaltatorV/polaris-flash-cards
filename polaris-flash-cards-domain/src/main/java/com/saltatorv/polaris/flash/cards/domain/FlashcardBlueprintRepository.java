@@ -7,9 +7,9 @@ import java.util.Optional;
 
 public interface FlashcardBlueprintRepository {
 
-    Optional<FlashcardBlueprint> findById(FlashcardBlueprintId id);
+    Optional<FlashcardBlueprintSnapshot> findById(FlashcardBlueprintId id);
 
-    FlashcardBlueprint save(FlashcardBlueprint flashcardBlueprint);
+    FlashcardBlueprintSnapshot save(FlashcardBlueprintSnapshot flashcardBlueprint);
 
-    List<FlashcardBlueprint> findByIds(List<FlashcardBlueprintId> ids);
+    List<FlashcardBlueprintSnapshot> findByIds(List<FlashcardBlueprintId> ids);
 }
