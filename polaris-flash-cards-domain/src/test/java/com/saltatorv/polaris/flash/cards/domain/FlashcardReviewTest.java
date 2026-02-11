@@ -342,7 +342,7 @@ class FlashcardReviewTest {
         List<FlashcardSnapshot> flashcardSnapshots = snapshot.getFlashcardSnapshots();
 
         for (int i = 0; i < answers.size(); i++) {
-            assertEquals(answers.get(i), flashcardSnapshots.get(i).getAnswer());
+            assertEquals(answers.get(i).name(), flashcardSnapshots.get(i).getAnswer());
         }
     }
 
