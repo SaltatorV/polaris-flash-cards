@@ -21,7 +21,7 @@ public class AddFlashcardBlueprintUseCase {
             FlashcardBlueprint blueprint = new FlashcardBlueprint(dto.getQuestion(), dto.getDefinition(),
                     new FlashcardMetadata(dto.getSource(), dto.getTags(), dto.getLanguage()));
 
-            flashcardBlueprintRepository.save(blueprint);
+            flashcardBlueprintRepository.save(blueprint.generateSnapshot());
         }
     }
 }
