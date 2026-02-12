@@ -38,6 +38,7 @@ class FlashcardReviewRepositoryImpl implements FlashcardReviewRepository {
 
         for (FlashcardRevisionEntity revisionEntity : flashcardReviewEntity.getFlashcardRevisions()) {
             flashcardSnapshots.add(new FlashcardSnapshot(revisionEntity.getFlashcardBlueprintId(),
+                    revisionEntity.getQuestion(), revisionEntity.getDefinition(),
                     revisionEntity.getStatus()));
         }
 
@@ -62,6 +63,8 @@ class FlashcardReviewRepositoryImpl implements FlashcardReviewRepository {
         for (FlashcardSnapshot flashcardSnapshot : flashcardReview.getFlashcardSnapshots()) {
             revisionEntities.add(new FlashcardRevisionEntity(flashcardReviewEntity,
                     flashcardSnapshot.getFlashcardBlueprintId(),
+                    flashcardSnapshot.getQuestion(),
+                    flashcardSnapshot.getDefinition(),
                     flashcardSnapshot.getAnswer()));
         }
 

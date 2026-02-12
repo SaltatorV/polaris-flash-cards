@@ -12,14 +12,19 @@ public class FlashcardRevisionEntity {
     @JoinColumn(name = "flashcard_review_id")
     private FlashcardReviewEntity flashcardReview;
     private String flashcardBlueprintId;
+    private String question;
+    private String definition;
     private String status;
 
     public FlashcardRevisionEntity() {
     }
 
-    public FlashcardRevisionEntity(FlashcardReviewEntity flashcardReview, String flashcardBlueprintId, String status) {
+    public FlashcardRevisionEntity(FlashcardReviewEntity flashcardReview, String flashcardBlueprintId,
+                                   String question, String definition, String status) {
         this.flashcardReview = flashcardReview;
         this.flashcardBlueprintId = flashcardBlueprintId;
+        this.question = question;
+        this.definition = definition;
         this.status = status;
     }
 
@@ -33,5 +38,13 @@ public class FlashcardRevisionEntity {
 
     public String getStatus() {
         return status;
+    }
+
+    public String getDefinition() {
+        return definition;
+    }
+
+    public String getQuestion() {
+        return question;
     }
 }
