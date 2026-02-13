@@ -10,6 +10,10 @@ public class FlashcardReviewId extends Id<UUID> {
         super(id);
     }
 
+    private FlashcardReviewId(String id) {
+        this(UUID.fromString(id));
+    }
+
     public static FlashcardReviewId generate() {
         return new FlashcardReviewId(UUID.randomUUID());
     }

@@ -8,6 +8,10 @@ public class FlashcardBlueprintId extends Id<UUID> {
         super(id);
     }
 
+    private FlashcardBlueprintId(String id) {
+        this(UUID.fromString(id));
+    }
+
     public static FlashcardBlueprintId generate() {
         return new FlashcardBlueprintId(UUID.randomUUID());
     }
