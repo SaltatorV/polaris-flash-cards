@@ -59,7 +59,7 @@ public class FlashcardReview {
                 .toList();
 
         FlashcardReviewId reviewId = new FlashcardReviewId
-                (UUID.fromString(reviewSnapshot.getFlashcardReviewId()));
+                (reviewSnapshot.getFlashcardReviewId());
 
         long startTime = reviewSnapshot.getStartDate().atZone(java.time.ZoneId.systemDefault()).toInstant().toEpochMilli();
         long finishTime = reviewSnapshot.getFinishDate().atZone(java.time.ZoneId.systemDefault()).toInstant().toEpochMilli();

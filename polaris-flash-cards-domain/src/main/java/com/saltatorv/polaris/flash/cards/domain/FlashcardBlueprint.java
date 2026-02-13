@@ -32,7 +32,7 @@ public class FlashcardBlueprint {
                 snapshot.getTags(),
                 Locale.forLanguageTag(snapshot.getLanguage()));
 
-        return new FlashcardBlueprint(new FlashcardBlueprintId(UUID.fromString(snapshot.getFlashcardBlueprintId())),
+        return new FlashcardBlueprint(new FlashcardBlueprintId(snapshot.getFlashcardBlueprintId()),
                 snapshot.getQuestion(),
                 snapshot.getDefinition(),
                 flashcardMetadata);
