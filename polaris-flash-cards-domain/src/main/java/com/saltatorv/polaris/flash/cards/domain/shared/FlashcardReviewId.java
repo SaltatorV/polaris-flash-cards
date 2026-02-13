@@ -10,7 +10,7 @@ public class FlashcardReviewId extends Id<UUID> {
         super(id);
     }
 
-    private FlashcardReviewId(String id) {
+    public FlashcardReviewId(String id) {
         this(UUID.fromString(id));
     }
 

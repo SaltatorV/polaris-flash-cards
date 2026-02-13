@@ -8,7 +8,7 @@ public class FlashcardBlueprintId extends Id<UUID> {
         super(id);
     }
 
-    private FlashcardBlueprintId(String id) {
+    public FlashcardBlueprintId(String id) {
         this(UUID.fromString(id));
     }
 
