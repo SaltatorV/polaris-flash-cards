@@ -10,6 +10,7 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class FlashcardReview {
     private final FlashcardReviewId id;
@@ -29,6 +30,43 @@ public class FlashcardReview {
         this.currentFlashcardIndex = 0;
         this.startTime = 0;
         this.finishTime = 0;
+    }
+
+    private FlashcardReview(FlashcardReviewId flashcardReviewId, List<Flashcard> flashcards,
+                            long startDate, long finishDate) {
+
+        this.id = flashcardReviewId;
+        this.flashcards = flashcards;
+        this.startTime = startDate;
+        this.finishTime = finishDate;
+
+        this.currentFlashcardIndex = 0;
+
+        for (Flashcard flashcard : flashcards) {
+            if (!flashcard.isNotAnswered()) {
+                currentFlashcardIndex++;
+            }
+        }
+    }
+
+
+    public static FlashcardReview restore(FlashcardReviewSnapshot reviewSnapshot) {
+        List<FlashcardSnapshot> flashcardSnapshots = reviewSnapshot.getFlashcardSnapshots();
+
+        List<Flashcard> flashcards = flashcardSnapshots
+                .stream()
+                .map(Flashcard::restore)
+                .toList();
+
+        FlashcardReviewId reviewId = new FlashcardReviewId
+                (UUID.fromString(reviewSnapshot.getFlashcardReviewId()));
+
+        long startTime = reviewSnapshot.getStartDate().atZone(java.time.ZoneId.systemDefault()).toInstant().toEpochMilli();
+        long finishTime = reviewSnapshot.getFinishDate().atZone(java.time.ZoneId.systemDefault()).toInstant().toEpochMilli();
+
+        return new FlashcardReview(reviewId,
+                flashcards, startTime,
+                finishTime);
     }
 
     public FlashcardReviewSnapshot generateSnapshot() {

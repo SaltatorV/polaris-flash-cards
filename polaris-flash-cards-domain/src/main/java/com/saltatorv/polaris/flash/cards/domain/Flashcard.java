@@ -7,14 +7,25 @@ public class Flashcard {
     private Answer answer;
 
     Flashcard(String blueprintId, String question, String definition) {
+        this(blueprintId, question, definition, Answer.NOT_ANSWERED);
+    }
+
+    private Flashcard(String blueprintId, String question, String definition, Answer answer) {
         this.blueprintId = blueprintId;
         this.question = question;
         this.definition = definition;
-        this.answer = Answer.NOT_ANSWERED;
+        this.answer = answer;
+    }
+
+    public static Flashcard restore(FlashcardSnapshot snapshot) {
+        return new Flashcard(snapshot.getFlashcardBlueprintId(),
+                snapshot.getQuestion(),
+                snapshot.getDefinition(),
+                Answer.valueOf(snapshot.getAnswer()));
     }
 
     FlashcardSnapshot generateSnapshot() {
-        return new FlashcardSnapshot(blueprintId, answer);
+        return new FlashcardSnapshot(blueprintId, question, definition, answer);
     }
 
     void markAsSuccess() {
