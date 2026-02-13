@@ -1,12 +1,8 @@
 package com.saltatorv.polaris.flash.cards.application.command.review;
 
-import com.saltatorv.polaris.flash.cards.domain.FlashcardBlueprint;
-import com.saltatorv.polaris.flash.cards.domain.FlashcardMetadata;
-import com.saltatorv.polaris.flash.cards.domain.FlashcardReview;
-import com.saltatorv.polaris.flash.cards.domain.FlashcardReviewRepository;
+import com.saltatorv.polaris.flash.cards.domain.*;
 import com.saltatorv.polaris.flash.cards.domain.exception.FlashcardReviewAlreadyFinishedDomainException;
 import com.saltatorv.polaris.flash.cards.domain.exception.FlashcardReviewAlreadyStartedDomainException;
-import com.saltatorv.polaris.flash.cards.domain.shared.FlashcardReviewId;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -56,9 +52,6 @@ public class BeginReviewUseCaseTest {
 
         //when
         assertThrows(RuntimeException.class, this::beginReview);
-
-        //then
-
     }
 
     @Test
@@ -66,12 +59,10 @@ public class BeginReviewUseCaseTest {
         //given
         generateReviewForRepository();
         beginReview();
+        configureFindById();
 
         //when
         assertThrows(FlashcardReviewAlreadyStartedDomainException.class, this::beginReview);
-
-        //then
-
     }
 
     @Test
@@ -80,12 +71,10 @@ public class BeginReviewUseCaseTest {
         generateReviewForRepository();
         beginReview();
         finishReview();
+        configureFindById();
 
         //when
         assertThrows(FlashcardReviewAlreadyFinishedDomainException.class, this::beginReview);
-
-        //then
-
     }
 
     private void beginReview() {
@@ -99,8 +88,8 @@ public class BeginReviewUseCaseTest {
     private void generateReviewForRepository() {
         List<FlashcardBlueprint> blueprints = generateFlashcardBlueprints(10);
         review = new FlashcardReview(blueprints);
-        when(flashcardReviewRepository.findById(any(FlashcardReviewId.class)))
-                .thenReturn(java.util.Optional.of(review));
+        configureFindById();
+        configureSave();
     }
 
     private List<FlashcardBlueprint> generateFlashcardBlueprints(int size) {
@@ -115,6 +104,21 @@ public class BeginReviewUseCaseTest {
 
         return blueprints;
     }
+
+    private void configureFindById() {
+        when(flashcardReviewRepository.findById(review.getId()))
+                .thenReturn(java.util.Optional.of(review.generateSnapshot()));
+    }
+
+    private void configureSave() {
+        when(flashcardReviewRepository.save(any(FlashcardReviewSnapshot.class)))
+                .then(invocationOnMock -> {
+                    review = FlashcardReview.restore(invocationOnMock.getArgument(0));
+                    return invocationOnMock.getArgument(0);
+                });
+    }
+
+
 
     private void assertReviewIsStarted() {
         long startDate = convertDateToEpochMilli(review.getStartDate());

@@ -2,6 +2,7 @@ package com.saltatorv.polaris.flash.cards.application.command.review;
 
 import com.saltatorv.polaris.flash.cards.domain.FlashcardReview;
 import com.saltatorv.polaris.flash.cards.domain.FlashcardReviewRepository;
+import com.saltatorv.polaris.flash.cards.domain.FlashcardReviewSnapshot;
 import com.saltatorv.polaris.flash.cards.domain.shared.FlashcardReviewId;
 import org.springframework.stereotype.Service;
 
@@ -16,12 +17,16 @@ public class BeginReviewUseCase {
     }
 
     public void beginReview(FlashcardReviewId id) {
-        Optional<FlashcardReview> review = flashcardReviewRepository.findById(id);
-        if (review.isEmpty()) {
+        Optional<FlashcardReviewSnapshot> reviewSnapshot = flashcardReviewRepository.findById(id);
+
+        if (reviewSnapshot.isEmpty()) {
             throw new IllegalArgumentException("Review not found");
         }
 
-        review.get().begin();
-        flashcardReviewRepository.save(review.get());
+        FlashcardReview review = FlashcardReview.restore(reviewSnapshot.get());
+
+        review.begin();
+
+        flashcardReviewRepository.save(review.generateSnapshot());
     }
 }
