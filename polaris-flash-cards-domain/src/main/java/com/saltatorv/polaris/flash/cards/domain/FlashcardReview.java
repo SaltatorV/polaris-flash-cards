@@ -1,16 +1,12 @@
 package com.saltatorv.polaris.flash.cards.domain;
 
-import com.saltatorv.polaris.flash.cards.domain.exception.FlashcardReviewAlreadyFinishedDomainException;
-import com.saltatorv.polaris.flash.cards.domain.exception.FlashcardReviewAlreadyStartedDomainException;
-import com.saltatorv.polaris.flash.cards.domain.exception.FlashcardReviewNotStartedDomainException;
-import com.saltatorv.polaris.flash.cards.domain.exception.NoMoreQuestionsInFlashcardReviewDomainException;
+import com.saltatorv.polaris.flash.cards.domain.exception.*;
 import com.saltatorv.polaris.flash.cards.domain.shared.FlashcardReviewId;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 public class FlashcardReview {
     private final FlashcardReviewId id;
@@ -97,6 +93,7 @@ public class FlashcardReview {
         ensureReviewIsStarted();
         ensureReviewIsNotFinished();
         ensureThereAreFlashcardsLeft();
+        markPreviousFlashcardAsIncorrectIfNotAnswered();
 
         Flashcard question = flashcards
                 .get(currentFlashcardIndex);
@@ -106,11 +103,13 @@ public class FlashcardReview {
     }
 
     public void markFlashcardAsCorrect() {
-        flashcards.get(currentFlashcardIndex).markAsSuccess();
+        ensureAtLeastOneFlashcardWasReceived();
+        flashcards.get(currentFlashcardIndex-1).markAsSuccess();
     }
 
     public void markFlashcardAsIncorrect() {
-        flashcards.get(currentFlashcardIndex).markAsFailure();
+        ensureAtLeastOneFlashcardWasReceived();
+        flashcards.get(currentFlashcardIndex-1).markAsFailure();
     }
 
     public int getCorrectAnswers() {
@@ -178,6 +177,21 @@ public class FlashcardReview {
     private void ensureThereAreFlashcardsLeft() {
         if (currentFlashcardIndex >= flashcardCount()) {
             throw new NoMoreQuestionsInFlashcardReviewDomainException();
+        }
+    }
+
+    private void ensureAtLeastOneFlashcardWasReceived() {
+        if(currentFlashcardIndex == 0) {
+            throw new NoFlashcardReceivedFromReviewDomainException();
+        }
+    }
+
+    private void markPreviousFlashcardAsIncorrectIfNotAnswered() {
+        if (currentFlashcardIndex > 0) {
+            Flashcard previousFlashcard = flashcards.get(currentFlashcardIndex - 1);
+            if (previousFlashcard.isNotAnswered()) {
+                previousFlashcard.markAsFailure();
+            }
         }
     }
 }

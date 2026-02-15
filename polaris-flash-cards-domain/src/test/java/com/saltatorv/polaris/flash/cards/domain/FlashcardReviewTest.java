@@ -1,9 +1,6 @@
 package com.saltatorv.polaris.flash.cards.domain;
 
-import com.saltatorv.polaris.flash.cards.domain.exception.FlashcardReviewAlreadyFinishedDomainException;
-import com.saltatorv.polaris.flash.cards.domain.exception.FlashcardReviewAlreadyStartedDomainException;
-import com.saltatorv.polaris.flash.cards.domain.exception.FlashcardReviewNotStartedDomainException;
-import com.saltatorv.polaris.flash.cards.domain.exception.NoMoreQuestionsInFlashcardReviewDomainException;
+import com.saltatorv.polaris.flash.cards.domain.exception.*;
 import org.junit.jupiter.api.Test;
 
 import java.time.Instant;
@@ -150,6 +147,21 @@ class FlashcardReviewTest {
     }
 
     @Test
+    public void testShouldMarkPreviousFlashcardAsIncorrectIfNextWithoutAnswer() {
+        //given
+        FlashcardReview review = prepareAndBeginReview();
+
+        //when
+        review.next();
+        review.next();
+        review.markFlashcardAsCorrect();
+        review.next();
+
+        //then
+        assertEquals(1, review.getIncorrectAnswers());
+    }
+
+    @Test
     public void testShouldNotPassNextQuestionWhenReviewNotStarted() {
         //given
         FlashcardReview review = buildFlashcardReview()
@@ -171,9 +183,10 @@ class FlashcardReviewTest {
         //when
         review.next();
         review.next();
-        assertThrows(NoMoreQuestionsInFlashcardReviewDomainException.class, review::next);
+        review.next();
 
         //then
+        assertThrows(NoMoreQuestionsInFlashcardReviewDomainException.class, review::next);
     }
 
     @Test
@@ -204,32 +217,6 @@ class FlashcardReviewTest {
     }
 
     @Test
-    public void testShouldNotMarkFlashcardAsAnsweredIfReviewNotProceedNextQuestion() {
-        //given
-        FlashcardReview review = prepareAndBeginReview();
-        review.next();
-
-        //when
-        review.markFlashcardAsCorrect();
-
-        //then
-        assertEquals(0, review.getCorrectAnswers());
-    }
-
-    @Test
-    public void testShouldNotMarkFlashcardAsAnsweredIfReviewNotProceedNextQuestion2() {
-        //given
-        FlashcardReview review = prepareAndBeginReview();
-        review.next();
-
-        //when
-        review.markFlashcardAsIncorrect();
-
-        //then
-        assertEquals(0, review.getIncorrectAnswers());
-    }
-
-    @Test
     public void testShouldMarkFlashcardAsFailure() {
         //given
         FlashcardReview review = prepareAndBeginReview();
@@ -257,6 +244,7 @@ class FlashcardReviewTest {
                 .create();
 
         review.begin();
+        review.next();
 
         //when
         incorrectAnswer(review);
@@ -281,16 +269,35 @@ class FlashcardReviewTest {
                 .addFlashcard("Question-3", "Answer-3")
                 .create();
         review.begin();
+        review.next();
         correctAnswer(review);
         incorrectAnswer(review);
         waitSomeTime();
         review.finish();
-        //when
 
+        //when
         FlashcardReviewSnapshot snapshot = review.generateSnapshot();
 
         //then
         assertGeneratedSnapshotIsValid(snapshot, review, List.of(CORRECT, INCORRECT, NOT_ANSWERED));
+    }
+
+    @Test
+    public void testShouldThrowExceptionWhenTryMarkFlashcardAsIncorrectWhenDontReceiveAnyFlashcards() {
+        //given
+        FlashcardReview review = prepareAndBeginReview();
+
+        //when & then
+        assertThrows(NoFlashcardReceivedFromReviewDomainException.class, () -> incorrectAnswer(review));
+    }
+
+    @Test
+    public void testShouldThrowExceptionWhenTryMarkFlashcardAsCorrectWhenDontReceiveAnyFlashcards() {
+        //given
+        FlashcardReview review = prepareAndBeginReview();
+
+        //when & then
+        assertThrows(NoFlashcardReceivedFromReviewDomainException.class, () -> correctAnswer(review));
     }
 
     private LocalDateTime getCurrentDate() {
@@ -307,6 +314,7 @@ class FlashcardReviewTest {
         FlashcardReview review = buildFlashcardReview()
                 .addFlashcard("Question-1", "Answer-1")
                 .addFlashcard("Question-2", "Answer-2")
+                .addFlashcard("Question-3", "Answer-3")
                 .create();
         review.begin();
         return review;
