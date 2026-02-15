@@ -44,8 +44,8 @@ public class Flashcard {
         return definition;
     }
 
-    public boolean isSuccessfulAnswer() {
-        return this.answer.isSuccessfulAnswer();
+    public boolean isCorrectAnswer() {
+        return this.answer.isCorrect();
     }
 
     public boolean isIncorrectAnswer() {

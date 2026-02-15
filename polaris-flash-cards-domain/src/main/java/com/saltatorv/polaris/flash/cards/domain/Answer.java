@@ -3,13 +3,13 @@ package com.saltatorv.polaris.flash.cards.domain;
 enum Answer {
     CORRECT(true), INCORRECT(false), NOT_ANSWERED(false);
 
-    private final boolean isSuccessfulAnswer;
+    private final boolean isCorrect;
 
-    Answer(boolean isSuccessfulAnswer) {
-        this.isSuccessfulAnswer = isSuccessfulAnswer;
+    Answer(boolean isCorrect) {
+        this.isCorrect = isCorrect;
     }
 
-    boolean isSuccessfulAnswer() {
-        return isSuccessfulAnswer;
+    boolean isCorrect() {
+        return isCorrect;
     }
 }
