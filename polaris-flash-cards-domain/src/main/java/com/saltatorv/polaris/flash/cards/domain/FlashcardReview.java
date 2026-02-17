@@ -115,7 +115,7 @@ public class FlashcardReview {
     public int getCorrectAnswers() {
         int correctAnswers = 0;
         for (int i = 0; i < currentFlashcardIndex; i++) {
-            if (flashcards.get(i).isSuccessfulAnswer()) {
+            if (flashcards.get(i).isCorrectAnswer()) {
                 correctAnswers++;
             }
         }
