@@ -120,16 +120,42 @@ class FlashcardReviewTest {
     }
 
     @Test
+    public void testShouldMarkAllFlashcardOtherThanCorrectToIncorrectAfterFinish() {
+        //given
+        FlashcardReview review = buildFlashcardReview()
+                .addFlashcard("Question-1", "Answer-1")
+                .addFlashcard("Question-2", "Answer-2")
+                .addFlashcard("Question-3", "Answer-3")
+                .create();
+
+        //when
+        review.begin();
+        review.next();
+        review.markFlashcardAsCorrect();
+        review.next();
+        review.next();
+
+        //when
+        review.finish();
+
+        //then
+        assertEquals(1, review.getCorrectAnswers());
+        assertEquals(2, review.getIncorrectAnswers());
+    }
+
+
+    @Test
     public void testShouldGetFirstQuestion() {
         //given
         FlashcardReview review = prepareAndBeginReview();
 
         //when
-        Flashcard question = review.next();
+        Flashcard flashcard = review.next();
 
         //then
-        assertEquals("Question-1", question.getQuestion());
-        assertEquals("Answer-1", question.getDefinition());
+        assertEquals("Question-1", flashcard.getQuestion());
+        assertEquals("Answer-1", flashcard.getDefinition());
+        assertEquals(REVIEWED.name(), flashcard.generateSnapshot().getAnswer());
     }
 
     @Test
@@ -138,12 +164,15 @@ class FlashcardReviewTest {
         FlashcardReview review = prepareAndBeginReview();
 
         //when
-        review.next();
-        Flashcard question = review.next();
+        Flashcard first = review.next();
+        Flashcard second = review.next();
 
         //then
-        assertEquals("Question-2", question.getQuestion());
-        assertEquals("Answer-2", question.getDefinition());
+        assertTrue(first.isIncorrectAnswer());
+
+        assertEquals("Question-2", second.getQuestion());
+        assertEquals("Answer-2", second.getDefinition());
+        assertEquals(REVIEWED.name(), second.generateSnapshot().getAnswer());
     }
 
     @Test
@@ -279,7 +308,7 @@ class FlashcardReviewTest {
         FlashcardReviewSnapshot snapshot = review.generateSnapshot();
 
         //then
-        assertGeneratedSnapshotIsValid(snapshot, review, List.of(CORRECT, INCORRECT, NOT_ANSWERED));
+        assertGeneratedSnapshotIsValid(snapshot, review, List.of(CORRECT, INCORRECT, INCORRECT));
     }
 
     @Test
