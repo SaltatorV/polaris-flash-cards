@@ -3,6 +3,7 @@ package com.saltatorv.polaris.flash.cards.application.command.blueprint;
 import com.saltatorv.polaris.flash.cards.application.command.blueprint.dto.FlashcardBlueprintDataDto;
 import com.saltatorv.polaris.flash.cards.domain.FlashcardBlueprint;
 import com.saltatorv.polaris.flash.cards.domain.FlashcardBlueprintRepository;
+import com.saltatorv.polaris.flash.cards.domain.FlashcardBlueprintSnapshot;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -60,7 +61,7 @@ public class AddFlashcardBlueprintUseCaseTest {
                     "PL"));
         }
 
-        when(repository.save(any(FlashcardBlueprint.class))).then(invocation -> {
+        when(repository.save(any(FlashcardBlueprintSnapshot.class))).then(invocation -> {
             blueprints.add(invocation.getArgument(0));
             return invocation.getArgument(0);
         });
