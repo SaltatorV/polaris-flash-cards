@@ -5,7 +5,6 @@ import com.saltatorv.polaris.flash.cards.domain.*;
 import com.saltatorv.polaris.flash.cards.domain.exception.FlashcardReviewAlreadyFinishedDomainException;
 import com.saltatorv.polaris.flash.cards.domain.exception.FlashcardReviewNotStartedDomainException;
 import com.saltatorv.polaris.flash.cards.domain.exception.NoMoreQuestionsInFlashcardReviewDomainException;
-import com.saltatorv.polaris.flash.cards.domain.shared.FlashcardReviewId;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -18,7 +17,6 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -58,18 +56,27 @@ public class NextFlashcardFromReviewUseCaseTest {
         //given
         generateReviewForRepository();
         beginReview();
+        configureFindById();
+
+        //when
+        next();
+
+        //then
+        assertFlashcardDtoIsEqualToFlashcard(0);
+    }
+
+    @Test
+    public void testShouldPassFewNextQuestions() {
+        //given
+        generateReviewForRepository();
+        beginReview();
 
         //when & then
         for (int i = 0; i < FLASHCARDS_BLUEPRINTS_SIZE; i++) {
+            configureFindById();
             next();
             assertFlashcardDtoIsEqualToFlashcard(i);
         }
-    }
-
-    private void assertFlashcardDtoIsEqualToFlashcard(int index) {
-        Flashcard flashcard = blueprints.get(index).createFlashcard();
-        assertEquals(flashcard.getQuestion(), flashcardDto.getQuestion());
-        assertEquals(flashcard.getDefinition(), flashcardDto.getDefinition());
     }
 
 
@@ -77,23 +84,10 @@ public class NextFlashcardFromReviewUseCaseTest {
     public void testShouldThrowExceptionWhenReviewNotStarted() {
         //given
         generateReviewForRepository();
+        configureFindById();
 
         //when
         assertThrows(FlashcardReviewNotStartedDomainException.class, this::next);
-    }
-
-    @Test
-    public void testShouldThrowExceptionWhenReviewFinished() {
-        //given
-        generateReviewForRepository();
-        beginReview();
-
-        //when
-        for (int i = 0; i < FLASHCARDS_BLUEPRINTS_SIZE; i++) {
-            next();
-        }
-
-        assertThrows(NoMoreQuestionsInFlashcardReviewDomainException.class, this::next);
     }
 
     @Test
@@ -101,14 +95,31 @@ public class NextFlashcardFromReviewUseCaseTest {
         //given
         generateReviewForRepository();
         beginReview();
+
+        //when & then
+        for (int i = 0; i < FLASHCARDS_BLUEPRINTS_SIZE; i++) {
+            configureFindById();
+            next();
+        }
+
+        assertThrows(NoMoreQuestionsInFlashcardReviewDomainException.class, this::next);
+    }
+
+    @Test
+    public void testShouldThrowExceptionWhenReviewFinished() {
+        //given
+        generateReviewForRepository();
+        beginReview();
         finishReview();
+        configureFindById();
 
         //when
         assertThrows(FlashcardReviewAlreadyFinishedDomainException.class, this::next);
     }
 
     private void next() {
-        flashcardDto = nextFlashcardFromReviewUseCase.nextFlashcardDto(review.getId());
+        flashcardDto = nextFlashcardFromReviewUseCase.nextFlashcard(review.getId());
+        review.next();
     }
 
     private void beginReview() {
@@ -122,8 +133,11 @@ public class NextFlashcardFromReviewUseCaseTest {
     private void generateReviewForRepository() {
         blueprints = generateFlashcardBlueprints(FLASHCARDS_BLUEPRINTS_SIZE);
         review = new FlashcardReview(blueprints);
-        when(flashcardReviewRepository.findById(any(FlashcardReviewId.class)))
-                .thenReturn(java.util.Optional.of(review));
+    }
+
+    private void configureFindById() {
+        when(flashcardReviewRepository.findById(review.getId()))
+                .thenReturn(java.util.Optional.of(review.generateSnapshot()));
     }
 
     private List<FlashcardBlueprint> generateFlashcardBlueprints(int size) {
@@ -137,5 +151,11 @@ public class NextFlashcardFromReviewUseCaseTest {
         }
 
         return blueprints;
+    }
+
+    private void assertFlashcardDtoIsEqualToFlashcard(int index) {
+        Flashcard flashcard = blueprints.get(index).createFlashcard();
+        assertEquals(flashcard.getQuestion(), flashcardDto.getQuestion());
+        assertEquals(flashcard.getDefinition(), flashcardDto.getDefinition());
     }
 }
