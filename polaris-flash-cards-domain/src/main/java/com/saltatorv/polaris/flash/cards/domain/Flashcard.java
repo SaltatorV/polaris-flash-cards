@@ -36,6 +36,10 @@ public class Flashcard {
         this.answer = Answer.INCORRECT;
     }
 
+    public void markAsReviewed() {
+        this.answer = Answer.REVIEWED;
+    }
+
     public String getQuestion() {
         return question;
     }
@@ -54,6 +58,10 @@ public class Flashcard {
 
     public boolean isNotAnswered() {
         return this.answer == Answer.NOT_ANSWERED;
+    }
+
+    public boolean isReviewed() {
+        return this.answer == Answer.REVIEWED;
     }
 
     public String getBlueprintId() {

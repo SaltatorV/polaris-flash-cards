@@ -86,6 +86,11 @@ public class FlashcardReview {
         ensureReviewIsStarted();
         ensureReviewIsNotFinished();
 
+        for (Flashcard flashcard : flashcards) {
+            if(!flashcard.isCorrectAnswer()) {
+                flashcard.markAsFailure();
+            }
+        }
         finishTime = System.currentTimeMillis();
     }
 
@@ -95,11 +100,13 @@ public class FlashcardReview {
         ensureThereAreFlashcardsLeft();
         markPreviousFlashcardAsIncorrectIfNotAnswered();
 
-        Flashcard question = flashcards
+        Flashcard flashcard = flashcards
                 .get(currentFlashcardIndex);
 
+        flashcard.markAsReviewed();
+
         currentFlashcardIndex++;
-        return question;
+        return flashcard;
     }
 
     public void markFlashcardAsCorrect() {
@@ -189,7 +196,7 @@ public class FlashcardReview {
     private void markPreviousFlashcardAsIncorrectIfNotAnswered() {
         if (currentFlashcardIndex > 0) {
             Flashcard previousFlashcard = flashcards.get(currentFlashcardIndex - 1);
-            if (previousFlashcard.isNotAnswered()) {
+            if (previousFlashcard.isReviewed()) {
                 previousFlashcard.markAsFailure();
             }
         }
