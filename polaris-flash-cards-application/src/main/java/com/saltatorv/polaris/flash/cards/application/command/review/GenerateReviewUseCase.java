@@ -1,10 +1,7 @@
 package com.saltatorv.polaris.flash.cards.application.command.review;
 
 import com.saltatorv.polaris.flash.cards.application.FlashcardBlueprintIdCache;
-import com.saltatorv.polaris.flash.cards.domain.FlashcardBlueprint;
-import com.saltatorv.polaris.flash.cards.domain.FlashcardBlueprintRepository;
-import com.saltatorv.polaris.flash.cards.domain.FlashcardReview;
-import com.saltatorv.polaris.flash.cards.domain.FlashcardReviewRepository;
+import com.saltatorv.polaris.flash.cards.domain.*;
 import com.saltatorv.polaris.flash.cards.domain.shared.FlashcardBlueprintId;
 import com.saltatorv.polaris.flash.cards.domain.shared.FlashcardReviewId;
 import org.springframework.stereotype.Service;
@@ -27,11 +24,21 @@ public class GenerateReviewUseCase {
     }
 
     public FlashcardReviewId generateReview(List<FlashcardBlueprintId> flashcardIds) {
-        List<FlashcardBlueprint> flashcardBlueprints = flashcardBlueprintRepository.findByIds(flashcardIds);
-        FlashcardReview toSave = new FlashcardReview(flashcardBlueprints);
-        FlashcardReview savedReview = flashcardReviewRepository.save(toSave);
 
-        return savedReview.getId();
+        if(flashcardIds.isEmpty()){
+            throw new IllegalArgumentException("The selected flashcard collection cannot be empty.");
+        }
+
+        List<FlashcardBlueprintSnapshot> flashcardBlueprintsSnapshots = flashcardBlueprintRepository.findByIds(flashcardIds);
+        List<FlashcardBlueprint> flashcardBlueprints = flashcardBlueprintsSnapshots
+                .stream()
+                .map(FlashcardBlueprint::restore)
+                .toList();
+
+        FlashcardReview toSave = new FlashcardReview(flashcardBlueprints);
+        FlashcardReviewSnapshot savedReview = flashcardReviewRepository.save(toSave.generateSnapshot());
+
+        return new FlashcardReviewId(savedReview.getFlashcardReviewId());
     }
 
     public FlashcardReviewId generateRandomReview(int reviewSize) {
@@ -58,9 +65,9 @@ public class GenerateReviewUseCase {
         return reservoir;
     }
 
-    private List<FlashcardBlueprintId> reservoirSampling(List<FlashcardBlueprintId> reservoir,
-                                                         List<FlashcardBlueprintId> cachedIds,
-                                                         int reviewSize) {
+    private void reservoirSampling(List<FlashcardBlueprintId> reservoir,
+                                   List<FlashcardBlueprintId> cachedIds,
+                                   int reviewSize) {
         Random random = new Random();
 
         for (int indexAfterNElements = reviewSize; indexAfterNElements < cachedIds.size(); indexAfterNElements++) {
@@ -70,6 +77,5 @@ public class GenerateReviewUseCase {
             }
         }
 
-        return reservoir;
     }
 }

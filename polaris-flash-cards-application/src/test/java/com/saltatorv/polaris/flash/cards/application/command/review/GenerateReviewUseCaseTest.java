@@ -15,8 +15,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
@@ -38,7 +37,7 @@ public class GenerateReviewUseCaseTest {
         generateFlashcardBlueprints(20);
         List<FlashcardBlueprintId> ids = getRandomBlueprintIds(10);
 
-        when(flashcardReviewRepository.save(any(FlashcardReview.class)))
+        when(flashcardReviewRepository.save(any(FlashcardReviewSnapshot.class)))
                 .thenAnswer(invocation -> invocation.getArgument(0));
 
         //when
@@ -50,10 +49,22 @@ public class GenerateReviewUseCaseTest {
     }
 
     @Test
+    public void testShouldThrowExceptionWhenGenerateReviewFromEmptyList() {
+        //given
+        List<FlashcardBlueprintId> ids = List.of();
+
+        //when & then
+        assertThrows(RuntimeException.class, () -> generateReviewUseCase.generateReview(ids));
+    }
+
+    @Test
     public void testShouldGenerateRandomReview() {
         //given
-        when(flashcardReviewRepository.save(any(FlashcardReview.class)))
+        when(flashcardReviewRepository.save(any(FlashcardReviewSnapshot.class)))
                 .thenAnswer(invocation -> invocation.getArgument(0));
+
+        when(flashcardBlueprintIdCache.getAll())
+                .thenReturn(generateFlashcardBlueprintIds(5));
 
         //when
         FlashcardReviewId reviewId = generateReviewUseCase.generateRandomReview(5);
@@ -62,6 +73,12 @@ public class GenerateReviewUseCaseTest {
         assertNotNull(reviewId);
         assertEquals(reviewId.getId(), getUUID(reviewId));
 
+    }
+
+    @Test
+    public void testShouldThrowExceptionWhenGenerateRandomReviewFromEmptyList() {
+        //when & then
+        assertThrows(RuntimeException.class, () -> generateReviewUseCase.generateRandomReview(0));
     }
 
     private String getUUID(FlashcardReviewId reviewId) {
@@ -73,9 +90,9 @@ public class GenerateReviewUseCaseTest {
         return blueprints.subList(0, size).stream().map(FlashcardBlueprint::getFlashcardBlueprintId).toList();
     }
 
-    private void generateFlashcardBlueprints(int size) {
+    private void generateFlashcardBlueprints(int count) {
         blueprints = new ArrayList<>();
-        for (int i = 0; i < size; i++) {
+        for (int i = 0; i < count; i++) {
             blueprints.add(new FlashcardBlueprint("Question-%s".formatted(i),
                     "Answer-%s".formatted(i),
                     new FlashcardMetadata("Source-%s".formatted(i),
@@ -84,4 +101,8 @@ public class GenerateReviewUseCaseTest {
         }
     }
 
+    private List<FlashcardBlueprintId> generateFlashcardBlueprintIds(int count) {
+        generateFlashcardBlueprints(count);
+        return blueprints.stream().map(FlashcardBlueprint::getFlashcardBlueprintId).toList();
+    }
 }
