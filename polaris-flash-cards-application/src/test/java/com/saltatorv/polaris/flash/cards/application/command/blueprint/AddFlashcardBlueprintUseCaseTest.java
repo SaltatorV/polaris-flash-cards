@@ -62,7 +62,7 @@ public class AddFlashcardBlueprintUseCaseTest {
         }
 
         when(repository.save(any(FlashcardBlueprintSnapshot.class))).then(invocation -> {
-            blueprints.add(invocation.getArgument(0));
+            blueprints.add(FlashcardBlueprint.restore(invocation.getArgument(0)));
             return invocation.getArgument(0);
         });
     }
