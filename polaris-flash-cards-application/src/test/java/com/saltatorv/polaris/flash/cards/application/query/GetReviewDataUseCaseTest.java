@@ -74,18 +74,18 @@ public class GetReviewDataUseCaseTest {
         waitSomeTime(examTimeInMiliseconds);
 
         for (int i = 0; i < correctAnswers; i++) {
-            review.markFlashcardAsCorrect();
             review.next();
+            review.markFlashcardAsCorrect();
         }
 
         for (int i = 0; i < incorrectAnswers; i++) {
-            review.markFlashcardAsIncorrect();
             review.next();
+            review.markFlashcardAsIncorrect();
         }
 
         review.finish();
         when(flashcardReviewRepository.findById(review.getId()))
-                .thenReturn(java.util.Optional.of(review));
+                .thenReturn(java.util.Optional.of(review.generateSnapshot()));
     }
 
     private List<FlashcardBlueprint> generateFlashcardBlueprints(int size) {

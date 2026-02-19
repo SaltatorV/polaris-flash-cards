@@ -3,6 +3,7 @@ package com.saltatorv.polaris.flash.cards.application.query;
 import com.saltatorv.polaris.flash.cards.application.query.dto.FlashcardReviewDataDto;
 import com.saltatorv.polaris.flash.cards.domain.FlashcardReview;
 import com.saltatorv.polaris.flash.cards.domain.FlashcardReviewRepository;
+import com.saltatorv.polaris.flash.cards.domain.FlashcardReviewSnapshot;
 import com.saltatorv.polaris.flash.cards.domain.shared.FlashcardReviewId;
 import org.springframework.stereotype.Service;
 
@@ -25,10 +26,10 @@ public class GetReviewDataUseCase {
 
 
     private FlashcardReview getReview(FlashcardReviewId id) {
-        Optional<FlashcardReview> review = flashcardReviewRepository.findById(id);
-        if (review.isEmpty()) {
+        Optional<FlashcardReviewSnapshot> reviewSnapshot = flashcardReviewRepository.findById(id);
+        if (reviewSnapshot.isEmpty()) {
             throw new IllegalArgumentException("Review not found");
         }
-        return review.get();
+        return FlashcardReview.restore(reviewSnapshot.get());
     }
 }
