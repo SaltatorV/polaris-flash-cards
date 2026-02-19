@@ -1,15 +1,13 @@
 package com.saltatorv.polaris.flash.cards.application.command.review;
 
+import com.saltatorv.polaris.flash.cards.application.shared.FlashcardReviewUseCaseBase;
 import com.saltatorv.polaris.flash.cards.domain.FlashcardReview;
 import com.saltatorv.polaris.flash.cards.domain.FlashcardReviewRepository;
-import com.saltatorv.polaris.flash.cards.domain.FlashcardReviewSnapshot;
 import com.saltatorv.polaris.flash.cards.domain.shared.FlashcardReviewId;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 @Service
-public class BeginReviewUseCase {
+public class BeginReviewUseCase extends FlashcardReviewUseCaseBase {
     private final FlashcardReviewRepository flashcardReviewRepository;
 
     BeginReviewUseCase(FlashcardReviewRepository flashcardReviewRepository) {
@@ -17,13 +15,7 @@ public class BeginReviewUseCase {
     }
 
     public void beginReview(FlashcardReviewId id) {
-        Optional<FlashcardReviewSnapshot> reviewSnapshot = flashcardReviewRepository.findById(id);
-
-        if (reviewSnapshot.isEmpty()) {
-            throw new IllegalArgumentException("Review not found");
-        }
-
-        FlashcardReview review = FlashcardReview.restore(reviewSnapshot.get());
+        FlashcardReview review = getReviewFromRepository(id, flashcardReviewRepository);
 
         review.begin();
 
