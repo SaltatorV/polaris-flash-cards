@@ -47,6 +47,7 @@
         <module>polaris-flash-cards-application</module>
         <module>polaris-flash-cards-data-access</module>
         <module>polaris-flash-cards-cli</module>
+        <module>polaris-flash-cards-container</module>
     </modules>
 
     <dependencies>
