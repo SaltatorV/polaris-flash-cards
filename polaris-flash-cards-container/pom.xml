@@ -28,6 +28,10 @@
             <groupId>com.saltatorv</groupId>
             <artifactId>polaris-flash-cards-cli</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-jpa</artifactId>
+        </dependency>
     </dependencies>
 
 </project>
