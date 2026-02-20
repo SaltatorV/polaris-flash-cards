@@ -23,6 +23,11 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+
+        <dependency>
+            <groupId>com.saltatorv</groupId>
+            <artifactId>polaris-flash-cards-cli</artifactId>
+        </dependency>
     </dependencies>
 
 </project>
