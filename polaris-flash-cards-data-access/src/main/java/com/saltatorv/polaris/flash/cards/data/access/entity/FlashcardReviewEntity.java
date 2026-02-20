@@ -14,7 +14,7 @@ public class FlashcardReviewEntity {
     private String id;
     private LocalDateTime startDate;
     private LocalDateTime finishDate;
-    @OneToMany(mappedBy = "flashcardReviewId", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "flashcardReview", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<FlashcardRevisionEntity> flashcardRevisions;
 
     public FlashcardReviewEntity() {

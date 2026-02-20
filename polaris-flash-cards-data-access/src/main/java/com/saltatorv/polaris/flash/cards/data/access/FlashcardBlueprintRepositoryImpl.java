@@ -66,7 +66,7 @@ class FlashcardBlueprintRepositoryImpl implements FlashcardBlueprintRepository {
     @Override
     public List<FlashcardBlueprintSnapshot> findByIds(List<FlashcardBlueprintId> ids) {
         Iterable<FlashcardBlueprintEntity> entities =
-                sqlFlashcardBlueprintRepository.findByIds(
+                sqlFlashcardBlueprintRepository.findByIdIn(
                         ids.stream()
                                 .map(id -> id.getId()).toList());
 

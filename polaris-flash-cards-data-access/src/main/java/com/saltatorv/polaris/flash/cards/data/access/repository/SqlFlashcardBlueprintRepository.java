@@ -3,6 +3,7 @@ package com.saltatorv.polaris.flash.cards.data.access.repository;
 import com.saltatorv.polaris.flash.cards.data.access.entity.FlashcardBlueprintEntity;
 import org.springframework.data.repository.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface SqlFlashcardBlueprintRepository extends Repository<FlashcardBlueprintEntity, String> {
@@ -14,5 +15,5 @@ public interface SqlFlashcardBlueprintRepository extends Repository<FlashcardBlu
 
     Iterable<FlashcardBlueprintEntity> findAll();
 
-    Iterable<FlashcardBlueprintEntity> findByIds(Iterable<String> ids);
+    Iterable<FlashcardBlueprintEntity> findByIdIn(List<String> ids);
 }
