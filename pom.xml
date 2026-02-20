@@ -30,7 +30,8 @@
         <polaris.flash.cards.domain.version>0.0.1-SNAPSHOT</polaris.flash.cards.domain.version>
         <polaris.flash.cards.application.version>0.0.1-SNAPSHOT</polaris.flash.cards.application.version>
         <polaris.flash.cards.data-access.version>0.0.1-SNAPSHOT</polaris.flash.cards.data-access.version>
-        <polaris.flash.cards.dli.version>0.0.1-SNAPSHOT</polaris.flash.cards.dli.version>
+        <polaris.flash.cards.cli.version>0.0.1-SNAPSHOT</polaris.flash.cards.cli.version>
+        <polaris.flash.cards.web.version>0.0.1-SNAPSHOT</polaris.flash.cards.web.version>
 
         <!-- SPRING -->
         <spring.boot.version>3.2.2</spring.boot.version>
@@ -48,6 +49,7 @@
         <module>polaris-flash-cards-data-access</module>
         <module>polaris-flash-cards-cli</module>
         <module>polaris-flash-cards-container</module>
+        <module>polaris-flash-cards-web</module>
     </modules>
 
     <dependencies>
@@ -80,6 +82,11 @@
                 <groupId>com.saltatorv</groupId>
                 <artifactId>polaris-flash-cards-cli</artifactId>
                 <version>${polaris.flash.cards.cli.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.saltatorv</groupId>
+                <artifactId>polaris-flash-cards-web</artifactId>
+                <version>${polaris.flash.cards.web.version}</version>
             </dependency>
 
             <!-- SPRING -->
