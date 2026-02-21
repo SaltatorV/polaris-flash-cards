@@ -12,4 +12,6 @@ public interface FlashcardBlueprintRepository {
     FlashcardBlueprintSnapshot save(FlashcardBlueprintSnapshot flashcardBlueprint);
 
     List<FlashcardBlueprintSnapshot> findByIds(List<FlashcardBlueprintId> ids);
+
+    List<FlashcardBlueprintSnapshot> findAll();
 }

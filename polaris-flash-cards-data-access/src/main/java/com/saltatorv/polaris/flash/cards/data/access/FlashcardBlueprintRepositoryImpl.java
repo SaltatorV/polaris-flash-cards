@@ -84,4 +84,23 @@ class FlashcardBlueprintRepositoryImpl implements FlashcardBlueprintRepository {
 
         return snapshots;
     }
+
+    @Override
+    public List<FlashcardBlueprintSnapshot> findAll() {
+        Iterable<FlashcardBlueprintEntity> entities = sqlFlashcardBlueprintRepository.findAll();
+
+        List<FlashcardBlueprintSnapshot> snapshots = new ArrayList<>();
+
+        for (FlashcardBlueprintEntity entity : entities) {
+            snapshots.add(new FlashcardBlueprintSnapshot(
+                    entity.getId(),
+                    entity.getQuestion(),
+                    entity.getDefinition(),
+                    entity.getSource(),
+                    List.of(entity.getTags().split(";")),
+                    entity.getLanguage()));
+        }
+
+        return snapshots;
+    }
 }
