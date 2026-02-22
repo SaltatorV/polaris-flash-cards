@@ -18,10 +18,6 @@
             <artifactId>spring-boot-starter</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.springframework.data</groupId>
-            <artifactId>spring-data-jpa</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
@@ -34,10 +30,6 @@
         <dependency>
             <groupId>com.saltatorv</groupId>
             <artifactId>polaris-flash-cards-data-access</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.saltatorv</groupId>
-            <artifactId>polaris-flash-cards-cli</artifactId>
         </dependency>
         <dependency>
             <groupId>com.saltatorv</groupId>
