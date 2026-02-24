@@ -17,5 +17,9 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.saltatorv</groupId>
+            <artifactId>polaris-flash-cards-application</artifactId>
+        </dependency>
     </dependencies>
 </project>
