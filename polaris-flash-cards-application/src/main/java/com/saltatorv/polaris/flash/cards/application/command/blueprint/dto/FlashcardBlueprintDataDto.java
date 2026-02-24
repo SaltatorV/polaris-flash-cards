@@ -4,11 +4,11 @@ import java.util.List;
 import java.util.Locale;
 
 public class FlashcardBlueprintDataDto {
-    private final String question;
-    private final String definition;
-    private final String source;
-    private final List<String> tags;
-    private final Locale language;
+    private String question;
+    private String definition;
+    private String source;
+    private List<String> tags;
+    private String language;
 
     public FlashcardBlueprintDataDto(String question,
                                      String definition, String source,
@@ -17,7 +17,10 @@ public class FlashcardBlueprintDataDto {
         this.definition = definition;
         this.source = source;
         this.tags = tags;
-        this.language = Locale.forLanguageTag(language);
+        this.language = language;
+    }
+
+    public FlashcardBlueprintDataDto() {
     }
 
     public String getQuestion() {
@@ -37,6 +40,6 @@ public class FlashcardBlueprintDataDto {
     }
 
     public Locale getLanguage() {
-        return language;
+        return Locale.forLanguageTag(language);
     }
 }
