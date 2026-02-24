@@ -33,7 +33,7 @@
         <polaris.flash.cards.web.version>0.0.1-SNAPSHOT</polaris.flash.cards.web.version>
 
         <!-- SPRING -->
-        <spring.boot.version>3.2.2</spring.boot.version>
+        <spring.boot.version>4.0.3</spring.boot.version>
 
         <!-- TESTING -->
         <jacoco.version>0.8.12</jacoco.version>
