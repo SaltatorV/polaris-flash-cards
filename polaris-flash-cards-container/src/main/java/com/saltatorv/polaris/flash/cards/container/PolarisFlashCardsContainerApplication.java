@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @EntityScan(basePackages = {"com.saltatorv.polaris.flash.cards"})
 @EnableJpaRepositories(basePackages = {"com.saltatorv.polaris.flash.cards"})
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = {"com.saltatorv.polaris.flash.cards"})
 public class PolarisFlashCardsContainerApplication {
 
     public static void main(String[] args) {
