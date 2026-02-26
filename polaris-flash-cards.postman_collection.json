@@ -1,0 +1,190 @@
+{
+  "info": {
+    "_postman_id": "09fc2df7-5a8a-4ea4-bb2f-d064f8c8e02a",
+    "name": "polaris-flash-cards",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "23354945"
+  },
+  "item": [
+    {
+      "name": "FlashcardBlueprint:ADD",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "[]",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "localhost:8080/api/v1/flashcard/blueprints",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "v1",
+            "flashcard",
+            "blueprints"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "FlashcardReview:GenerateRandom",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "20",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "localhost:8080/api/v1/flashcard/review/generate/random",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "v1",
+            "flashcard",
+            "review",
+            "generate",
+            "random"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "FlashcardReview:Begin",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "url": {
+          "raw": "localhost:8080/api/v1/flashcard/review/X/begin",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "v1",
+            "flashcard",
+            "review",
+            "X",
+            "begin"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "FlashcardReview:Finish",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "url": {
+          "raw": "localhost:8080/api/v1/flashcard/review/X/finish",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "v1",
+            "flashcard",
+            "review",
+            "X",
+            "finish"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "FlashcardReview:Next",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "url": {
+          "raw": "localhost:8080/api/v1/flashcard/review/X/flashcard/drawNext",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "v1",
+            "flashcard",
+            "review",
+            "X",
+            "flashcard",
+            "drawNext"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "FlashcardReview:MarkAsCorrect",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "url": {
+          "raw": "localhost:8080/api/v1/flashcard/review/X/flashcard/markAsCorrect",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "v1",
+            "flashcard",
+            "review",
+            "X",
+            "flashcard",
+            "markAsCorrect"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "FlashcardReview:MarkAsIncorrect",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "url": {
+          "raw": "localhost:8080/api/v1/flashcard/review/X/flashcard/markAsIncorrect",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "v1",
+            "flashcard",
+            "review",
+            "X",
+            "flashcard",
+            "markAsIncorrect"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
