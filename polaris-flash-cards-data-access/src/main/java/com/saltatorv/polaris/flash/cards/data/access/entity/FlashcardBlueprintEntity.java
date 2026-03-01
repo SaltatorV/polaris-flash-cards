@@ -1,5 +1,6 @@
 package com.saltatorv.polaris.flash.cards.data.access.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 
@@ -8,6 +9,7 @@ public class FlashcardBlueprintEntity {
     @Id
     private String id;
     private String question;
+    @Column(columnDefinition = "TEXT")
     private String definition;
     private String tags;
     private String language;
