@@ -3,26 +3,25 @@ package com.saltatorv.polaris.flash.cards.domain;
 import com.saltatorv.polaris.flash.cards.domain.shared.FlashcardBlueprintId;
 
 import java.util.Locale;
-import java.util.UUID;
 
 @Generated
 public class FlashcardBlueprint {
     private final FlashcardBlueprintId flashcardBlueprintId;
     private final String question;
-    private final String answer;
+    private final String definition;
     private final FlashcardMetadata metadata;
 
-    public FlashcardBlueprint(String question, String answer, FlashcardMetadata metadata) {
+    public FlashcardBlueprint(String question, String definition, FlashcardMetadata metadata) {
         this.flashcardBlueprintId = FlashcardBlueprintId.generate();
         this.question = question;
-        this.answer = answer;
+        this.definition = definition;
         this.metadata = metadata;
     }
 
-    private FlashcardBlueprint(FlashcardBlueprintId flashcardBlueprintId, String question, String answer, FlashcardMetadata metadata) {
+    private FlashcardBlueprint(FlashcardBlueprintId flashcardBlueprintId, String question, String definition, FlashcardMetadata metadata) {
         this.flashcardBlueprintId = flashcardBlueprintId;
         this.question = question;
-        this.answer = answer;
+        this.definition = definition;
         this.metadata = metadata;
     }
 
@@ -39,11 +38,11 @@ public class FlashcardBlueprint {
     }
 
     public FlashcardBlueprintSnapshot generateSnapshot() {
-        return new FlashcardBlueprintSnapshot(flashcardBlueprintId.getId(), question, answer, metadata.getSource(), metadata.getTags(), metadata.getLanguage());
+        return new FlashcardBlueprintSnapshot(flashcardBlueprintId.getId(), question, definition, metadata.getSource(), metadata.getTags(), metadata.getLanguage());
     }
 
     public Flashcard createFlashcard() {
-        return new Flashcard(flashcardBlueprintId.getId(), question, answer);
+        return new Flashcard(flashcardBlueprintId.getId(), question, definition);
     }
 
     public FlashcardMetadata getMetadata() {
