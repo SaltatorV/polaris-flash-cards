@@ -17,6 +17,10 @@
             <groupId>com.saltatorv</groupId>
             <artifactId>polaris-flash-cards-domain</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.saltatorv</groupId>
+            <artifactId>polaris-flash-cards-application</artifactId>
+        </dependency>
 
         <!-- SPRING -->
         <dependency>
@@ -24,14 +28,15 @@
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
 
+        <!-- DATABASE -->
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
             <scope>runtime</scope>
         </dependency>
         <dependency>
-            <groupId>com.saltatorv</groupId>
-            <artifactId>polaris-flash-cards-application</artifactId>
+            <groupId>org.liquibase</groupId>
+            <artifactId>liquibase-core</artifactId>
         </dependency>
     </dependencies>
 </project>
