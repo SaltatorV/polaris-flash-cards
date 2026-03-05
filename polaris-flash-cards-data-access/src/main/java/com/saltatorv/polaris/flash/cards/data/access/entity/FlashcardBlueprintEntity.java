@@ -8,12 +8,17 @@ import jakarta.persistence.Id;
 public class FlashcardBlueprintEntity {
     @Id
     private String id;
+    @Column(columnDefinition = "TEXT")
     private String question;
     @Column(columnDefinition = "TEXT")
     private String definition;
+    @Column(length = 40)
     private String tags;
+    @Column(length = 3)
     private String language;
+    @Column(length = 200)
     private String source;
+    @Column(length = 100)
     private String author;
 
     public FlashcardBlueprintEntity() {
