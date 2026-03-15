@@ -1,0 +1,41 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.6.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
+
+
+    <changeSet author="saltatorv" id="insert-flashcard-revision-table">
+        <createTable tableName="flashcard_revision_entity">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+
+            <column name="flashcard_blueprint_id" type="VARCHAR(36)" autoIncrement="false">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+
+            <column name="flashcard_review_id" type="VARCHAR(36)">
+                <constraints nullable="false"
+                             foreignKeyName="fk_review_revisions"
+                             references="flashcard_review_entity(id)"/>
+
+            </column>
+
+            <column name="question"
+                    type="text">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="definition"
+                    type="text" >
+                <constraints nullable="false" />
+            </column>
+
+            <column name="status"
+                    type="varchar(20)" >
+                <constraints nullable="false"
+                            checkConstraint="environment in ('CORRECT', 'INCORRECT', 'NOT_ANSWERED', 'REVIEWED')"/>
+            </column>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>
