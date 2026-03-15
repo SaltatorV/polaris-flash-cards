@@ -7,7 +7,7 @@ public class FlashcardRevisionEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "flashcard_review_id")
     private FlashcardReviewEntity flashcardReview;
@@ -28,7 +28,7 @@ public class FlashcardRevisionEntity {
         this.status = status;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
