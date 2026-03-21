@@ -11,20 +11,17 @@ public class FlashcardRevisionEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "flashcard_review_id")
     private FlashcardReviewEntity flashcardReview;
-    private String flashcardBlueprintId;
-    private String question;
-    private String definition;
+    @ManyToOne
+    @JoinColumn(name = "flashcard_blueprint_id")
+    private FlashcardBlueprintEntity flashcardBlueprint;
     private String status;
 
     public FlashcardRevisionEntity() {
     }
 
-    public FlashcardRevisionEntity(FlashcardReviewEntity flashcardReview, String flashcardBlueprintId,
-                                   String question, String definition, String status) {
+    public FlashcardRevisionEntity(FlashcardReviewEntity flashcardReview, FlashcardBlueprintEntity flashcardBlueprint, String status) {
         this.flashcardReview = flashcardReview;
-        this.flashcardBlueprintId = flashcardBlueprintId;
-        this.question = question;
-        this.definition = definition;
+        this.flashcardBlueprint = flashcardBlueprint;
         this.status = status;
     }
 
@@ -32,19 +29,13 @@ public class FlashcardRevisionEntity {
         return id;
     }
 
-    public String getFlashcardBlueprintId() {
-        return flashcardBlueprintId;
+    public FlashcardBlueprintEntity getFlashcardBlueprint() {
+        return flashcardBlueprint;
     }
 
     public String getStatus() {
         return status;
     }
 
-    public String getDefinition() {
-        return definition;
-    }
-
-    public String getQuestion() {
-        return question;
-    }
 }
+

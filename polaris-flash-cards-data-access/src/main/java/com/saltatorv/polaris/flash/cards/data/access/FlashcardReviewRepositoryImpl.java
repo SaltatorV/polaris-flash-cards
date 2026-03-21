@@ -1,7 +1,9 @@
 package com.saltatorv.polaris.flash.cards.data.access;
 
+import com.saltatorv.polaris.flash.cards.data.access.entity.FlashcardBlueprintEntity;
 import com.saltatorv.polaris.flash.cards.data.access.entity.FlashcardReviewEntity;
 import com.saltatorv.polaris.flash.cards.data.access.entity.FlashcardRevisionEntity;
+import com.saltatorv.polaris.flash.cards.data.access.repository.SqlFlashcardBlueprintRepository;
 import com.saltatorv.polaris.flash.cards.data.access.repository.SqlFlashcardReviewRepository;
 import com.saltatorv.polaris.flash.cards.domain.FlashcardReviewRepository;
 import com.saltatorv.polaris.flash.cards.domain.FlashcardReviewSnapshot;
@@ -18,27 +20,32 @@ import java.util.UUID;
 class FlashcardReviewRepositoryImpl implements FlashcardReviewRepository {
 
     private final SqlFlashcardReviewRepository sqlFlashcardReviewRepository;
+    private final SqlFlashcardBlueprintRepository flashcardBlueprintRepository;
 
-    FlashcardReviewRepositoryImpl(SqlFlashcardReviewRepository sqlFlashcardReviewRepository) {
+    FlashcardReviewRepositoryImpl(SqlFlashcardReviewRepository sqlFlashcardReviewRepository,
+                                  SqlFlashcardBlueprintRepository flashcardBlueprintRepository) {
         this.sqlFlashcardReviewRepository = sqlFlashcardReviewRepository;
+        this.flashcardBlueprintRepository = flashcardBlueprintRepository;
     }
 
     @Override
     public Optional<FlashcardReviewSnapshot> findById(FlashcardReviewId id) {
-        Optional<FlashcardReviewEntity> found =
+        Optional<FlashcardReviewEntity> foundReview =
                 sqlFlashcardReviewRepository.findById(id.getId());
 
-        if (found.isEmpty()) {
-            return Optional.empty();
+        if (foundReview.isEmpty()) {
+            throw new IllegalArgumentException("Review not found");
         }
 
-        FlashcardReviewEntity flashcardReviewEntity = found.get();
+        FlashcardReviewEntity flashcardReviewEntity = foundReview.get();
 
         List<FlashcardSnapshot> flashcardSnapshots = new ArrayList<>();
 
         for (FlashcardRevisionEntity revisionEntity : flashcardReviewEntity.getFlashcardRevisions()) {
-            flashcardSnapshots.add(new FlashcardSnapshot(revisionEntity.getFlashcardBlueprintId(),
-                    revisionEntity.getQuestion(), revisionEntity.getDefinition(),
+            FlashcardBlueprintEntity blueprint = revisionEntity.getFlashcardBlueprint();
+
+            flashcardSnapshots.add(new FlashcardSnapshot(blueprint.getId(),
+                    blueprint.getQuestion(), blueprint.getDefinition(),
                     revisionEntity.getStatus()));
         }
 
@@ -61,10 +68,16 @@ class FlashcardReviewRepositoryImpl implements FlashcardReviewRepository {
 
         List<FlashcardRevisionEntity> revisionEntities = new ArrayList<>();
         for (FlashcardSnapshot flashcardSnapshot : flashcardReview.getFlashcardSnapshots()) {
+
+            Optional<FlashcardBlueprintEntity> foundBlueprint = flashcardBlueprintRepository
+                    .findById(flashcardSnapshot.getFlashcardBlueprintId());
+
+            if (foundBlueprint.isEmpty()) {
+                throw new IllegalArgumentException("Flashcard blueprint not found");
+            }
+
             revisionEntities.add(new FlashcardRevisionEntity(flashcardReviewEntity,
-                    flashcardSnapshot.getFlashcardBlueprintId(),
-                    flashcardSnapshot.getQuestion(),
-                    flashcardSnapshot.getDefinition(),
+                    foundBlueprint.get(),
                     flashcardSnapshot.getAnswer()));
         }
 

@@ -20,6 +20,8 @@ class FlashcardBlueprintIdCacheImpl implements FlashcardBlueprintIdCache {
                 .stream()
                 .map(snapshot -> new FlashcardBlueprintId(snapshot.getFlashcardBlueprintId()))
                 .toList();
+
+        System.out.println("IDS: "+ids.toArray().length);
     }
 
     @Override
