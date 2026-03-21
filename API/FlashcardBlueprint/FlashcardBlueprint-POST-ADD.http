@@ -1,0 +1,12 @@
+POST {{baseUrl}}/api/v1/flashcard/blueprints
+Content-Type: application/json
+
+[
+  {
+    "source": "OCP Oracle Certified Professional Java SE 21 Developer",
+    "tags": ["Java"],
+    "language": "EN",
+    "question": "Which functional interface takes two parameters and has an accept() method?",
+    "definition": "BiConsumer"
+  }
+]

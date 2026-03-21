@@ -1,0 +1,4 @@
+POST {{baseUrl}}/api/v1/flashcard/review/generate/random
+Content-Type: application/json
+
+20
