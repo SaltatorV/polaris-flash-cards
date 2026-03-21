@@ -49,8 +49,8 @@ class FlashcardBlueprintRepositoryImpl implements FlashcardBlueprintRepository {
                 flashcardBlueprintSnapshot.getQuestion(),
                 flashcardBlueprintSnapshot.getDefinition(),
                 String.join(";", flashcardBlueprintSnapshot.getTags()),
-                flashcardBlueprintSnapshot.getSource(),
                 flashcardBlueprintSnapshot.getLanguage(),
+                flashcardBlueprintSnapshot.getSource(),
                 "Test"
         );
 
