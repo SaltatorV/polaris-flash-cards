@@ -15,6 +15,7 @@ public class FlashcardReview {
     private int currentFlashcardIndex;
     private long startTime;
     private long finishTime;
+    private FlashcardReviewLifecycle lifecycle;
 
     public FlashcardReview(List<FlashcardBlueprint> flashcardBlueprints) {
         this.id = FlashcardReviewId.generate();
@@ -26,6 +27,8 @@ public class FlashcardReview {
         this.currentFlashcardIndex = 0;
         this.startTime = 0;
         this.finishTime = 0;
+
+        this.lifecycle = FlashcardReviewLifecycle.CREATED;
     }
 
     private FlashcardReview(FlashcardReviewId flashcardReviewId, List<Flashcard> flashcards,
@@ -43,6 +46,14 @@ public class FlashcardReview {
                 currentFlashcardIndex++;
             }
         }
+
+        if (startDate != 0 && finishDate != 0) {
+            this.lifecycle = FlashcardReviewLifecycle.FINISHED;
+        } else if (startDate != 0) {
+            this.lifecycle = FlashcardReviewLifecycle.STARTED;
+        } else {
+            this.lifecycle = FlashcardReviewLifecycle.CREATED;
+        }
     }
 
 
@@ -59,6 +70,7 @@ public class FlashcardReview {
 
         long startTime = reviewSnapshot.getStartDate().atZone(java.time.ZoneId.systemDefault()).toInstant().toEpochMilli();
         long finishTime = reviewSnapshot.getFinishDate().atZone(java.time.ZoneId.systemDefault()).toInstant().toEpochMilli();
+
 
         return new FlashcardReview(reviewId,
                 flashcards, startTime,
@@ -80,6 +92,7 @@ public class FlashcardReview {
         ensureReviewIsNotAlreadyStarted();
 
         startTime = System.currentTimeMillis();
+        lifecycle = FlashcardReviewLifecycle.STARTED;
     }
 
     public void finish() {
@@ -87,11 +100,12 @@ public class FlashcardReview {
         ensureReviewIsNotFinished();
 
         for (Flashcard flashcard : flashcards) {
-            if(!flashcard.isCorrectAnswer()) {
+            if (!flashcard.isCorrectAnswer()) {
                 flashcard.markAsFailure();
             }
         }
         finishTime = System.currentTimeMillis();
+        lifecycle = FlashcardReviewLifecycle.FINISHED;
     }
 
     public Flashcard next() {
@@ -111,12 +125,12 @@ public class FlashcardReview {
 
     public void markFlashcardAsCorrect() {
         ensureAtLeastOneFlashcardWasReceived();
-        flashcards.get(currentFlashcardIndex-1).markAsSuccess();
+        flashcards.get(currentFlashcardIndex - 1).markAsSuccess();
     }
 
     public void markFlashcardAsIncorrect() {
         ensureAtLeastOneFlashcardWasReceived();
-        flashcards.get(currentFlashcardIndex-1).markAsFailure();
+        flashcards.get(currentFlashcardIndex - 1).markAsFailure();
     }
 
     public int getCorrectAnswers() {
@@ -164,19 +178,19 @@ public class FlashcardReview {
     }
 
     private void ensureReviewIsNotAlreadyStarted() {
-        if (startTime != 0) {
+        if (lifecycle == FlashcardReviewLifecycle.STARTED) {
             throw new FlashcardReviewAlreadyStartedDomainException();
         }
     }
 
     private void ensureReviewIsStarted() {
-        if (startTime == 0) {
+        if (lifecycle == FlashcardReviewLifecycle.CREATED) {
             throw new FlashcardReviewNotStartedDomainException();
         }
     }
 
     private void ensureReviewIsNotFinished() {
-        if (finishTime != 0) {
+        if (lifecycle == FlashcardReviewLifecycle.FINISHED) {
             throw new FlashcardReviewAlreadyFinishedDomainException();
         }
     }
@@ -188,7 +202,7 @@ public class FlashcardReview {
     }
 
     private void ensureAtLeastOneFlashcardWasReceived() {
-        if(currentFlashcardIndex == 0) {
+        if (currentFlashcardIndex == 0) {
             throw new NoFlashcardReceivedFromReviewDomainException();
         }
     }
