@@ -3,8 +3,6 @@ package com.saltatorv.polaris.flash.cards.domain;
 import com.saltatorv.polaris.flash.cards.domain.exception.*;
 import com.saltatorv.polaris.flash.cards.domain.shared.FlashcardReviewId;
 
-import java.time.Instant;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,8 +11,7 @@ public class FlashcardReview {
     private final List<Flashcard> flashcards;
 
     private int currentFlashcardIndex;
-    private long startTime;
-    private long finishTime;
+    private ActivityWindow activityWindow;
     private FlashcardReviewLifecycle lifecycle;
 
     public FlashcardReview(List<FlashcardBlueprint> flashcardBlueprints) {
@@ -25,8 +22,7 @@ public class FlashcardReview {
                 .map(FlashcardBlueprint::createFlashcard)
                 .toList();
         this.currentFlashcardIndex = 0;
-        this.startTime = 0;
-        this.finishTime = 0;
+        this.activityWindow = ActivityWindow.create();
 
         this.lifecycle = FlashcardReviewLifecycle.CREATED;
     }
@@ -36,8 +32,7 @@ public class FlashcardReview {
 
         this.id = flashcardReviewId;
         this.flashcards = flashcards;
-        this.startTime = startDate;
-        this.finishTime = finishDate;
+        this.activityWindow = ActivityWindow.restore(startDate, finishDate);
 
         this.currentFlashcardIndex = 0;
 
@@ -84,14 +79,14 @@ public class FlashcardReview {
             flashcardSnapshots.add(flashcard.generateSnapshot());
         }
 
-        return new FlashcardReviewSnapshot(id.getId(), getStartDate(), getFinishDate(), flashcardSnapshots);
+        return new FlashcardReviewSnapshot(id.getId(), activityWindow.getStartDate(), activityWindow.getFinishDate(), flashcardSnapshots);
     }
 
     public void begin() {
         ensureReviewIsNotFinished();
         ensureReviewIsNotAlreadyStarted();
 
-        startTime = System.currentTimeMillis();
+        activityWindow = activityWindow.begin();
         lifecycle = FlashcardReviewLifecycle.STARTED;
     }
 
@@ -104,7 +99,7 @@ public class FlashcardReview {
                 flashcard.markAsFailure();
             }
         }
-        finishTime = System.currentTimeMillis();
+        activityWindow = activityWindow.finish();
         lifecycle = FlashcardReviewLifecycle.FINISHED;
     }
 
@@ -155,26 +150,12 @@ public class FlashcardReview {
         return incorrectAnswers;
     }
 
-    public LocalDateTime getStartDate() {
-        return calculateDate(startTime);
-    }
-
-    public LocalDateTime getFinishDate() {
-        return calculateDate(finishTime);
-    }
-
     public int flashcardCount() {
         return flashcards.size();
     }
 
     public FlashcardReviewId getId() {
         return id;
-    }
-
-    private LocalDateTime calculateDate(Long timeInMilliseconds) {
-        return LocalDateTime.ofInstant(
-                Instant.ofEpochMilli(timeInMilliseconds),
-                java.time.ZoneId.systemDefault());
     }
 
     private void ensureReviewIsNotAlreadyStarted() {
