@@ -1,5 +1,8 @@
 package com.saltatorv.polaris.flash.cards.domain;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
+
 class ActivityWindow {
 
     private final long startTime;
@@ -14,7 +17,11 @@ class ActivityWindow {
         return new ActivityWindow(0, 0);
     }
 
-    ActivityWindow start() {
+    static ActivityWindow restore(long startTime, long finishTime) {
+        return new ActivityWindow(startTime, finishTime);
+    }
+
+    ActivityWindow begin() {
         return new ActivityWindow(System.currentTimeMillis(), 0);
     }
 
@@ -22,11 +29,17 @@ class ActivityWindow {
         return new ActivityWindow(this.startTime, System.currentTimeMillis());
     }
 
-    public long getStartTime() {
-        return startTime;
+    public LocalDateTime getStartDate() {
+        return calculateDate(startTime);
     }
 
-    public long getFinishTime() {
-        return finishTime;
+    public LocalDateTime getFinishDate() {
+        return calculateDate(finishTime);
+    }
+
+    private LocalDateTime calculateDate(Long timeInMilliseconds) {
+        return LocalDateTime.ofInstant(
+                Instant.ofEpochMilli(timeInMilliseconds),
+                java.time.ZoneId.systemDefault());
     }
 }
