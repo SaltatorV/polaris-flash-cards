@@ -12,7 +12,6 @@ public class FlashcardReview {
 
     private int currentFlashcardIndex;
     private ActivityWindow activityWindow;
-    private FlashcardReviewLifecycle lifecycle;
 
     public FlashcardReview(List<FlashcardBlueprint> flashcardBlueprints) {
         this.id = FlashcardReviewId.generate();
@@ -23,8 +22,6 @@ public class FlashcardReview {
                 .toList();
         this.currentFlashcardIndex = 0;
         this.activityWindow = ActivityWindow.create();
-
-        this.lifecycle = FlashcardReviewLifecycle.CREATED;
     }
 
     private FlashcardReview(FlashcardReviewId flashcardReviewId, List<Flashcard> flashcards,
@@ -40,14 +37,6 @@ public class FlashcardReview {
             if (!flashcard.isNotAnswered()) {
                 currentFlashcardIndex++;
             }
-        }
-
-        if (startDate != 0 && finishDate != 0) {
-            this.lifecycle = FlashcardReviewLifecycle.FINISHED;
-        } else if (startDate != 0) {
-            this.lifecycle = FlashcardReviewLifecycle.STARTED;
-        } else {
-            this.lifecycle = FlashcardReviewLifecycle.CREATED;
         }
     }
 
@@ -87,7 +76,6 @@ public class FlashcardReview {
         ensureReviewIsNotAlreadyStarted();
 
         activityWindow = activityWindow.begin();
-        lifecycle = FlashcardReviewLifecycle.STARTED;
     }
 
     public void finish() {
@@ -100,7 +88,6 @@ public class FlashcardReview {
             }
         }
         activityWindow = activityWindow.finish();
-        lifecycle = FlashcardReviewLifecycle.FINISHED;
     }
 
     public Flashcard next() {
@@ -159,19 +146,22 @@ public class FlashcardReview {
     }
 
     private void ensureReviewIsNotAlreadyStarted() {
-        if (lifecycle == FlashcardReviewLifecycle.STARTED) {
+        if (activityWindow.calculateLifecycleStatus()
+                == FlashcardReviewLifecycle.STARTED) {
             throw new FlashcardReviewAlreadyStartedDomainException();
         }
     }
 
     private void ensureReviewIsStarted() {
-        if (lifecycle == FlashcardReviewLifecycle.CREATED) {
+        if (activityWindow.calculateLifecycleStatus()
+                == FlashcardReviewLifecycle.CREATED) {
             throw new FlashcardReviewNotStartedDomainException();
         }
     }
 
     private void ensureReviewIsNotFinished() {
-        if (lifecycle == FlashcardReviewLifecycle.FINISHED) {
+        if (activityWindow.calculateLifecycleStatus()
+                == FlashcardReviewLifecycle.FINISHED) {
             throw new FlashcardReviewAlreadyFinishedDomainException();
         }
     }

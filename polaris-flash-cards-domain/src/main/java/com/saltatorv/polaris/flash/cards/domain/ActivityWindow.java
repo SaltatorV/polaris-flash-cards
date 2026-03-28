@@ -29,6 +29,16 @@ class ActivityWindow {
         return new ActivityWindow(this.startTime, System.currentTimeMillis());
     }
 
+    FlashcardReviewLifecycle calculateLifecycleStatus() {
+        if (startTime != 0 && finishTime != 0) {
+            return FlashcardReviewLifecycle.FINISHED;
+        } else if (startTime != 0) {
+            return FlashcardReviewLifecycle.STARTED;
+        } else {
+            return FlashcardReviewLifecycle.CREATED;
+        }
+    }
+
     public LocalDateTime getStartDate() {
         return calculateDate(startTime);
     }
