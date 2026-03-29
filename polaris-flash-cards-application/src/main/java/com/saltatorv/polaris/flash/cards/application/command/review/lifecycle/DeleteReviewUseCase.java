@@ -7,14 +7,14 @@ import com.saltatorv.polaris.flash.cards.domain.shared.FlashcardReviewId;
 import org.springframework.stereotype.Service;
 
 @Service
-public class DeleteReviewUseCase extends FlashcardReviewUseCaseBase {
+class DeleteReviewUseCase extends FlashcardReviewUseCaseBase {
     private final FlashcardReviewRepository flashcardReviewRepository;
 
-    public DeleteReviewUseCase(FlashcardReviewRepository flashcardReviewRepository) {
+    DeleteReviewUseCase(FlashcardReviewRepository flashcardReviewRepository) {
         this.flashcardReviewRepository = flashcardReviewRepository;
     }
 
-    public void deleteReview(FlashcardReviewId id) {
+    void deleteReview(FlashcardReviewId id) {
         FlashcardReview review = getReviewFromRepository(id, flashcardReviewRepository);
         flashcardReviewRepository.deleteById(review.getId());
     }

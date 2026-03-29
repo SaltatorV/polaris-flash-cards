@@ -11,19 +11,19 @@ import java.util.List;
 import java.util.Random;
 
 @Service
-public class GenerateReviewUseCase {
+class GenerateReviewUseCase {
 
     private final FlashcardReviewRepository flashcardReviewRepository;
     private final FlashcardBlueprintRepository flashcardBlueprintRepository;
     private final FlashcardBlueprintIdCache flashcardBlueprintIdCache;
 
-    public GenerateReviewUseCase(FlashcardReviewRepository flashcardReviewRepository, FlashcardBlueprintRepository flashcardBlueprintRepository, FlashcardBlueprintIdCache flashcardBlueprintIdCache) {
+    GenerateReviewUseCase(FlashcardReviewRepository flashcardReviewRepository, FlashcardBlueprintRepository flashcardBlueprintRepository, FlashcardBlueprintIdCache flashcardBlueprintIdCache) {
         this.flashcardReviewRepository = flashcardReviewRepository;
         this.flashcardBlueprintRepository = flashcardBlueprintRepository;
         this.flashcardBlueprintIdCache = flashcardBlueprintIdCache;
     }
 
-    public FlashcardReviewId generateReview(List<FlashcardBlueprintId> flashcardIds) {
+    FlashcardReviewId generateReview(List<FlashcardBlueprintId> flashcardIds) {
 
         if(flashcardIds.isEmpty()){
             throw new IllegalArgumentException("The selected flashcard collection cannot be empty.");
