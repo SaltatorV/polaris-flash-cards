@@ -1,7 +1,10 @@
 package com.saltatorv.polaris.flash.cards.web;
 
-import com.saltatorv.polaris.flash.cards.application.command.review.*;
 import com.saltatorv.polaris.flash.cards.application.command.review.dto.FlashcardDto;
+import com.saltatorv.polaris.flash.cards.application.command.review.operation.AnswerFlashcardUseCase;
+import com.saltatorv.polaris.flash.cards.application.command.review.operation.BeginReviewUseCase;
+import com.saltatorv.polaris.flash.cards.application.command.review.operation.FinishReviewUseCase;
+import com.saltatorv.polaris.flash.cards.application.command.review.operation.NextFlashcardFromReviewUseCase;
 import com.saltatorv.polaris.flash.cards.domain.shared.FlashcardReviewId;
 import org.springframework.web.bind.annotation.*;
 

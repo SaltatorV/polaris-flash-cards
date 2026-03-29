@@ -1,4 +1,4 @@
-package com.saltatorv.polaris.flash.cards.application.command.review;
+package com.saltatorv.polaris.flash.cards.application.command.review.operation;
 
 import com.saltatorv.polaris.flash.cards.application.shared.FlashcardReviewUseCaseBase;
 import com.saltatorv.polaris.flash.cards.domain.FlashcardReview;
@@ -7,17 +7,17 @@ import com.saltatorv.polaris.flash.cards.domain.shared.FlashcardReviewId;
 import org.springframework.stereotype.Service;
 
 @Service
-public class FinishReviewUseCase extends FlashcardReviewUseCaseBase {
+public class BeginReviewUseCase extends FlashcardReviewUseCaseBase {
     private final FlashcardReviewRepository flashcardReviewRepository;
 
-    public FinishReviewUseCase(FlashcardReviewRepository flashcardReviewRepository) {
+    BeginReviewUseCase(FlashcardReviewRepository flashcardReviewRepository) {
         this.flashcardReviewRepository = flashcardReviewRepository;
     }
 
-    public void finishReview(FlashcardReviewId id) {
+    public void beginReview(FlashcardReviewId id) {
         FlashcardReview review = getReviewFromRepository(id, flashcardReviewRepository);
 
-        review.finish();
+        review.begin();
 
         flashcardReviewRepository.save(review.generateSnapshot());
     }
