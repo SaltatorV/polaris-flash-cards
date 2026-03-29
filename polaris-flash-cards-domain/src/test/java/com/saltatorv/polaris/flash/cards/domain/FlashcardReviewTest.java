@@ -27,7 +27,7 @@ class FlashcardReviewTest {
 
         //then
         assertEquals(2, review.flashcardCount());
-        assertEquals(getNotConfiguredDate(), review.generateSnapshot().getStartDate());
+        assertEquals(getNotConfiguredDate(), review.getStartDate());
     }
 
     @Test
@@ -42,7 +42,7 @@ class FlashcardReviewTest {
         review.begin();
 
         //then
-        assertTrue(review.generateSnapshot().getStartDate()
+        assertTrue(review.getStartDate()
                 .isBefore(getCurrentDate()));
     }
 
@@ -89,10 +89,8 @@ class FlashcardReviewTest {
         review.finish();
 
         //then
-        System.out.println(review.generateSnapshot().getFinishDate());
-        System.out.println(review.generateSnapshot().getStartDate());
-        assertTrue(review.generateSnapshot().getStartDate()
-                .isBefore(review.generateSnapshot().getFinishDate()));
+        assertTrue(review.getStartDate()
+                .isBefore(review.getFinishDate()));
     }
 
     @Test
@@ -377,8 +375,8 @@ class FlashcardReviewTest {
 
     private void assertGeneratedSnapshotIsValid(FlashcardReviewSnapshot snapshot, FlashcardReview review, List<Answer> answers) {
         assertEquals(review.getId().getId(), snapshot.getFlashcardReviewId());
-        assertEquals(review.generateSnapshot().getStartDate(), snapshot.getStartDate());
-        assertEquals(review.generateSnapshot().getFinishDate(), snapshot.getFinishDate());
+        assertEquals(review.getStartDate(), snapshot.getStartDate());
+        assertEquals(review.getFinishDate(), snapshot.getFinishDate());
 
         List<FlashcardSnapshot> flashcardSnapshots = snapshot.getFlashcardSnapshots();
 

@@ -3,6 +3,7 @@ package com.saltatorv.polaris.flash.cards.domain;
 import com.saltatorv.polaris.flash.cards.domain.exception.*;
 import com.saltatorv.polaris.flash.cards.domain.shared.FlashcardReviewId;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -145,6 +146,13 @@ public class FlashcardReview {
         return id;
     }
 
+    public LocalDateTime getStartDate() {
+        return activityWindow.getStartDate();
+    }
+
+    public LocalDateTime getFinishDate() {
+        return activityWindow.getFinishDate();
+    }
     private void ensureReviewIsNotAlreadyStarted() {
         if (activityWindow.defineReviewStatus()
                 == FlashcardReviewLifecycle.STARTED) {
