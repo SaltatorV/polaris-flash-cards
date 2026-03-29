@@ -8,4 +8,6 @@ public interface FlashcardReviewRepository {
     Optional<FlashcardReviewSnapshot> findById(FlashcardReviewId id);
 
     FlashcardReviewSnapshot save(FlashcardReviewSnapshot flashcardReview);
+
+    void deleteById(FlashcardReviewId id);
 }

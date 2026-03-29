@@ -88,4 +88,16 @@ class FlashcardReviewRepositoryImpl implements FlashcardReviewRepository {
                         flashcardReview.getFlashcardReviewId())))
                 .get();
     }
+
+    @Override
+    public void deleteById(FlashcardReviewId id) {
+        Optional<FlashcardReviewEntity> foundReview =
+                sqlFlashcardReviewRepository.findById(id.getId());
+
+        if (foundReview.isEmpty()) {
+            throw new IllegalArgumentException("Review not found");
+        }
+
+        sqlFlashcardReviewRepository.deleteById(id.getId());
+    }
 }
