@@ -17,8 +17,13 @@ class ActivityWindow {
         return new ActivityWindow(0, 0);
     }
 
-    static ActivityWindow restore(long startTime, long finishTime) {
-        return new ActivityWindow(startTime, finishTime);
+    static ActivityWindow restore(LocalDateTime startTime, LocalDateTime finishTime) {
+        return new ActivityWindow(calculateTimeInMilliseconds(startTime),
+                calculateTimeInMilliseconds(finishTime));
+    }
+
+    private static Long calculateTimeInMilliseconds(LocalDateTime date) {
+        return date.atZone(java.time.ZoneId.systemDefault()).toInstant().toEpochMilli();
     }
 
     ActivityWindow begin() {

@@ -4,10 +4,13 @@ public class Flashcard {
     private final String blueprintId;
     private final String question;
     private final String definition;
+
     private Answer answer;
+    private ActivityWindow activityWindow;
 
     Flashcard(String blueprintId, String question, String definition) {
         this(blueprintId, question, definition, Answer.NOT_ANSWERED);
+        this.activityWindow = ActivityWindow.create();
     }
 
     private Flashcard(String blueprintId, String question, String definition, Answer answer) {
@@ -15,6 +18,7 @@ public class Flashcard {
         this.question = question;
         this.definition = definition;
         this.answer = answer;
+        this.activityWindow = ActivityWindow.create();
     }
 
     public static Flashcard restore(FlashcardSnapshot snapshot) {
@@ -25,19 +29,23 @@ public class Flashcard {
     }
 
     FlashcardSnapshot generateSnapshot() {
-        return new FlashcardSnapshot(blueprintId, question, definition, answer);
+        return new FlashcardSnapshot(blueprintId, question, definition, answer,
+                activityWindow.getStartDate(), activityWindow.getFinishDate());
     }
 
     void markAsSuccess() {
         this.answer = Answer.CORRECT;
+        this.activityWindow = activityWindow.finish();
     }
 
     void markAsFailure() {
         this.answer = Answer.INCORRECT;
+        this.activityWindow = activityWindow.finish();
     }
 
     public void markAsReviewed() {
         this.answer = Answer.REVIEWED;
+        this.activityWindow = activityWindow.begin();
     }
 
     public String getQuestion() {

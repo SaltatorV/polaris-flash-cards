@@ -26,7 +26,7 @@ public class FlashcardReview {
     }
 
     private FlashcardReview(FlashcardReviewId flashcardReviewId, List<Flashcard> flashcards,
-                            long startDate, long finishDate) {
+                            LocalDateTime startDate, LocalDateTime finishDate) {
 
         this.id = flashcardReviewId;
         this.flashcards = flashcards;
@@ -53,13 +53,10 @@ public class FlashcardReview {
         FlashcardReviewId reviewId = new FlashcardReviewId
                 (reviewSnapshot.getFlashcardReviewId());
 
-        long startTime = reviewSnapshot.getStartDate().atZone(java.time.ZoneId.systemDefault()).toInstant().toEpochMilli();
-        long finishTime = reviewSnapshot.getFinishDate().atZone(java.time.ZoneId.systemDefault()).toInstant().toEpochMilli();
-
 
         return new FlashcardReview(reviewId,
-                flashcards, startTime,
-                finishTime);
+                flashcards, reviewSnapshot.getStartDate(),
+                reviewSnapshot.getFinishDate());
     }
 
     public FlashcardReviewSnapshot generateSnapshot() {
@@ -153,6 +150,7 @@ public class FlashcardReview {
     public LocalDateTime getFinishDate() {
         return activityWindow.getFinishDate();
     }
+
     private void ensureReviewIsNotAlreadyStarted() {
         if (activityWindow.defineReviewStatus()
                 == FlashcardReviewLifecycle.STARTED) {
