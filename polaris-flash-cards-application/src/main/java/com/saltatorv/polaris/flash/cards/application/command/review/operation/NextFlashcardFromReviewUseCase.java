@@ -9,15 +9,15 @@ import com.saltatorv.polaris.flash.cards.domain.shared.FlashcardReviewId;
 import org.springframework.stereotype.Service;
 
 @Service
-public class NextFlashcardFromReviewUseCase extends FlashcardReviewUseCaseBase {
+class NextFlashcardFromReviewUseCase extends FlashcardReviewUseCaseBase {
 
     private final FlashcardReviewRepository flashcardReviewRepository;
 
-    public NextFlashcardFromReviewUseCase(FlashcardReviewRepository flashcardReviewRepository) {
+    NextFlashcardFromReviewUseCase(FlashcardReviewRepository flashcardReviewRepository) {
         this.flashcardReviewRepository = flashcardReviewRepository;
     }
 
-    public FlashcardDto nextFlashcard(FlashcardReviewId id) {
+    FlashcardDto nextFlashcard(FlashcardReviewId id) {
         FlashcardReview review = getReviewFromRepository(id, flashcardReviewRepository);
 
         Flashcard nextFlashcard = review.next();
