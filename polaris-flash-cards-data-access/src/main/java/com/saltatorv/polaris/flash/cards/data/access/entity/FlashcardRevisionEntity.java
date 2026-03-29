@@ -2,6 +2,8 @@ package com.saltatorv.polaris.flash.cards.data.access.entity;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
+
 @Entity
 public class FlashcardRevisionEntity {
 
@@ -15,14 +17,19 @@ public class FlashcardRevisionEntity {
     @JoinColumn(name = "flashcard_blueprint_id")
     private FlashcardBlueprintEntity flashcardBlueprint;
     private String status;
+    private LocalDateTime startDate;
+    private LocalDateTime finishDate;
 
     public FlashcardRevisionEntity() {
     }
 
-    public FlashcardRevisionEntity(FlashcardReviewEntity flashcardReview, FlashcardBlueprintEntity flashcardBlueprint, String status) {
+    public FlashcardRevisionEntity(FlashcardReviewEntity flashcardReview, FlashcardBlueprintEntity flashcardBlueprint,
+                                   String status, LocalDateTime startDate, LocalDateTime finishDate) {
         this.flashcardReview = flashcardReview;
         this.flashcardBlueprint = flashcardBlueprint;
         this.status = status;
+        this.startDate = startDate;
+        this.finishDate = finishDate;
     }
 
     public Long getId() {
@@ -37,5 +44,12 @@ public class FlashcardRevisionEntity {
         return status;
     }
 
+    public LocalDateTime getFinishDate() {
+        return finishDate;
+    }
+
+    public LocalDateTime getStartDate() {
+        return startDate;
+    }
 }
 

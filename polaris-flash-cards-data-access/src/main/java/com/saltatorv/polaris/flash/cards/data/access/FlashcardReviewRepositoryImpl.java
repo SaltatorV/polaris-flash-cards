@@ -46,7 +46,9 @@ class FlashcardReviewRepositoryImpl implements FlashcardReviewRepository {
 
             flashcardSnapshots.add(new FlashcardSnapshot(blueprint.getId(),
                     blueprint.getQuestion(), blueprint.getDefinition(),
-                    revisionEntity.getStatus()));
+                    revisionEntity.getStatus(),
+                    revisionEntity.getStartDate(),
+                    revisionEntity.getFinishDate()));
         }
 
         FlashcardReviewSnapshot flashcardReviewSnapshot = new FlashcardReviewSnapshot(flashcardReviewEntity.getId(),
@@ -78,7 +80,9 @@ class FlashcardReviewRepositoryImpl implements FlashcardReviewRepository {
 
             revisionEntities.add(new FlashcardRevisionEntity(flashcardReviewEntity,
                     foundBlueprint.get(),
-                    flashcardSnapshot.getAnswer()));
+                    flashcardSnapshot.getAnswer(),
+                    flashcardSnapshot.getStartDate(),
+                    flashcardSnapshot.getFinishDate()));
         }
 
         flashcardReviewEntity.setFlashcardRevisions(revisionEntities);
