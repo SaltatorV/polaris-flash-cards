@@ -2,31 +2,22 @@ package com.saltatorv.polaris.flash.cards.web;
 
 import com.saltatorv.polaris.flash.cards.application.command.review.*;
 import com.saltatorv.polaris.flash.cards.application.command.review.dto.FlashcardDto;
-import com.saltatorv.polaris.flash.cards.application.command.review.lifecycle.GenerateReviewUseCase;
 import com.saltatorv.polaris.flash.cards.domain.shared.FlashcardReviewId;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/flashcard/review")
 class FlashcardReviewController {
-    private final GenerateReviewUseCase generateReviewUseCase;
     private final BeginReviewUseCase beginReviewUseCase;
     private final FinishReviewUseCase finishReviewUseCase;
     private final NextFlashcardFromReviewUseCase nextFlashcardFromReviewUseCase;
     private final AnswerFlashcardUseCase answerFlashcardUseCase;
 
-    public FlashcardReviewController(GenerateReviewUseCase generateReviewUseCase, BeginReviewUseCase beginReviewUseCase, FinishReviewUseCase finishReviewUseCase, NextFlashcardFromReviewUseCase nextFlashcardFromReviewUseCase, AnswerFlashcardUseCase answerFlashcardUseCase) {
-        this.generateReviewUseCase = generateReviewUseCase;
+    public FlashcardReviewController(BeginReviewUseCase beginReviewUseCase, FinishReviewUseCase finishReviewUseCase, NextFlashcardFromReviewUseCase nextFlashcardFromReviewUseCase, AnswerFlashcardUseCase answerFlashcardUseCase) {
         this.beginReviewUseCase = beginReviewUseCase;
         this.finishReviewUseCase = finishReviewUseCase;
         this.nextFlashcardFromReviewUseCase = nextFlashcardFromReviewUseCase;
         this.answerFlashcardUseCase = answerFlashcardUseCase;
-    }
-
-    @PostMapping("/generate/random")
-    public String generateRandomReview(@RequestBody int size) {
-        FlashcardReviewId id = generateReviewUseCase.generateRandomReview(size);
-        return id.getId();
     }
 
     @PostMapping("/{reviewId}/begin")
