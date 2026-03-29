@@ -146,21 +146,21 @@ public class FlashcardReview {
     }
 
     private void ensureReviewIsNotAlreadyStarted() {
-        if (activityWindow.calculateLifecycleStatus()
+        if (activityWindow.defineReviewStatus()
                 == FlashcardReviewLifecycle.STARTED) {
             throw new FlashcardReviewAlreadyStartedDomainException();
         }
     }
 
     private void ensureReviewIsStarted() {
-        if (activityWindow.calculateLifecycleStatus()
+        if (activityWindow.defineReviewStatus()
                 == FlashcardReviewLifecycle.CREATED) {
             throw new FlashcardReviewNotStartedDomainException();
         }
     }
 
     private void ensureReviewIsNotFinished() {
-        if (activityWindow.calculateLifecycleStatus()
+        if (activityWindow.defineReviewStatus()
                 == FlashcardReviewLifecycle.FINISHED) {
             throw new FlashcardReviewAlreadyFinishedDomainException();
         }

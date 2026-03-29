@@ -29,7 +29,7 @@ class ActivityWindow {
         return new ActivityWindow(this.startTime, System.currentTimeMillis());
     }
 
-    FlashcardReviewLifecycle calculateLifecycleStatus() {
+    FlashcardReviewLifecycle defineReviewStatus() {
         if (startTime != 0 && finishTime != 0) {
             return FlashcardReviewLifecycle.FINISHED;
         } else if (startTime != 0) {
