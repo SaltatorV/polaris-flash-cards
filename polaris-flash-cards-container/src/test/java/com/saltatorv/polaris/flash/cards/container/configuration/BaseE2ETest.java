@@ -5,21 +5,15 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
-import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
-import org.testcontainers.junit.jupiter.Container;
+import org.springframework.context.annotation.Import;
 import org.testcontainers.junit.jupiter.Testcontainers;
-import org.testcontainers.postgresql.PostgreSQLContainer;
 
 import static io.restassured.RestAssured.given;
 
 @Testcontainers
+@Import(PostgresConfiguration.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class BaseE2ETest {
-    @Container
-    @ServiceConnection
-    private static final PostgreSQLContainer container =
-            new PostgreSQLContainer("postgres:16")
-                    .withDatabaseName("polaris_flash_cards");
 
     @LocalServerPort
     private int port;
