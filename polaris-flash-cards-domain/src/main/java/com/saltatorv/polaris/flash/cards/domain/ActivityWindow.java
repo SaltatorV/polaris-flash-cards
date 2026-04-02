@@ -34,22 +34,20 @@ class ActivityWindow {
         return new ActivityWindow(this.startTime, System.currentTimeMillis());
     }
 
-    FlashcardReviewLifecycle defineReviewStatus() {
-        if (startTime != 0 && finishTime != 0) {
-            return FlashcardReviewLifecycle.FINISHED;
-        } else if (startTime != 0) {
-            return FlashcardReviewLifecycle.STARTED;
-        } else {
-            return FlashcardReviewLifecycle.CREATED;
-        }
-    }
-
-    public LocalDateTime getStartDate() {
+    LocalDateTime getStartDate() {
         return calculateDate(startTime);
     }
 
-    public LocalDateTime getFinishDate() {
+    LocalDateTime getFinishDate() {
         return calculateDate(finishTime);
+    }
+
+    Long getStartDateInMilliseconds() {
+        return startTime;
+    }
+
+    Long getFinishDateInMilliseconds() {
+        return finishTime;
     }
 
     private LocalDateTime calculateDate(Long timeInMilliseconds) {

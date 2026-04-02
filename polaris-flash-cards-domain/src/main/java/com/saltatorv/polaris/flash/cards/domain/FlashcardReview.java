@@ -152,22 +152,19 @@ public class FlashcardReview {
     }
 
     private void ensureReviewIsNotAlreadyStarted() {
-        if (activityWindow.defineReviewStatus()
-                == FlashcardReviewLifecycle.STARTED) {
+        if (defineReviewStatus() == FlashcardReviewLifecycle.STARTED) {
             throw new FlashcardReviewAlreadyStartedDomainException();
         }
     }
 
     private void ensureReviewIsStarted() {
-        if (activityWindow.defineReviewStatus()
-                == FlashcardReviewLifecycle.CREATED) {
+        if (defineReviewStatus() == FlashcardReviewLifecycle.CREATED) {
             throw new FlashcardReviewNotStartedDomainException();
         }
     }
 
     private void ensureReviewIsNotFinished() {
-        if (activityWindow.defineReviewStatus()
-                == FlashcardReviewLifecycle.FINISHED) {
+        if (defineReviewStatus() == FlashcardReviewLifecycle.FINISHED) {
             throw new FlashcardReviewAlreadyFinishedDomainException();
         }
     }
@@ -190,6 +187,17 @@ public class FlashcardReview {
             if (previousFlashcard.isReviewed()) {
                 previousFlashcard.markAsFailure();
             }
+        }
+    }
+
+    private FlashcardReviewLifecycle defineReviewStatus() {
+        if (activityWindow.getStartDateInMilliseconds() != 0 &&
+                activityWindow.getFinishDateInMilliseconds() != 0) {
+            return FlashcardReviewLifecycle.FINISHED;
+        } else if (activityWindow.getStartDateInMilliseconds() != 0) {
+            return FlashcardReviewLifecycle.STARTED;
+        } else {
+            return FlashcardReviewLifecycle.CREATED;
         }
     }
 }
