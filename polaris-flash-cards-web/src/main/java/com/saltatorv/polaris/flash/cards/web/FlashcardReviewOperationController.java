@@ -9,12 +9,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 class FlashcardReviewOperationController extends BaseController {
-    private final static String BASE_LIFECYCLE_ENDPOINT = "/flashcard/review";
-    private final static String FLASHCARD_REVIEW_BEGIN_ENDPOINT = BASE_LIFECYCLE_ENDPOINT + "/{reviewId}/begin";
-    private final static String FLASHCARD_REVIEW_FINISH_ENDPOINT = BASE_LIFECYCLE_ENDPOINT + "/{reviewId}/finish";
-    private final static String FLASHCARD_REVIEW_DRAW_NEXT_ENDPOINT = BASE_LIFECYCLE_ENDPOINT + "/{reviewId}/flashcard/drawNext";
-    private final static String FLASHCARD_REVIEW_MARK_CORRECT_ENDPOINT = BASE_LIFECYCLE_ENDPOINT + "/{reviewId}/flashcard/markAsCorrect";
-    private final static String FLASHCARD_REVIEW_MARK_INCORRECT_ENDPOINT = BASE_LIFECYCLE_ENDPOINT + "/{reviewId}/flashcard/markAsIncorrect";
+    public final static String BASE_LIFECYCLE_ENDPOINT = "/flashcard/review";
+    public final static String FLASHCARD_REVIEW_BEGIN_ENDPOINT = BASE_LIFECYCLE_ENDPOINT + "/{reviewId}/begin";
+    public final static String FLASHCARD_REVIEW_FINISH_ENDPOINT = BASE_LIFECYCLE_ENDPOINT + "/{reviewId}/finish";
+    public final static String FLASHCARD_REVIEW_DRAW_NEXT_ENDPOINT = BASE_LIFECYCLE_ENDPOINT + "/{reviewId}/flashcard/drawNext";
+    public final static String FLASHCARD_REVIEW_MARK_CORRECT_ENDPOINT = BASE_LIFECYCLE_ENDPOINT + "/{reviewId}/flashcard/markAsCorrect";
+    public final static String FLASHCARD_REVIEW_MARK_INCORRECT_ENDPOINT = BASE_LIFECYCLE_ENDPOINT + "/{reviewId}/flashcard/markAsIncorrect";
 
     private final FlashcardReviewOperationFacade flashcardReviewOperationFacade;
 

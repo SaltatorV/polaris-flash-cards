@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class FlashcardReviewLifecycleController extends BaseController {
-    private final static String BASE_LIFECYCLE_ENDPOINT = "/flashcard/review";
-    private final static String FLASHCARD_REVIEW_GENERATE_RANDOM_ENDPOINT = BASE_LIFECYCLE_ENDPOINT + "/generate/random";
-    private final static String FLASHCARD_REVIEW_DELETE_ENDPOINT = BASE_LIFECYCLE_ENDPOINT + "/{reviewId}/delete";
+    public final static String BASE_LIFECYCLE_ENDPOINT = "/flashcard/review";
+    public final static String FLASHCARD_REVIEW_GENERATE_RANDOM_ENDPOINT = BASE_LIFECYCLE_ENDPOINT + "/generate/random";
+    public final static String FLASHCARD_REVIEW_DELETE_ENDPOINT = BASE_LIFECYCLE_ENDPOINT + "/{reviewId}/delete";
 
     private final FlashcardReviewLifecycleFacade flashcardReviewLifecycleFacade;
 
