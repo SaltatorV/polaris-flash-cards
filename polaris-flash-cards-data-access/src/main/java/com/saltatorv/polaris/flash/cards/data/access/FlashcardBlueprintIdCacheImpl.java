@@ -8,24 +8,32 @@ import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Repository
 class FlashcardBlueprintIdCacheImpl implements FlashcardBlueprintIdCache {
+    private final FlashcardBlueprintRepository flashcardBlueprintRepository;
 
-    private final List<FlashcardBlueprintId> ids;
+    private List<FlashcardBlueprintId> ids;
 
     public FlashcardBlueprintIdCacheImpl(FlashcardBlueprintRepository flashcardBlueprintRepository) {
-        List<FlashcardBlueprintSnapshot> snapshots = flashcardBlueprintRepository.findAll();
-        ids = snapshots
-                .stream()
-                .map(snapshot -> new FlashcardBlueprintId(snapshot.getFlashcardBlueprintId()))
-                .toList();
-
-        System.out.println("IDS: "+ids.toArray().length);
+        ids = new ArrayList<>();
+        this.flashcardBlueprintRepository = flashcardBlueprintRepository;
+        invalidate();
     }
 
     @Override
     public List<FlashcardBlueprintId> getAll() {
         return new ArrayList<>(ids);
+    }
+
+    @Override
+    public void invalidate() {
+        ids.clear();
+        List<FlashcardBlueprintSnapshot> snapshots = flashcardBlueprintRepository.findAll();
+        ids = snapshots
+                .stream()
+                .map(snapshot -> new FlashcardBlueprintId(snapshot.getFlashcardBlueprintId()))
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 }

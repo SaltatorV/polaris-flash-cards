@@ -7,4 +7,6 @@ import java.util.List;
 public interface FlashcardBlueprintIdCache {
 
     List<FlashcardBlueprintId> getAll();
+
+    void invalidate();
 }
