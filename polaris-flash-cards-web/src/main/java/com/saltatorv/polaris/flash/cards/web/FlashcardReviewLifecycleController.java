@@ -4,25 +4,27 @@ import com.saltatorv.polaris.flash.cards.application.command.review.lifecycle.Fl
 import com.saltatorv.polaris.flash.cards.domain.shared.FlashcardReviewId;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/v1/flashcard/review")
-class FlashcardReviewLifecycleController {
+public class FlashcardReviewLifecycleController extends BaseController {
+    private final static String BASE_LIFECYCLE_ENDPOINT = "/flashcard/review";
+    private final static String FLASHCARD_REVIEW_GENERATE_RANDOM_ENDPOINT = BASE_LIFECYCLE_ENDPOINT + "/generate/random";
+    private final static String FLASHCARD_REVIEW_DELETE_ENDPOINT = BASE_LIFECYCLE_ENDPOINT + "/{reviewId}/delete";
+
     private final FlashcardReviewLifecycleFacade flashcardReviewLifecycleFacade;
 
     public FlashcardReviewLifecycleController(FlashcardReviewLifecycleFacade flashcardReviewLifecycleFacade) {
         this.flashcardReviewLifecycleFacade = flashcardReviewLifecycleFacade;
     }
 
-    @PostMapping("/generate/random")
+    @PostMapping(FLASHCARD_REVIEW_GENERATE_RANDOM_ENDPOINT)
     public String generateRandomReview(@RequestBody int size) {
         FlashcardReviewId id = flashcardReviewLifecycleFacade.generateRandomReview(size);
         return id.getId();
     }
 
-    @PostMapping("/{reviewId}/delete")
+    @PostMapping(FLASHCARD_REVIEW_DELETE_ENDPOINT)
     public void deleteReview(@RequestBody String id) {
         flashcardReviewLifecycleFacade.deleteReview(new FlashcardReviewId(id));
     }
