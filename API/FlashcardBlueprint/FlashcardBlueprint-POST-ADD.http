@@ -1,4 +1,4 @@
-POST {{baseUrl}}/api/v1/flashcard/blueprints
+POST {{baseUrl}}/api/v1/flashcard/blueprint/create
 Content-Type: application/json
 
 [
