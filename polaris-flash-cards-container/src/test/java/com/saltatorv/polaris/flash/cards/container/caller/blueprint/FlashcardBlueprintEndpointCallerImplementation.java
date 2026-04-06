@@ -10,16 +10,16 @@ import java.util.List;
 import static com.saltatorv.polaris.flash.cards.web.FlashcardBlueprintController.FLASHCARD_BLUEPRINT_CREATE_ENDPOINT;
 import static io.restassured.RestAssured.given;
 
-public class BlueprintEndpointCallerImplementation implements EndpointCaller, BlueprintEndpointCaller, CreateBlueprintEndpointCaller {
+public class FlashcardBlueprintEndpointCallerImplementation implements EndpointCaller, FlashcardBlueprintEndpointCaller, CreateBlueprintEndpointCaller {
 
     private List<FlashcardBlueprintDataDto> dtos;
 
-    private BlueprintEndpointCallerImplementation() {
+    private FlashcardBlueprintEndpointCallerImplementation() {
         dtos = List.of();
     }
 
-    public static BlueprintEndpointCaller build() {
-        return new BlueprintEndpointCallerImplementation();
+    public static FlashcardBlueprintEndpointCaller build() {
+        return new FlashcardBlueprintEndpointCallerImplementation();
     }
 
     // BlueprintEndpointCaller
@@ -47,7 +47,7 @@ public class BlueprintEndpointCallerImplementation implements EndpointCaller, Bl
     }
 
     @Override
-    public BlueprintEndpointCaller executeCreateAPICall() {
+    public FlashcardBlueprintEndpointCaller executeCreateAPICall() {
         given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .body(dtos)
