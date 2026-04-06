@@ -10,8 +10,9 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/flashcard/blueprints")
+@RequestMapping("/api/v1")
 public class FlashcardBlueprintController {
+    public static final String FLASHCARD_BLUEPRINT_CREATE_ENDPOINT = "flashcard/blueprint/create";
 
     private final AddFlashcardBlueprintUseCase addFlashcardBlueprintUseCase;
 
@@ -19,7 +20,7 @@ public class FlashcardBlueprintController {
         this.addFlashcardBlueprintUseCase = addFlashcardBlueprintUseCase;
     }
 
-    @PostMapping
+    @PostMapping(FLASHCARD_BLUEPRINT_CREATE_ENDPOINT)
     public void createFlashcardBlueprints(@RequestBody List<FlashcardBlueprintDataDto> requests) {
         addFlashcardBlueprintUseCase.addFlashcardBlueprints(requests);
     }
