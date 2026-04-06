@@ -5,6 +5,7 @@ import com.saltatorv.polaris.flash.cards.container.caller.EndpointCaller;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.saltatorv.polaris.flash.cards.web.BaseController.BASE_API_ENDPOINT;
@@ -16,7 +17,7 @@ public class FlashcardBlueprintEndpointCallerImplementation implements EndpointC
     private List<FlashcardBlueprintDataDto> dtos;
 
     private FlashcardBlueprintEndpointCallerImplementation() {
-        dtos = List.of();
+        dtos = new ArrayList<>();
     }
 
     public static FlashcardBlueprintEndpointCaller build() {
@@ -40,7 +41,7 @@ public class FlashcardBlueprintEndpointCallerImplementation implements EndpointC
                     String.format("Definition-%d", length),
                     String.format("Source-%d", length),
                     List.of(String.format("Tags-%d", length)),
-                    String.format("Language-%d", length)
+                    String.format("LG%d", length)
             ));
         }
 
