@@ -1,10 +1,10 @@
 package com.saltatorv.polaris.flash.cards.container.caller.flashcard;
 
-import com.saltatorv.polaris.flash.cards.container.caller.EndpointCaller;
+public interface FlashcardReviewEndpointCaller {
 
-public class FlashcardReviewEndpointCaller implements EndpointCaller {
+    LifecycleFlashcardReviewEndpointCaller generateRandomFlashcardReview(int flashcardCount);
 
-    public static FlashcardReviewEndpointCaller build() {
-        return new FlashcardReviewEndpointCaller();
-    }
+    LifecycleFlashcardReviewEndpointCaller generateFlashcardReview();
+
+    LifecycleFlashcardReviewEndpointCaller generateInvalidFlashcardReview();
 }
