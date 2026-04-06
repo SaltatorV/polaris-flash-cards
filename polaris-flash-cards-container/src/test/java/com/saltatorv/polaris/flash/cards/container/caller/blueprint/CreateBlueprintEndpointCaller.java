@@ -4,5 +4,5 @@ public interface CreateBlueprintEndpointCaller {
 
     CreateBlueprintEndpointCaller addDefaultBlueprintToRequestBody(int times);
 
-    BlueprintEndpointCaller executeCreateAPICall();
+    FlashcardBlueprintEndpointCaller executeCreateAPICall();
 }

@@ -7,6 +7,7 @@ import org.springframework.http.MediaType;
 
 import java.util.List;
 
+import static com.saltatorv.polaris.flash.cards.web.BaseController.BASE_API_ENDPOINT;
 import static com.saltatorv.polaris.flash.cards.web.FlashcardBlueprintController.FLASHCARD_BLUEPRINT_CREATE_ENDPOINT;
 import static io.restassured.RestAssured.given;
 
