@@ -20,6 +20,8 @@ public class FlashcardBlueprintDataDto {
         this.language = language;
     }
 
+    public FlashcardBlueprintDataDto() {
+    }
 
     public String getQuestion() {
         return question;
