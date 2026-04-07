@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-class FlashcardReviewOperationController extends BaseController {
+public class FlashcardReviewOperationController extends BaseController {
     public final static String BASE_LIFECYCLE_ENDPOINT = "/flashcard/review";
     public final static String FLASHCARD_REVIEW_BEGIN_ENDPOINT = BASE_LIFECYCLE_ENDPOINT + "/{reviewId}/begin";
     public final static String FLASHCARD_REVIEW_FINISH_ENDPOINT = BASE_LIFECYCLE_ENDPOINT + "/{reviewId}/finish";
