@@ -6,6 +6,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -15,7 +16,7 @@ public class FlashcardReviewEntity {
     private LocalDateTime startDate;
     private LocalDateTime finishDate;
     @OneToMany(mappedBy = "flashcardReview", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<FlashcardRevisionEntity> flashcardRevisions;
+    private List<FlashcardRevisionEntity> flashcardRevisions = new ArrayList<>();
 
     public FlashcardReviewEntity() {
     }
