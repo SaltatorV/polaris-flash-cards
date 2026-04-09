@@ -51,5 +51,13 @@ public class FlashcardRevisionEntity {
     public LocalDateTime getStartDate() {
         return startDate;
     }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public void setFinishDate(LocalDateTime finishDate) {
+        this.finishDate = finishDate;
+    }
 }
 
