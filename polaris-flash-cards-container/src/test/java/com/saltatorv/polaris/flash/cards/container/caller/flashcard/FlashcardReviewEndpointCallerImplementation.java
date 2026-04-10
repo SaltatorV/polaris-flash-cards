@@ -3,6 +3,7 @@ package com.saltatorv.polaris.flash.cards.container.caller.flashcard;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
+import java.util.List;
 import java.util.UUID;
 
 import static com.saltatorv.polaris.flash.cards.web.BaseController.BASE_API_ENDPOINT;
@@ -71,7 +72,7 @@ public class FlashcardReviewEndpointCallerImplementation implements FlashcardRev
     }
 
     @Override
-    public LifecycleFlashcardReviewEndpointCaller drawNext() {
+    public LifecycleFlashcardReviewEndpointCaller drawNext(List<String> drewQuestions) {
         String question = given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .when()
@@ -80,7 +81,9 @@ public class FlashcardReviewEndpointCallerImplementation implements FlashcardRev
                 .then()
                 .extract()
                 .asString();
-        System.out.println(question);
+
+        drewQuestions.add(question);
+
         return this;
     }
 
