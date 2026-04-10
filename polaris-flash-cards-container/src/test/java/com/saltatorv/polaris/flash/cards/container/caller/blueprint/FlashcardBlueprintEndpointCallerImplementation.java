@@ -34,14 +34,13 @@ public class FlashcardBlueprintEndpointCallerImplementation implements EndpointC
     // CreateBlueprintEndpointCaller
     @Override
     public CreateBlueprintEndpointCaller addDefaultBlueprintToRequestBody(int times) {
-        int length = dtos.size();
         for (int i = 0; i < times; i++) {
             dtos.add(new FlashcardBlueprintDataDto(
-                    String.format("Question-%d", length),
-                    String.format("Definition-%d", length),
-                    String.format("Source-%d", length),
-                    List.of(String.format("Tags-%d", length)),
-                    String.format("LG%d", length)
+                    String.format("Question-%d", i),
+                    String.format("Definition-%d", i),
+                    String.format("Source-%d", i),
+                    List.of(String.format("Tags-%d", i)),
+                    String.format("LG%d", i)
             ));
         }
 
