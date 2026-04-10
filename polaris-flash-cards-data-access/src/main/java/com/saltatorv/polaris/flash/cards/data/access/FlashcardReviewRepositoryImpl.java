@@ -61,14 +61,13 @@ class FlashcardReviewRepositoryImpl implements FlashcardReviewRepository {
 
     @Override
     public FlashcardReviewSnapshot save(FlashcardReviewSnapshot flashcardReview) {
+        Optional<FlashcardReviewEntity> fromDb = sqlFlashcardReviewRepository.findById(flashcardReview.getFlashcardReviewId());
+        FlashcardReviewEntity flashcardReviewEntity = fromDb.orElseGet(() -> new FlashcardReviewEntity(flashcardReview.getFlashcardReviewId()));
 
-        FlashcardReviewEntity flashcardReviewEntity = new FlashcardReviewEntity(
-                flashcardReview.getFlashcardReviewId(),
-                flashcardReview.getStartDate(),
-                flashcardReview.getFinishDate()
-        );
+        flashcardReviewEntity.setStartDate(flashcardReview.getStartDate());
+        flashcardReviewEntity.setFinishDate(flashcardReview.getFinishDate());
 
-        List<FlashcardRevisionEntity> revisionEntities = new ArrayList<>();
+        List<FlashcardRevisionEntity> revisions = new ArrayList<>();
         for (FlashcardSnapshot flashcardSnapshot : flashcardReview.getFlashcardSnapshots()) {
 
             Optional<FlashcardBlueprintEntity> foundBlueprint = flashcardBlueprintRepository
@@ -78,14 +77,18 @@ class FlashcardReviewRepositoryImpl implements FlashcardReviewRepository {
                 throw new IllegalArgumentException("Flashcard blueprint not found");
             }
 
-            revisionEntities.add(new FlashcardRevisionEntity(flashcardReviewEntity,
+            FlashcardRevisionEntity newOne = new FlashcardRevisionEntity(flashcardReviewEntity,
                     foundBlueprint.get(),
                     flashcardSnapshot.getAnswer(),
                     flashcardSnapshot.getStartDate(),
-                    flashcardSnapshot.getFinishDate()));
+                    flashcardSnapshot.getFinishDate());
+
+            revisions.add(newOne);
         }
 
-        flashcardReviewEntity.setFlashcardRevisions(revisionEntities);
+        flashcardReviewEntity.getFlashcardRevisions().clear();
+        flashcardReviewEntity.getFlashcardRevisions().addAll(revisions);
+
         sqlFlashcardReviewRepository.save(flashcardReviewEntity);
         return findById(
                 new FlashcardReviewId(UUID.fromString(
