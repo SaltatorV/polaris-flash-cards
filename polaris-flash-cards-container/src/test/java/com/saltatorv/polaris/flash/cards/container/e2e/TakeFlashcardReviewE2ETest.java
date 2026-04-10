@@ -8,13 +8,17 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.util.ArrayList;
 import java.util.stream.Stream;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 class TakeFlashcardReviewE2ETest extends BaseE2ETest {
-    private final static int BLUEPRINT_MULTIPLIER = 2;
 
     static Stream<Arguments> provideCorrectAndIncorrectAnswersForReview() {
         return Stream.of(
+                Arguments.of(FlashcardReviewAnswers.of(true)),
+                Arguments.of(FlashcardReviewAnswers.of(false)),
                 Arguments.of(FlashcardReviewAnswers.of(true, true, true, true, true, true, true, true, true, true)),
                 Arguments.of(FlashcardReviewAnswers.of(false, false, false, false, false, false, false, false, false, false)),
                 Arguments.of(FlashcardReviewAnswers.of(true, false, false, false, false, false, false, false, false, false)),
@@ -28,9 +32,10 @@ class TakeFlashcardReviewE2ETest extends BaseE2ETest {
     @ParameterizedTest
     void testShouldAddFlashcardBlueprint(FlashcardReviewAnswers flashcardReviewAnswers) {
         //given
+        var drewQuestions = new ArrayList<String>();
         FlashcardBlueprintEndpointCallerImplementation.build()
                 .createBlueprint()
-                .addDefaultBlueprintToRequestBody(flashcardReviewAnswers.answers().size() * BLUEPRINT_MULTIPLIER)
+                .addDefaultBlueprintToRequestBody(flashcardReviewAnswers.answers().size() * 2)
                 .executeCreateAPICall();
 
         //when
@@ -39,7 +44,7 @@ class TakeFlashcardReviewE2ETest extends BaseE2ETest {
                 .begin();
 
         for (Boolean answer : flashcardReviewAnswers.answers()) {
-            caller.drawNext();
+            caller.drawNext(drewQuestions);
             if (answer) {
                 caller.markAsCorrect();
             } else {
@@ -48,5 +53,11 @@ class TakeFlashcardReviewE2ETest extends BaseE2ETest {
         }
 
         caller.finish();
+
+        assertEveryDrewQuestionIsDifferent(drewQuestions);
+    }
+
+    private void assertEveryDrewQuestionIsDifferent(ArrayList<String> drewQuestions) {
+        assertTrue(drewQuestions.stream().distinct().count() == drewQuestions.size());
     }
 }
