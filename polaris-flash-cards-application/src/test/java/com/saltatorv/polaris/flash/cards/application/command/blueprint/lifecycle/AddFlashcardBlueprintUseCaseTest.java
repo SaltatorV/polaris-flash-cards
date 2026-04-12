@@ -1,4 +1,4 @@
-package com.saltatorv.polaris.flash.cards.application.command.blueprint;
+package com.saltatorv.polaris.flash.cards.application.command.blueprint.lifecycle;
 
 import com.saltatorv.polaris.flash.cards.application.command.blueprint.dto.FlashcardBlueprintDataDto;
 import com.saltatorv.polaris.flash.cards.domain.FlashcardBlueprint;

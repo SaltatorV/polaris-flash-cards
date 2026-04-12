@@ -1,6 +1,6 @@
 package com.saltatorv.polaris.flash.cards.web;
 
-import com.saltatorv.polaris.flash.cards.application.command.blueprint.AddFlashcardBlueprintUseCase;
+import com.saltatorv.polaris.flash.cards.application.command.blueprint.lifecycle.AddFlashcardBlueprintUseCase;
 import com.saltatorv.polaris.flash.cards.application.command.blueprint.dto.FlashcardBlueprintDataDto;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
