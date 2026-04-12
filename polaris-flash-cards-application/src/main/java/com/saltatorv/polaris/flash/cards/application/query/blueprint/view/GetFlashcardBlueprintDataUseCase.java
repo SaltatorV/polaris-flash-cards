@@ -1,4 +1,4 @@
-package com.saltatorv.polaris.flash.cards.application.query;
+package com.saltatorv.polaris.flash.cards.application.query.blueprint.view;
 
 import com.saltatorv.polaris.flash.cards.domain.FlashcardBlueprintRepository;
 import org.springframework.stereotype.Service;
