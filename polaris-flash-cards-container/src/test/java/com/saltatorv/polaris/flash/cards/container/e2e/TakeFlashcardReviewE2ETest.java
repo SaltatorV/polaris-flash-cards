@@ -11,6 +11,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.ArrayList;
 import java.util.stream.Stream;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class TakeFlashcardReviewE2ETest extends BaseE2ETest {
@@ -54,7 +55,12 @@ class TakeFlashcardReviewE2ETest extends BaseE2ETest {
 
         caller.finish();
 
+        assertDrewQuestionCount(flashcardReviewAnswers, drewQuestions);
         assertEveryDrewQuestionIsDifferent(drewQuestions);
+    }
+
+    private void assertDrewQuestionCount(FlashcardReviewAnswers flashcardReviewAnswers, ArrayList<String> drewQuestions) {
+        assertEquals(flashcardReviewAnswers.answers().size(), drewQuestions.size());
     }
 
     private void assertEveryDrewQuestionIsDifferent(ArrayList<String> drewQuestions) {
