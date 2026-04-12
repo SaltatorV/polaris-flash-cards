@@ -4,10 +4,10 @@ import com.saltatorv.polaris.flash.cards.domain.FlashcardBlueprintRepository;
 import org.springframework.stereotype.Service;
 
 @Service
-public class GetFlashcardBlueprintDataUseCase {
+class GetFlashcardBlueprintDataUseCase {
     private final FlashcardBlueprintRepository flashcardBlueprintRepository;
 
-    public GetFlashcardBlueprintDataUseCase(FlashcardBlueprintRepository flashcardBlueprintRepository) {
+    GetFlashcardBlueprintDataUseCase(FlashcardBlueprintRepository flashcardBlueprintRepository) {
         this.flashcardBlueprintRepository = flashcardBlueprintRepository;
     }
 
