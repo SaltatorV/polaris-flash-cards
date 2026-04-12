@@ -7,8 +7,8 @@ import java.util.List;
 import java.util.UUID;
 
 import static com.saltatorv.polaris.flash.cards.web.BaseController.BASE_API_ENDPOINT;
-import static com.saltatorv.polaris.flash.cards.web.FlashcardReviewLifecycleController.FLASHCARD_REVIEW_GENERATE_RANDOM_ENDPOINT;
-import static com.saltatorv.polaris.flash.cards.web.FlashcardReviewOperationController.*;
+import static com.saltatorv.polaris.flash.cards.web.controller.command.review.FlashcardReviewLifecycleController.FLASHCARD_REVIEW_GENERATE_RANDOM_ENDPOINT;
+import static com.saltatorv.polaris.flash.cards.web.controller.command.review.FlashcardReviewOperationController.*;
 import static io.restassured.RestAssured.given;
 
 public class FlashcardReviewEndpointCallerImplementation implements FlashcardReviewEndpointCaller, LifecycleFlashcardReviewEndpointCaller {
