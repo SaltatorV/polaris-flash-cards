@@ -1,4 +1,4 @@
-package com.saltatorv.polaris.flash.cards.application.query.dto;
+package com.saltatorv.polaris.flash.cards.application.query.review.dto;
 
 import com.saltatorv.polaris.flash.cards.domain.shared.FlashcardReviewId;
 
