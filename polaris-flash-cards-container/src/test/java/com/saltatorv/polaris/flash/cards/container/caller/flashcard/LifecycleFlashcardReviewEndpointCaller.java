@@ -13,4 +13,6 @@ public interface LifecycleFlashcardReviewEndpointCaller {
     LifecycleFlashcardReviewEndpointCaller markAsIncorrect();
 
     LifecycleFlashcardReviewEndpointCaller markAsCorrect();
+
+    ViewFlashcardReviewEndpointCaller view();
 }

@@ -1,5 +1,6 @@
 package com.saltatorv.polaris.flash.cards.container.caller.flashcard;
 
+import com.saltatorv.polaris.flash.cards.application.query.review.dto.FlashcardReviewDataDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
@@ -9,9 +10,11 @@ import java.util.UUID;
 import static com.saltatorv.polaris.flash.cards.web.BaseController.BASE_API_ENDPOINT;
 import static com.saltatorv.polaris.flash.cards.web.controller.command.review.FlashcardReviewLifecycleController.FLASHCARD_REVIEW_GENERATE_RANDOM_ENDPOINT;
 import static com.saltatorv.polaris.flash.cards.web.controller.command.review.FlashcardReviewOperationController.*;
+import static com.saltatorv.polaris.flash.cards.web.controller.query.review.FlashcardReviewViewController.FLASHCARD_REVIEW_GET_ENDPOINT;
 import static io.restassured.RestAssured.given;
 
-public class FlashcardReviewEndpointCallerImplementation implements FlashcardReviewEndpointCaller, LifecycleFlashcardReviewEndpointCaller {
+public class FlashcardReviewEndpointCallerImplementation implements FlashcardReviewEndpointCaller,
+        LifecycleFlashcardReviewEndpointCaller, ViewFlashcardReviewEndpointCaller {
     String flashcardReviewId;
 
     public static FlashcardReviewEndpointCaller build() {
@@ -109,5 +112,30 @@ public class FlashcardReviewEndpointCallerImplementation implements FlashcardRev
                 .then()
                 .statusCode(HttpStatus.OK.value());
         return this;
+    }
+
+    @Override
+    public ViewFlashcardReviewEndpointCaller view() {
+        return this;
+    }
+
+    // LifecycleFlashcardReviewEndpointCaller
+
+    @Override
+    public LifecycleFlashcardReviewEndpointCaller lifecycle() {
+        return this;
+    }
+
+    @Override
+    public FlashcardReviewDataDto getReview() {
+        return given()
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .when()
+                .pathParam("reviewId", flashcardReviewId)
+                .get(BASE_API_ENDPOINT + FLASHCARD_REVIEW_GET_ENDPOINT)
+                .then()
+                .statusCode(HttpStatus.OK.value())
+                .extract()
+                .as(FlashcardReviewDataDto.class);
     }
 }
