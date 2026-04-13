@@ -20,7 +20,7 @@ public class FlashcardReviewViewController extends BaseController {
     }
 
     @GetMapping(FLASHCARD_REVIEW_GET_ENDPOINT)
-    public FlashcardReviewDataDto getFlashcardReview(@PathVariable String reviewId) {
+    public FlashcardReviewDataDto getFlashcardReview(@PathVariable("reviewId") String reviewId) {
         return flashcardReviewViewFacade.getReviewData(new FlashcardReviewId(reviewId));
     }
 
