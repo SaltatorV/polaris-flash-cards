@@ -1,5 +1,6 @@
 package com.saltatorv.polaris.flash.cards.container.e2e;
 
+import com.saltatorv.polaris.flash.cards.application.query.review.dto.FlashcardReviewDataDto;
 import com.saltatorv.polaris.flash.cards.container.caller.blueprint.FlashcardBlueprintEndpointCallerImplementation;
 import com.saltatorv.polaris.flash.cards.container.caller.flashcard.FlashcardReviewEndpointCallerImplementation;
 import com.saltatorv.polaris.flash.cards.container.configuration.BaseE2ETest;
@@ -55,9 +56,15 @@ class TakeFlashcardReviewE2ETest extends BaseE2ETest {
 
         caller.finish();
 
+        FlashcardReviewDataDto reviewResult = caller.view().getReview();
+
         assertDrewQuestionCount(flashcardReviewAnswers, drewQuestions);
         assertEveryDrewQuestionIsDifferent(drewQuestions);
+        assertFlashcardCount(flashcardReviewAnswers, reviewResult);
+        assertCorrectAnswerCountIs(flashcardReviewAnswers, reviewResult);
+        assertIncorrectAnswerCountIs(flashcardReviewAnswers, reviewResult);
     }
+
 
     private void assertDrewQuestionCount(FlashcardReviewAnswers flashcardReviewAnswers, ArrayList<String> drewQuestions) {
         assertEquals(flashcardReviewAnswers.answers().size(), drewQuestions.size());
@@ -65,5 +72,28 @@ class TakeFlashcardReviewE2ETest extends BaseE2ETest {
 
     private void assertEveryDrewQuestionIsDifferent(ArrayList<String> drewQuestions) {
         assertTrue(drewQuestions.stream().distinct().count() == drewQuestions.size());
+    }
+
+    private void assertFlashcardCount(FlashcardReviewAnswers flashcardReviewAnswers, FlashcardReviewDataDto reviewResult) {
+        assertEquals(0, reviewResult.getNotAnsweredCount());
+        assertEquals(flashcardReviewAnswers.answers().size(), reviewResult.getFlashcardCount());
+    }
+
+    private void assertCorrectAnswerCountIs(FlashcardReviewAnswers flashcardReviewAnswers, FlashcardReviewDataDto reviewResult) {
+        long expectedCorrectAnswerCount =
+                flashcardReviewAnswers.answers().stream()
+                        .filter(Boolean.TRUE::equals)
+                        .count();
+
+        assertEquals(expectedCorrectAnswerCount, reviewResult.getCorrectAnswers());
+    }
+
+    private void assertIncorrectAnswerCountIs(FlashcardReviewAnswers flashcardReviewAnswers, FlashcardReviewDataDto reviewResult) {
+        long expectedIncorrectAnswerCount =
+                flashcardReviewAnswers.answers().stream()
+                        .filter(Boolean.FALSE::equals)
+                        .count();
+
+        assertEquals(expectedIncorrectAnswerCount, reviewResult.getIncorrectAnswers());
     }
 }
