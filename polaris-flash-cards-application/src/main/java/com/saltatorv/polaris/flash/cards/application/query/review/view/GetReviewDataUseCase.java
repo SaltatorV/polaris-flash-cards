@@ -17,7 +17,7 @@ class GetReviewDataUseCase extends FlashcardReviewUseCaseBase {
 
     FlashcardReviewDataDto getReviewData(FlashcardReviewId id) {
         FlashcardReview review = getReviewFromRepository(id, flashcardReviewRepository);
-        return new FlashcardReviewDataDto(id, review.getCorrectAnswers(),
+        return new FlashcardReviewDataDto(id.getId(), review.getCorrectAnswers(),
                 review.getIncorrectAnswers(), review.flashcardCount(),
                 review.getStartDate(), review.getFinishDate());
     }

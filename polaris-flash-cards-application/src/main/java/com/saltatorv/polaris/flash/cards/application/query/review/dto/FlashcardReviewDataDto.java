@@ -1,19 +1,21 @@
 package com.saltatorv.polaris.flash.cards.application.query.review.dto;
 
-import com.saltatorv.polaris.flash.cards.domain.shared.FlashcardReviewId;
 
 import java.time.LocalDateTime;
 
 public class FlashcardReviewDataDto {
-    private final FlashcardReviewId id;
-    private final int correctAnswers;
-    private final int incorrectAnswers;
-    private final int flashcardCount;
-    private final int notAnsweredCount;
-    private final LocalDateTime startDate;
-    private final LocalDateTime finishDate;
+    private String id;
+    private int correctAnswers;
+    private int incorrectAnswers;
+    private int flashcardCount;
+    private int notAnsweredCount;
+    private LocalDateTime startDate;
+    private  LocalDateTime finishDate;
 
-    public FlashcardReviewDataDto(FlashcardReviewId id, int correctAnswers,
+    public FlashcardReviewDataDto() {
+    }
+
+    public FlashcardReviewDataDto(String id, int correctAnswers,
                                   int incorrectAnswers, int flashcardCount,
                                   LocalDateTime startDate, LocalDateTime finishDate) {
         this.id = id;
@@ -25,7 +27,7 @@ public class FlashcardReviewDataDto {
         this.finishDate = finishDate;
     }
 
-    public FlashcardReviewId getId() {
+    public String getId() {
         return id;
     }
 
@@ -51,5 +53,18 @@ public class FlashcardReviewDataDto {
 
     public LocalDateTime getFinishDate() {
         return finishDate;
+    }
+
+    @Override
+    public String toString() {
+        return "FlashcardReviewDataDto{" +
+                "id=" + id +
+                ", correctAnswers=" + correctAnswers +
+                ", incorrectAnswers=" + incorrectAnswers +
+                ", flashcardCount=" + flashcardCount +
+                ", notAnsweredCount=" + notAnsweredCount +
+                ", startDate=" + startDate +
+                ", finishDate=" + finishDate +
+                '}';
     }
 }
