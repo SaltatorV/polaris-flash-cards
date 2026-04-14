@@ -1,5 +1,6 @@
 package com.saltatorv.polaris.flash.cards.application.command.blueprint.lifecycle;
 
+import com.saltatorv.polaris.flash.cards.application.FlashcardBlueprintIdCache;
 import com.saltatorv.polaris.flash.cards.application.command.blueprint.dto.FlashcardBlueprintDataDto;
 import com.saltatorv.polaris.flash.cards.domain.FlashcardBlueprint;
 import com.saltatorv.polaris.flash.cards.domain.FlashcardBlueprintRepository;
@@ -24,6 +25,8 @@ public class AddFlashcardBlueprintUseCaseTest {
     private List<FlashcardBlueprint> blueprints;
     private List<FlashcardBlueprintDataDto> blueprintDataDtos;
 
+    @Mock
+    private FlashcardBlueprintIdCache flashcardBlueprintIdCache;
     @Mock
     private FlashcardBlueprintRepository repository;
     @InjectMocks
