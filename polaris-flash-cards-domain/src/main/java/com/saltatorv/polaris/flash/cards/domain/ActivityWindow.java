@@ -1,7 +1,5 @@
 package com.saltatorv.polaris.flash.cards.domain;
 
-import java.time.Instant;
-import java.time.LocalDateTime;
 
 class ActivityWindow {
 

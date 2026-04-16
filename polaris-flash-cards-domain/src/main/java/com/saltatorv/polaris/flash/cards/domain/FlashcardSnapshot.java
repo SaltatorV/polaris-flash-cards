@@ -1,6 +1,5 @@
 package com.saltatorv.polaris.flash.cards.domain;
 
-import java.time.LocalDateTime;
 
 public class FlashcardSnapshot {
     private final String flashcardBlueprintId;

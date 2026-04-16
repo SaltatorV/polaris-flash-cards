@@ -3,9 +3,6 @@ package com.saltatorv.polaris.flash.cards.domain;
 import com.saltatorv.polaris.flash.cards.domain.exception.*;
 import org.junit.jupiter.api.Test;
 
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.List;
 
 import static com.saltatorv.polaris.flash.cards.domain.Answer.*;
