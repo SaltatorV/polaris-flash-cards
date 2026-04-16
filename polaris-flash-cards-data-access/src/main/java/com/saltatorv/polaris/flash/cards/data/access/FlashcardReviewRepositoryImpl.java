@@ -11,10 +11,8 @@ import com.saltatorv.polaris.flash.cards.domain.FlashcardSnapshot;
 import com.saltatorv.polaris.flash.cards.domain.shared.FlashcardReviewId;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Repository
 class FlashcardReviewRepositoryImpl implements FlashcardReviewRepository {
@@ -55,7 +53,8 @@ class FlashcardReviewRepositoryImpl implements FlashcardReviewRepository {
                 flashcardReviewEntity.getStartDate(),
                 flashcardReviewEntity.getFinishDate(),
                 flashcardSnapshots);
-
+        System.out.println("FIND BY ID!!!!");
+        System.out.println(flashcardReviewSnapshot);
         return Optional.of(flashcardReviewSnapshot);
     }
 
@@ -67,6 +66,38 @@ class FlashcardReviewRepositoryImpl implements FlashcardReviewRepository {
         flashcardReviewEntity.setStartDate(flashcardReview.getStartDate());
         flashcardReviewEntity.setFinishDate(flashcardReview.getFinishDate());
 
+        List<FlashcardRevisionEntity> revisions = createRevisionFromFlashcardSnapshots(flashcardReview, flashcardReviewEntity);
+        if (flashcardReviewEntity.getFlashcardRevisions().isEmpty()) {
+            System.out.println("IS EMPTY");
+            flashcardReviewEntity.getFlashcardRevisions().addAll(revisions);
+        } else {
+            System.out.println("IS NOT EMPTY");
+            Map<String, FlashcardRevisionEntity> currentRevisions =
+                    flashcardReviewEntity
+                            .getFlashcardRevisions()
+                            .stream()
+                            .collect(Collectors.toMap(revision -> revision.getFlashcardBlueprint().getId(),
+                                    revision -> revision));
+
+            for (FlashcardRevisionEntity newOne : revisions) {
+                currentRevisions.get(newOne.getFlashcardBlueprint().getId()).updateFrom(newOne);
+            }
+
+
+        }
+        System.out.println("SAVE!!!!");
+        sqlFlashcardReviewRepository.save(flashcardReviewEntity);
+        for (FlashcardRevisionEntity revision : flashcardReviewEntity.getFlashcardRevisions()) {
+            System.out.println(revision);
+        }
+        System.out.println("SAVED!!!!");
+        return findById(
+                new FlashcardReviewId(UUID.fromString(
+                        flashcardReview.getFlashcardReviewId())))
+                .get();
+    }
+
+    private List<FlashcardRevisionEntity> createRevisionFromFlashcardSnapshots(FlashcardReviewSnapshot flashcardReview, FlashcardReviewEntity flashcardReviewEntity) {
         List<FlashcardRevisionEntity> revisions = new ArrayList<>();
         for (FlashcardSnapshot flashcardSnapshot : flashcardReview.getFlashcardSnapshots()) {
 
@@ -86,14 +117,7 @@ class FlashcardReviewRepositoryImpl implements FlashcardReviewRepository {
             revisions.add(newOne);
         }
 
-        flashcardReviewEntity.getFlashcardRevisions().clear();
-        flashcardReviewEntity.getFlashcardRevisions().addAll(revisions);
-
-        sqlFlashcardReviewRepository.save(flashcardReviewEntity);
-        return findById(
-                new FlashcardReviewId(UUID.fromString(
-                        flashcardReview.getFlashcardReviewId())))
-                .get();
+        return revisions;
     }
 
     @Override

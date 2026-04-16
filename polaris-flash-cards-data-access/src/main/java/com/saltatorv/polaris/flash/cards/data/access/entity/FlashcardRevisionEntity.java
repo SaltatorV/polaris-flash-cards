@@ -2,8 +2,6 @@ package com.saltatorv.polaris.flash.cards.data.access.entity;
 
 import jakarta.persistence.*;
 
-import java.time.LocalDateTime;
-
 @Entity
 public class FlashcardRevisionEntity {
 
@@ -17,19 +15,25 @@ public class FlashcardRevisionEntity {
     @JoinColumn(name = "flashcard_blueprint_id")
     private FlashcardBlueprintEntity flashcardBlueprint;
     private String status;
-    private LocalDateTime startDate;
-    private LocalDateTime finishDate;
+    private Long startDate;
+    private Long finishDate;
 
     public FlashcardRevisionEntity() {
     }
 
     public FlashcardRevisionEntity(FlashcardReviewEntity flashcardReview, FlashcardBlueprintEntity flashcardBlueprint,
-                                   String status, LocalDateTime startDate, LocalDateTime finishDate) {
+                                   String status, Long startDate, Long finishDate) {
         this.flashcardReview = flashcardReview;
         this.flashcardBlueprint = flashcardBlueprint;
         this.status = status;
         this.startDate = startDate;
         this.finishDate = finishDate;
+    }
+
+    public void updateFrom(FlashcardRevisionEntity newOne) {
+        this.status = newOne.getStatus();
+        this.startDate = newOne.getStartDate();
+        this.finishDate = newOne.getFinishDate();
     }
 
     public Long getId() {
@@ -44,20 +48,24 @@ public class FlashcardRevisionEntity {
         return status;
     }
 
-    public LocalDateTime getFinishDate() {
+    public Long getFinishDate() {
         return finishDate;
     }
 
-    public LocalDateTime getStartDate() {
+    public Long getStartDate() {
         return startDate;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public void setFinishDate(LocalDateTime finishDate) {
-        this.finishDate = finishDate;
+    @Override
+    public String toString() {
+        return "FlashcardRevisionEntity{" +
+                "id=" + id +
+                ", flashcardReview=" + flashcardReview.getId() +
+                ", flashcardBlueprint=" + flashcardBlueprint.getId() +
+                ", status='" + status + '\'' +
+                ", startDate=" + startDate +
+                ", finishDate=" + finishDate +
+                '}';
     }
 }
 
