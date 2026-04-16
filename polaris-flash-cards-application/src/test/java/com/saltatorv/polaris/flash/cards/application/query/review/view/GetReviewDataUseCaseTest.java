@@ -109,9 +109,6 @@ public class GetReviewDataUseCaseTest {
         }
     }
 
-    private long convertDateToEpochMilli(java.time.LocalDateTime date) {
-        return date.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
-    }
 
     private void assertReviewDataContainsValidDataFromReview(int examTimeInMiliseconds,
                                                              int correctAnswers, int incorrectAnswers) {
@@ -123,8 +120,8 @@ public class GetReviewDataUseCaseTest {
         assertEquals(incorrectAnswers, reviewData.getIncorrectAnswers());
         assertEquals(0, reviewData.getNotAnsweredCount());
 
-        long startDate = convertDateToEpochMilli(reviewData.getStartDate());
-        long endDate = convertDateToEpochMilli(reviewData.getFinishDate());
+        long startDate = reviewData.getStartDate();
+        long endDate = reviewData.getFinishDate();
 
         assertNotEquals(0, startDate);
         assertNotEquals(0, endDate);

@@ -121,14 +121,10 @@ public class BeginReviewUseCaseTest {
 
 
     private void assertReviewIsStarted() {
-        long startDate = convertDateToEpochMilli(review.getStartDate());
-        long endDate = convertDateToEpochMilli(review.getFinishDate());
+        long startDate = review.getStartDate();
+        long endDate = review.getFinishDate();
 
         assertNotEquals(0, startDate);
         assertEquals(0, endDate);
-    }
-
-    private long convertDateToEpochMilli(java.time.LocalDateTime date) {
-        return date.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
     }
 }

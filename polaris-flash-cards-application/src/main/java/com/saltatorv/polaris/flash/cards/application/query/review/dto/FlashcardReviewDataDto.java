@@ -1,7 +1,6 @@
 package com.saltatorv.polaris.flash.cards.application.query.review.dto;
 
 
-import java.time.LocalDateTime;
 
 public class FlashcardReviewDataDto {
     private String id;
@@ -9,15 +8,15 @@ public class FlashcardReviewDataDto {
     private int incorrectAnswers;
     private int flashcardCount;
     private int notAnsweredCount;
-    private LocalDateTime startDate;
-    private  LocalDateTime finishDate;
+    private Long startDate;
+    private  Long finishDate;
 
     public FlashcardReviewDataDto() {
     }
 
     public FlashcardReviewDataDto(String id, int correctAnswers,
                                   int incorrectAnswers, int flashcardCount,
-                                  LocalDateTime startDate, LocalDateTime finishDate) {
+                                  Long startDate, Long finishDate) {
         this.id = id;
         this.correctAnswers = correctAnswers;
         this.incorrectAnswers = incorrectAnswers;
@@ -47,11 +46,11 @@ public class FlashcardReviewDataDto {
         return flashcardCount;
     }
 
-    public LocalDateTime getStartDate() {
+    public Long getStartDate() {
         return startDate;
     }
 
-    public LocalDateTime getFinishDate() {
+    public Long getFinishDate() {
         return finishDate;
     }
 

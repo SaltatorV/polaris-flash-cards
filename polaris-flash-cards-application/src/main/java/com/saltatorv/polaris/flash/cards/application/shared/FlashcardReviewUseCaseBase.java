@@ -15,7 +15,8 @@ public class FlashcardReviewUseCaseBase {
         if (reviewSnapshot.isEmpty()) {
             throw new IllegalArgumentException("Review not found");
         }
-
+        System.out.println("getReviewFromRepository");
+        System.out.println(reviewSnapshot.get());
         return FlashcardReview.restore(reviewSnapshot.get());
     }
 }
