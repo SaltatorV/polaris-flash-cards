@@ -17,17 +17,19 @@ public class FlashcardRevisionEntity {
     private String status;
     private Long startDate;
     private Long finishDate;
+    private int position;
 
     public FlashcardRevisionEntity() {
     }
 
     public FlashcardRevisionEntity(FlashcardReviewEntity flashcardReview, FlashcardBlueprintEntity flashcardBlueprint,
-                                   String status, Long startDate, Long finishDate) {
+                                   String status, Long startDate, Long finishDate, int position) {
         this.flashcardReview = flashcardReview;
         this.flashcardBlueprint = flashcardBlueprint;
         this.status = status;
         this.startDate = startDate;
         this.finishDate = finishDate;
+        this.position = position;
     }
 
     public void updateFrom(FlashcardRevisionEntity newOne) {
@@ -54,6 +56,10 @@ public class FlashcardRevisionEntity {
 
     public Long getStartDate() {
         return startDate;
+    }
+
+    public int getPosition() {
+        return position;
     }
 
     @Override

@@ -1,9 +1,6 @@
 package com.saltatorv.polaris.flash.cards.data.access.entity;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +11,7 @@ public class FlashcardReviewEntity {
     private String id;
     private Long startDate;
     private Long finishDate;
+    @OrderBy("position ASC")
     @OneToMany(mappedBy = "flashcardReview", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<FlashcardRevisionEntity> flashcardRevisions = new ArrayList<>();
 

@@ -112,7 +112,8 @@ class FlashcardReviewRepositoryImpl implements FlashcardReviewRepository {
                     foundBlueprint.get(),
                     flashcardSnapshot.getAnswer(),
                     flashcardSnapshot.getStartDate(),
-                    flashcardSnapshot.getFinishDate());
+                    flashcardSnapshot.getFinishDate(),
+                    flashcardReview.getFlashcardSnapshots().indexOf(flashcardSnapshot));
 
             revisions.add(newOne);
         }
