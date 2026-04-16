@@ -1,0 +1,18 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.6.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
+
+
+    <changeSet author="saltatorv" id="flashcard-review-with-change-start-and-finish-dates-type">
+
+        <dropColumn tableName="flashcard_revision_entity" columnName="start_date"/>
+        <dropColumn tableName="flashcard_revision_entity" columnName="finish_date"/>
+
+        <addColumn tableName="flashcard_revision_entity">
+            <column name="start_date" type="BIGINT"/>
+            <column name="finish_date" type="BIGINT"/>
+        </addColumn>
+    </changeSet>
+
+</databaseChangeLog>
