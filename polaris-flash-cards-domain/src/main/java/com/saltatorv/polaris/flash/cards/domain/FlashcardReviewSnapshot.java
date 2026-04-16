@@ -5,11 +5,11 @@ import java.util.List;
 
 public class FlashcardReviewSnapshot {
     private final String flashcardReviewId;
-    private final LocalDateTime startDate;
-    private final LocalDateTime finishDate;
+    private final Long startDate;
+    private final Long finishDate;
     private final List<FlashcardSnapshot> flashcardSnapshots;
 
-    public FlashcardReviewSnapshot(String flashcardReviewId, LocalDateTime startDate, LocalDateTime finishDate, List<FlashcardSnapshot> flashcardSnapshots) {
+    public FlashcardReviewSnapshot(String flashcardReviewId, Long startDate, Long finishDate, List<FlashcardSnapshot> flashcardSnapshots) {
         this.flashcardReviewId = flashcardReviewId;
         this.startDate = startDate;
         this.finishDate = finishDate;
@@ -20,15 +20,24 @@ public class FlashcardReviewSnapshot {
         return flashcardReviewId;
     }
 
-    public LocalDateTime getStartDate() {
+    public Long getStartDate() {
         return startDate;
     }
 
-    public LocalDateTime getFinishDate() {
+    public Long getFinishDate() {
         return finishDate;
     }
 
     public List<FlashcardSnapshot> getFlashcardSnapshots() {
         return flashcardSnapshots;
+    }
+
+    @Override
+    public String toString() {
+        return "FlashcardReviewSnapshot{" +
+                "startDate=" + startDate +
+                ", finishDate=" + finishDate +
+                ", flashcardSnapshots=" + flashcardSnapshots +
+                '}';
     }
 }

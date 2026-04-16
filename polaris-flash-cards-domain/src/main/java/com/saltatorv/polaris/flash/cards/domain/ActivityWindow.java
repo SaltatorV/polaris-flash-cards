@@ -17,13 +17,8 @@ class ActivityWindow {
         return new ActivityWindow(0, 0);
     }
 
-    static ActivityWindow restore(LocalDateTime startTime, LocalDateTime finishTime) {
-        return new ActivityWindow(calculateTimeInMilliseconds(startTime),
-                calculateTimeInMilliseconds(finishTime));
-    }
-
-    private static Long calculateTimeInMilliseconds(LocalDateTime date) {
-        return date.atZone(java.time.ZoneId.systemDefault()).toInstant().toEpochMilli();
+    static ActivityWindow restore(Long startTime, Long finishTime) {
+        return new ActivityWindow(startTime, finishTime);
     }
 
     ActivityWindow begin() {
@@ -34,25 +29,11 @@ class ActivityWindow {
         return new ActivityWindow(this.startTime, System.currentTimeMillis());
     }
 
-    LocalDateTime getStartDate() {
-        return calculateDate(startTime);
-    }
-
-    LocalDateTime getFinishDate() {
-        return calculateDate(finishTime);
-    }
-
-    Long getStartDateInMilliseconds() {
+    Long getStartDate() {
         return startTime;
     }
 
-    Long getFinishDateInMilliseconds() {
+    Long getFinishDate() {
         return finishTime;
-    }
-
-    private LocalDateTime calculateDate(Long timeInMilliseconds) {
-        return LocalDateTime.ofInstant(
-                Instant.ofEpochMilli(timeInMilliseconds),
-                java.time.ZoneId.systemDefault());
     }
 }

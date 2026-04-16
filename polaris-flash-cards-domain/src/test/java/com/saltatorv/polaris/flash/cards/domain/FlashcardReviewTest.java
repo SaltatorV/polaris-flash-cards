@@ -27,7 +27,7 @@ class FlashcardReviewTest {
 
         //then
         assertEquals(2, review.flashcardCount());
-        assertEquals(getNotConfiguredDate(), review.getStartDate());
+        assertEquals(0, review.getStartDate());
     }
 
     @Test
@@ -42,8 +42,9 @@ class FlashcardReviewTest {
         review.begin();
 
         //then
-        assertTrue(review.getStartDate()
-                .isBefore(getCurrentDate()));
+        waitSomeTime();
+        assertTrue(review.getStartDate()>0);
+        assertTrue(review.getStartDate()<getCurrentDate());
     }
 
     @Test
@@ -89,8 +90,7 @@ class FlashcardReviewTest {
         review.finish();
 
         //then
-        assertTrue(review.getStartDate()
-                .isBefore(review.getFinishDate()));
+        assertTrue(review.getStartDate()<review.getFinishDate());
     }
 
     @Test
@@ -331,14 +331,8 @@ class FlashcardReviewTest {
         assertThrows(NoFlashcardReceivedFromReviewDomainException.class, () -> correctAnswer(review));
     }
 
-    private LocalDateTime getCurrentDate() {
-        return LocalDateTime.now();
-    }
-
-    private LocalDateTime getNotConfiguredDate() {
-        return LocalDateTime.ofInstant(
-                Instant.ofEpochMilli(0),
-                ZoneId.systemDefault());
+    private Long getCurrentDate() {
+        return System.currentTimeMillis();
     }
 
     private FlashcardReview prepareAndBeginReview() {

@@ -7,16 +7,16 @@ public class FlashcardSnapshot {
     private final String question;
     private final String definition;
     private final String answer;
-    private final LocalDateTime startDate;
-    private final LocalDateTime finishDate;
+    private final Long startDate;
+    private final Long finishDate;
 
     public FlashcardSnapshot(String flashcardBlueprintId, String question, String definition,
-                             Answer answer, LocalDateTime startDate, LocalDateTime finishDate) {
+                             Answer answer, Long startDate, Long finishDate) {
         this(flashcardBlueprintId, question, definition, answer.name(), startDate, finishDate);
     }
 
     public FlashcardSnapshot(String flashcardBlueprintId, String question, String definition,
-                             String answer, LocalDateTime startDate, LocalDateTime finishDate) {
+                             String answer, Long startDate, Long finishDate) {
         this.flashcardBlueprintId = flashcardBlueprintId;
         this.question = question;
         this.definition = definition;
@@ -41,11 +41,23 @@ public class FlashcardSnapshot {
         return definition;
     }
 
-    public LocalDateTime getStartDate() {
+    public Long getStartDate() {
         return startDate;
     }
 
-    public LocalDateTime getFinishDate() {
+    public Long getFinishDate() {
         return finishDate;
+    }
+
+    @Override
+    public String toString() {
+        return "FlashcardSnapshot{" +
+                "flashcardBlueprintId='" + flashcardBlueprintId + '\'' +
+                ", question='" + question + '\'' +
+                ", definition='" + definition + '\'' +
+                ", answer='" + answer + '\'' +
+                ", startDate=" + startDate +
+                ", finishDate=" + finishDate +
+                '}';
     }
 }

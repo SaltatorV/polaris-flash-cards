@@ -26,7 +26,7 @@ public class FlashcardReview {
     }
 
     private FlashcardReview(FlashcardReviewId flashcardReviewId, List<Flashcard> flashcards,
-                            LocalDateTime startDate, LocalDateTime finishDate) {
+                            Long startDate, Long finishDate) {
 
         this.id = flashcardReviewId;
         this.flashcards = flashcards;
@@ -143,11 +143,11 @@ public class FlashcardReview {
         return id;
     }
 
-    public LocalDateTime getStartDate() {
+    public Long getStartDate() {
         return activityWindow.getStartDate();
     }
 
-    public LocalDateTime getFinishDate() {
+    public Long getFinishDate() {
         return activityWindow.getFinishDate();
     }
 
@@ -191,10 +191,10 @@ public class FlashcardReview {
     }
 
     private FlashcardReviewLifecycle defineReviewStatus() {
-        if (activityWindow.getStartDateInMilliseconds() != 0 &&
-                activityWindow.getFinishDateInMilliseconds() != 0) {
+        if (activityWindow.getStartDate() != 0 &&
+                activityWindow.getFinishDate() != 0) {
             return FlashcardReviewLifecycle.FINISHED;
-        } else if (activityWindow.getStartDateInMilliseconds() != 0) {
+        } else if (activityWindow.getStartDate() != 0) {
             return FlashcardReviewLifecycle.STARTED;
         } else {
             return FlashcardReviewLifecycle.CREATED;
