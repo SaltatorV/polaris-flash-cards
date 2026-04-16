@@ -24,9 +24,9 @@ class NextFlashcardFromReviewUseCase extends FlashcardReviewUseCaseBase {
 
         FlashcardDto dto = new FlashcardDto(nextFlashcard.getQuestion(),
                 nextFlashcard.getDefinition());
-        System.out.println("NEXT");
+
         flashcardReviewRepository.save(review.generateSnapshot());
-        System.out.println("NEXT END");
+
         return dto;
     }
 }

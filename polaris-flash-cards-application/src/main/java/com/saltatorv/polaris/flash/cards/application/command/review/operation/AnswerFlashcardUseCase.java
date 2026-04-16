@@ -19,7 +19,7 @@ class AnswerFlashcardUseCase extends FlashcardReviewUseCaseBase {
         FlashcardReview review = getReviewFromRepository(id, flashcardReviewRepository);
 
         review.markFlashcardAsCorrect();
-        System.out.println("Mark as correct");
+
         flashcardReviewRepository.save(review.generateSnapshot());
     }
 
@@ -27,7 +27,7 @@ class AnswerFlashcardUseCase extends FlashcardReviewUseCaseBase {
         FlashcardReview review = getReviewFromRepository(id, flashcardReviewRepository);
 
         review.markFlashcardAsIncorrect();
-        System.out.println("mark as incorrect");
+
         flashcardReviewRepository.save(review.generateSnapshot());
     }
 

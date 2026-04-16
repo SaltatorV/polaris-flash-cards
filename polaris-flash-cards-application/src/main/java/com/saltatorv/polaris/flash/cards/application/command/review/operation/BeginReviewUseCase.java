@@ -18,7 +18,7 @@ class BeginReviewUseCase extends FlashcardReviewUseCaseBase {
         FlashcardReview review = getReviewFromRepository(id, flashcardReviewRepository);
 
         review.begin();
-        System.out.println("BEGIN");
+
         flashcardReviewRepository.save(review.generateSnapshot());
     }
 }

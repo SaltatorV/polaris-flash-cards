@@ -53,8 +53,7 @@ class FlashcardReviewRepositoryImpl implements FlashcardReviewRepository {
                 flashcardReviewEntity.getStartDate(),
                 flashcardReviewEntity.getFinishDate(),
                 flashcardSnapshots);
-        System.out.println("FIND BY ID!!!!");
-        System.out.println(flashcardReviewSnapshot);
+
         return Optional.of(flashcardReviewSnapshot);
     }
 
@@ -68,10 +67,8 @@ class FlashcardReviewRepositoryImpl implements FlashcardReviewRepository {
 
         List<FlashcardRevisionEntity> revisions = createRevisionFromFlashcardSnapshots(flashcardReview, flashcardReviewEntity);
         if (flashcardReviewEntity.getFlashcardRevisions().isEmpty()) {
-            System.out.println("IS EMPTY");
             flashcardReviewEntity.getFlashcardRevisions().addAll(revisions);
         } else {
-            System.out.println("IS NOT EMPTY");
             Map<String, FlashcardRevisionEntity> currentRevisions =
                     flashcardReviewEntity
                             .getFlashcardRevisions()
@@ -85,12 +82,9 @@ class FlashcardReviewRepositoryImpl implements FlashcardReviewRepository {
 
 
         }
-        System.out.println("SAVE!!!!");
+
         sqlFlashcardReviewRepository.save(flashcardReviewEntity);
-        for (FlashcardRevisionEntity revision : flashcardReviewEntity.getFlashcardRevisions()) {
-            System.out.println(revision);
-        }
-        System.out.println("SAVED!!!!");
+
         return findById(
                 new FlashcardReviewId(UUID.fromString(
                         flashcardReview.getFlashcardReviewId())))
