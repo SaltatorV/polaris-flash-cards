@@ -1,0 +1,32 @@
+# Git
+.git
+.gitignore
+
+# Readme
+README.md
+*.md
+
+# IDE
+.idea
+.vscode
+*.iml
+*.ipr
+*.iws
+
+# System
+.DS_Store
+Thumbs.db
+
+# Logi
+*.log
+
+# Build artifacts (Maven)
+**/target/
+
+# Docker (opcjonalnie)
+Dockerfile
+docker-compose.yml
+
+# Environment files
+.env
+.env.*
