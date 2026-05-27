@@ -11,7 +11,10 @@ import com.saltatorv.polaris.flash.cards.domain.FlashcardSnapshot;
 import com.saltatorv.polaris.flash.cards.domain.shared.FlashcardReviewId;
 import org.springframework.stereotype.Repository;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Repository
@@ -86,8 +89,8 @@ class FlashcardReviewRepositoryImpl implements FlashcardReviewRepository {
         sqlFlashcardReviewRepository.save(flashcardReviewEntity);
 
         return findById(
-                new FlashcardReviewId(UUID.fromString(
-                        flashcardReview.getFlashcardReviewId())))
+                new FlashcardReviewId(
+                        flashcardReview.getFlashcardReviewId()))
                 .get();
     }
 

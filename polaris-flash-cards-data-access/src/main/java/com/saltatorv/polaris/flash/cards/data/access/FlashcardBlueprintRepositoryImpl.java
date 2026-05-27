@@ -58,8 +58,7 @@ class FlashcardBlueprintRepositoryImpl implements FlashcardBlueprintRepository {
 
         return findById(
                 new FlashcardBlueprintId(
-                        UUID.fromString(
-                                flashcardBlueprintSnapshot.getFlashcardBlueprintId())))
+                                flashcardBlueprintSnapshot.getFlashcardBlueprintId()))
                 .get();
     }
 
