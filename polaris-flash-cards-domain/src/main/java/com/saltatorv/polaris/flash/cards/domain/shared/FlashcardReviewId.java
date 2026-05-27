@@ -2,19 +2,17 @@ package com.saltatorv.polaris.flash.cards.domain.shared;
 
 import com.saltatorv.polaris.flash.cards.domain.Generated;
 
-import java.util.UUID;
-
 @Generated
-public class FlashcardReviewId extends Id<UUID> {
-    public FlashcardReviewId(UUID id) {
+public class FlashcardReviewId extends Id {
+    public FlashcardReviewId(String id) {
         super(id);
     }
 
-    public FlashcardReviewId(String id) {
-        this(UUID.fromString(id));
+    public FlashcardReviewId() {
+        super();
     }
 
     public static FlashcardReviewId generate() {
-        return new FlashcardReviewId(UUID.randomUUID());
+        return new FlashcardReviewId();
     }
 }
