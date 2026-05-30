@@ -2,6 +2,8 @@ package com.saltatorv.polaris.flash.cards.domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+import java.util.Set;
 
 class FlashcardReviewBuilder {
     private List<FlashcardBlueprint> flashcardBlueprints;
@@ -15,8 +17,12 @@ class FlashcardReviewBuilder {
     }
 
     FlashcardReviewBuilder addFlashcard(String question, String answer) {
-        flashcardBlueprints.add(new FlashcardBlueprint(question, answer,
-                new FlashcardMetadata("source", List.of("tag"), java.util.Locale.ENGLISH)));
+
+        List<FlashcardLocalization> localizations = new ArrayList<>();
+        localizations.add(new FlashcardLocalization(Locale.of("EN"), question, answer));
+
+        flashcardBlueprints.add(new FlashcardBlueprint(localizations,
+                new FlashcardMetadata("source", Set.of("tag"))));
         return this;
     }
 
