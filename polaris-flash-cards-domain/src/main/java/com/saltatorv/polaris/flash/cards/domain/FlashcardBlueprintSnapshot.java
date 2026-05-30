@@ -1,45 +1,34 @@
 package com.saltatorv.polaris.flash.cards.domain;
 
 import java.util.List;
+import java.util.Set;
 
 public class FlashcardBlueprintSnapshot {
     private final String flashcardBlueprintId;
-    private final String question;
-    private final String definition;
+    private final List<FlashcardLocalization> localizations;
     private final String source;
-    private final List<String> tags;
-    private final String language;
+    private final Set<String> tags;
 
-    public FlashcardBlueprintSnapshot(String flashcardBlueprintId, String question, String definition, String source, List<String> tags, String language) {
+    public FlashcardBlueprintSnapshot(String flashcardBlueprintId, List<FlashcardLocalization> localizations, String source, Set<String> tags) {
         this.flashcardBlueprintId = flashcardBlueprintId;
-        this.question = question;
-        this.definition = definition;
+        this.localizations = localizations;
         this.source = source;
         this.tags = tags;
-        this.language = language;
     }
 
     public String getFlashcardBlueprintId() {
         return flashcardBlueprintId;
     }
 
-    public String getQuestion() {
-        return question;
-    }
-
-    public String getDefinition() {
-        return definition;
+    public List<FlashcardLocalization> getLocalizations() {
+        return localizations;
     }
 
     public String getSource() {
         return source;
     }
 
-    public List<String> getTags() {
+    public Set<String> getTags() {
         return tags;
-    }
-
-    public String getLanguage() {
-        return language;
     }
 }

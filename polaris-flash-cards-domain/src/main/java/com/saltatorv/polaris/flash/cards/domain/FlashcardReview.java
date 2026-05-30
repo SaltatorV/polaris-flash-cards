@@ -5,6 +5,7 @@ import com.saltatorv.polaris.flash.cards.domain.shared.FlashcardReviewId;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class FlashcardReview {
     private final FlashcardReviewId id;
@@ -18,7 +19,7 @@ public class FlashcardReview {
 
         this.flashcards = flashcardBlueprints
                 .stream()
-                .map(FlashcardBlueprint::createFlashcard)
+                .map(flashcardBlueprint -> flashcardBlueprint.createFlashcard(Locale.of("EN")))
                 .toList();
         this.currentFlashcardIndex = 0;
         this.activityWindow = ActivityWindow.create();

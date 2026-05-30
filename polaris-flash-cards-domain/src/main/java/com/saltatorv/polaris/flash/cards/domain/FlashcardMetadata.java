@@ -1,29 +1,22 @@
 package com.saltatorv.polaris.flash.cards.domain;
 
-import java.util.List;
-import java.util.Locale;
+import java.util.Set;
 
 @Generated
 public class FlashcardMetadata {
     private final String source;
-    private final List<String> tags;
-    private final Locale language;
+    private final Set<String> tags;
 
-    public FlashcardMetadata(String source, List<String> tags, Locale language) {
+    public FlashcardMetadata(String source, Set<String> tags) {
         this.source = source;
         this.tags = tags;
-        this.language = language;
     }
 
     public String getSource() {
         return source;
     }
 
-    public List<String> getTags() {
+    public Set<String> getTags() {
         return tags;
-    }
-
-    public String getLanguage() {
-        return language.getLanguage();
     }
 }
