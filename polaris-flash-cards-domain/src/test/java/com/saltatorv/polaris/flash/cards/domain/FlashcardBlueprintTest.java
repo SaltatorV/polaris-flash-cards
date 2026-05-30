@@ -86,7 +86,7 @@ class FlashcardBlueprintTest {
                 .done()
                 .create();
 
-        var newLocalization = new FlashcardLocalization(Locale.of("PL"), "Pytanie?", "Odpowiedz?");
+        var newLocalization = new FlashcardLocalization(Locale.of("PL"), "Pytanie?", "Odpowiedz");
 
         // when
         blueprint.addNewLocalization(newLocalization);
@@ -109,9 +109,9 @@ class FlashcardBlueprintTest {
                 .done()
                 .create();
 
-        var first = new FlashcardLocalization(Locale.of("PL"), "Pytanie?", "Odpowiedz?");
-        var second = new FlashcardLocalization(Locale.of("DE"), "Frage?", "Antwort?");
-        var third = new FlashcardLocalization(Locale.of("FR"), "Question?", "Reponse?");
+        var first = new FlashcardLocalization(Locale.of("PL"), "Pytanie?", "Odpowiedz");
+        var second = new FlashcardLocalization(Locale.of("DE"), "Frage?", "Antwort");
+        var third = new FlashcardLocalization(Locale.of("FR"), "Question?", "Reponse");
 
         // when
         blueprint.addNewLocalization(first);
@@ -141,7 +141,7 @@ class FlashcardBlueprintTest {
         var newLocalization = new FlashcardLocalization(Locale.of("EN"), "Question?", "Answer?");
 
         //when
-        assertThrows(RuntimeException.class, blueprint.addNewLocalization);
+        assertThrows(RuntimeException.class, () -> blueprint.addNewLocalization(newLocalization));
     }
 
     @Test
@@ -191,7 +191,7 @@ class FlashcardBlueprintTest {
         blueprint.removeLocalization("PL");
 
         //when
-        assertThrows(RuntimeException.class, blueprint.removeLocalization("PL"));
+        assertThrows(RuntimeException.class, () -> blueprint.removeLocalization("PL"));
     }
 
     @Test
@@ -208,7 +208,7 @@ class FlashcardBlueprintTest {
                 .create();
 
         //when
-        assertThrows(RuntimeException.class, blueprint.removeLocalization("EN"));
+        assertThrows(RuntimeException.class, () -> blueprint.removeLocalization("EN"));
     }
 
     @Test
@@ -244,7 +244,7 @@ class FlashcardBlueprintTest {
                 .create();
 
         // when
-        assertThrows(RuntimeException.class, blueprint.updateLocalization("PL", "Pytanie?", "Odpowiedz"));
+        assertThrows(RuntimeException.class, () -> blueprint.updateLocalization("PL", "Pytanie?", "Odpowiedz"));
     }
 
     private void assertBlueprintIsFrom(FlashcardBlueprint blueprint, String source) {
