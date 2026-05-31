@@ -77,15 +77,7 @@ public class FlashcardBlueprint {
 
     public void removeLocalization(String locale) {
 
-        FlashcardLocalization found = localizations.stream()
-                .filter(localization ->
-                        localization.getLocale().equals(Locale.forLanguageTag(locale)))
-                .findFirst()
-                .orElse(null);
-
-        if (found == null) {
-            throw new FlashcardBlueprintLocalizationDoNotExistsDomainException(locale);
-        }
+        FlashcardLocalization found = findLocalization(locale);
 
         if (localizations.size() == 1) {
             throw new FlashcardBlueprintWithoutLocalizationDomainException();
@@ -95,6 +87,14 @@ public class FlashcardBlueprint {
     }
 
     public void updateLocalization(String locale, String question, String answer) {
+        FlashcardLocalization found = findLocalization(locale);
+
+        localizations.remove(found);
+
+        localizations.add(new FlashcardLocalization(Locale.forLanguageTag(locale), question, answer));
+    }
+
+    private FlashcardLocalization findLocalization(String locale) {
         FlashcardLocalization found = localizations.stream()
                 .filter(localization ->
                         localization.getLocale().equals(Locale.forLanguageTag(locale)))
@@ -105,8 +105,6 @@ public class FlashcardBlueprint {
             throw new FlashcardBlueprintLocalizationDoNotExistsDomainException(locale);
         }
 
-        localizations.remove(found);
-
-        localizations.add(new FlashcardLocalization(Locale.forLanguageTag(locale), question, answer));
+        return found;
     }
 }
