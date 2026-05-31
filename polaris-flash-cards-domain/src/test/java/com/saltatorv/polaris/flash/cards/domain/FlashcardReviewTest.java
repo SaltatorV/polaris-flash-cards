@@ -365,7 +365,7 @@ class FlashcardReviewTest {
     }
 
     private void assertGeneratedSnapshotIsValid(FlashcardReviewSnapshot snapshot, FlashcardReview review, List<Answer> answers) {
-        assertEquals(review.getId().getId(), snapshot.getFlashcardReviewId());
+        assertEquals(review.generateSnapshot().getFlashcardReviewId(), snapshot.getFlashcardReviewId());
         assertEquals(review.getStartDate(), snapshot.getStartDate());
         assertEquals(review.getFinishDate(), snapshot.getFinishDate());
 

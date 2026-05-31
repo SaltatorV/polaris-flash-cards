@@ -139,10 +139,6 @@ public class FlashcardReview {
         return flashcards.size();
     }
 
-    public FlashcardReviewId getId() {
-        return id;
-    }
-
     public Long getStartDate() {
         return activityWindow.getStartDate();
     }
