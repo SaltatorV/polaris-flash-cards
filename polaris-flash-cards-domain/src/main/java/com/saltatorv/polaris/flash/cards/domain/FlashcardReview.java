@@ -1,6 +1,6 @@
 package com.saltatorv.polaris.flash.cards.domain;
 
-import com.saltatorv.polaris.flash.cards.domain.exception.*;
+import com.saltatorv.polaris.flash.cards.domain.exception.review.*;
 import com.saltatorv.polaris.flash.cards.domain.shared.FlashcardReviewId;
 
 import java.util.ArrayList;
