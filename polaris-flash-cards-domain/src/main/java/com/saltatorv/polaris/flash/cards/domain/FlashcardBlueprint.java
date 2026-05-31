@@ -40,8 +40,6 @@ public class FlashcardBlueprint {
     }
 
     public FlashcardBlueprintSnapshot generateSnapshot() {
-
-
         return new FlashcardBlueprintSnapshot(flashcardBlueprintId.getId(), localizations, metadata.getSource(), metadata.getTags());
     }
 
