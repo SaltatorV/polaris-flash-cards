@@ -1,5 +1,8 @@
 package com.saltatorv.polaris.flash.cards.domain;
 
+import com.saltatorv.polaris.flash.cards.domain.exception.blueprint.FlashcardBlueprintLocalizationAlreadyExistsDomainException;
+import com.saltatorv.polaris.flash.cards.domain.exception.blueprint.FlashcardBlueprintLocalizationDoNotExistsDomainException;
+import com.saltatorv.polaris.flash.cards.domain.exception.blueprint.FlashcardBlueprintWithoutLocalizationDomainException;
 import com.saltatorv.polaris.flash.cards.domain.shared.FlashcardBlueprintId;
 
 import java.util.List;
@@ -13,7 +16,7 @@ public class FlashcardBlueprint {
 
     public FlashcardBlueprint(List<FlashcardLocalization> localizations, FlashcardMetadata metadata) {
         if (localizations.isEmpty()) {
-            throw new IllegalArgumentException("Flashcard blueprint must have at least one localization");
+            throw new FlashcardBlueprintWithoutLocalizationDomainException();
         }
 
         this.flashcardBlueprintId = FlashcardBlueprintId.generate();
@@ -66,7 +69,7 @@ public class FlashcardBlueprint {
                                 localization.getLocale().equals(newLocalization.getLocale()))
                 .findFirst()
                 .ifPresent(localization -> {
-                    throw new IllegalArgumentException("Localization with locale " + newLocalization.getLocale() + " already exists");
+                    throw new FlashcardBlueprintLocalizationAlreadyExistsDomainException(newLocalization.getLocale().toLanguageTag());
                 });
 
         localizations.add(newLocalization);
@@ -81,11 +84,11 @@ public class FlashcardBlueprint {
                 .orElse(null);
 
         if (found == null) {
-            throw new IllegalArgumentException("Localization with locale " + locale + " does not exist");
+            throw new FlashcardBlueprintLocalizationDoNotExistsDomainException(locale);
         }
 
         if (localizations.size() == 1) {
-            throw new IllegalArgumentException("Cannot remove last localization");
+            throw new FlashcardBlueprintWithoutLocalizationDomainException();
         }
 
         localizations.remove(found);
@@ -99,7 +102,7 @@ public class FlashcardBlueprint {
                 .orElse(null);
 
         if (found == null) {
-            throw new IllegalArgumentException("Localization with locale " + locale + " does not exist");
+            throw new FlashcardBlueprintLocalizationDoNotExistsDomainException(locale);
         }
 
         localizations.remove(found);

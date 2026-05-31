@@ -1,5 +1,8 @@
 package com.saltatorv.polaris.flash.cards.domain;
 
+import com.saltatorv.polaris.flash.cards.domain.exception.blueprint.FlashcardBlueprintLocalizationAlreadyExistsDomainException;
+import com.saltatorv.polaris.flash.cards.domain.exception.blueprint.FlashcardBlueprintLocalizationDoNotExistsDomainException;
+import com.saltatorv.polaris.flash.cards.domain.exception.blueprint.FlashcardBlueprintWithoutLocalizationDomainException;
 import org.junit.jupiter.api.Test;
 
 import java.util.Locale;
@@ -70,7 +73,7 @@ class FlashcardBlueprintTest {
                 .done();
 
         // when
-        assertThrows(RuntimeException.class, builder::create);
+        assertThrows(FlashcardBlueprintWithoutLocalizationDomainException.class, builder::create);
     }
 
     @Test
@@ -141,7 +144,7 @@ class FlashcardBlueprintTest {
         var newLocalization = new FlashcardLocalization(Locale.of("EN"), "Question?", "Answer?");
 
         //when
-        assertThrows(RuntimeException.class, () -> blueprint.addNewLocalization(newLocalization));
+        assertThrows(FlashcardBlueprintLocalizationAlreadyExistsDomainException.class, () -> blueprint.addNewLocalization(newLocalization));
     }
 
     @Test
@@ -191,7 +194,7 @@ class FlashcardBlueprintTest {
         blueprint.removeLocalization("PL");
 
         //when
-        assertThrows(RuntimeException.class, () -> blueprint.removeLocalization("PL"));
+        assertThrows(FlashcardBlueprintLocalizationDoNotExistsDomainException.class, () -> blueprint.removeLocalization("PL"));
     }
 
     @Test
@@ -208,7 +211,7 @@ class FlashcardBlueprintTest {
                 .create();
 
         //when
-        assertThrows(RuntimeException.class, () -> blueprint.removeLocalization("EN"));
+        assertThrows(FlashcardBlueprintWithoutLocalizationDomainException.class, () -> blueprint.removeLocalization("EN"));
     }
 
     @Test
@@ -244,7 +247,7 @@ class FlashcardBlueprintTest {
                 .create();
 
         // when
-        assertThrows(RuntimeException.class, () -> blueprint.updateLocalization("PL", "Pytanie?", "Odpowiedz"));
+        assertThrows(FlashcardBlueprintLocalizationDoNotExistsDomainException.class, () -> blueprint.updateLocalization("PL", "Pytanie?", "Odpowiedz"));
     }
 
     private void assertBlueprintIsFrom(FlashcardBlueprint blueprint, String source) {
