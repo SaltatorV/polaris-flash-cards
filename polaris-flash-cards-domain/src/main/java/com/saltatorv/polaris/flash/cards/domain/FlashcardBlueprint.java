@@ -8,7 +8,6 @@ import com.saltatorv.polaris.flash.cards.domain.shared.FlashcardBlueprintId;
 import java.util.List;
 import java.util.Locale;
 
-@Generated
 public class FlashcardBlueprint {
     private final FlashcardBlueprintId flashcardBlueprintId;
     private final List<FlashcardLocalization> localizations;
