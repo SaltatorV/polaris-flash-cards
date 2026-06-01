@@ -1,6 +1,7 @@
 package com.saltatorv.polaris.flash.cards.domain;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 public class FlashcardBlueprintSnapshot {
@@ -30,5 +31,20 @@ public class FlashcardBlueprintSnapshot {
 
     public Set<String> getTags() {
         return tags;
+    }
+
+    @Override
+    @Generated
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+
+        FlashcardBlueprintSnapshot snapshot = (FlashcardBlueprintSnapshot) o;
+        return Objects.equals(flashcardBlueprintId, snapshot.flashcardBlueprintId);
+    }
+
+    @Override
+    @Generated
+    public int hashCode() {
+        return Objects.hashCode(flashcardBlueprintId);
     }
 }
