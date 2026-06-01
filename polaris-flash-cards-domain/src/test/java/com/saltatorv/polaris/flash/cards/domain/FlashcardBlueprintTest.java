@@ -250,6 +250,34 @@ class FlashcardBlueprintTest {
         assertThrows(FlashcardBlueprintLocalizationDoNotExistsDomainException.class, () -> blueprint.updateLocalization("PL", "Pytanie?", "Odpowiedz"));
     }
 
+    @Test
+    public void testShouldGenerateBlueprintSnapshot() {
+        // given
+        var blueprint = buildFlashcardBlueprint()
+                .fromSource("Java OCP")
+                .withTags("JAVA", "OCP", "Basic")
+                .defineLocalization()
+                .forLanguage("EN")
+                .attachQuestion("Question?")
+                .withAnswer("Answer")
+                .done()
+                .create();
+
+        var first = new FlashcardLocalization(Locale.of("PL"), "Pytanie?", "Odpowiedz");
+        var second = new FlashcardLocalization(Locale.of("DE"), "Frage?", "Antwort");
+
+        blueprint.addNewLocalization(first);
+        blueprint.addNewLocalization(second);
+        blueprint.removeLocalization("EN");
+
+        // when
+        var snapshot = blueprint.generateSnapshot();
+        var restored = FlashcardBlueprint.restore(snapshot);
+
+        // then
+        assertEquals(blueprint.generateSnapshot(), restored.generateSnapshot());
+    }
+
     private void assertBlueprintIsFrom(FlashcardBlueprint blueprint, String source) {
         assertEquals(blueprint.generateSnapshot().getSource(), source);
     }
