@@ -40,7 +40,7 @@ public class FlashcardBlueprint {
     }
 
     public FlashcardBlueprintSnapshot generateSnapshot() {
-        return new FlashcardBlueprintSnapshot(flashcardBlueprintId.getId(), localizations, metadata.getSource(), metadata.getTags());
+        return new FlashcardBlueprintSnapshot(flashcardBlueprintId.getId(), List.copyOf(localizations), metadata.getSource(), metadata.getTags());
     }
 
     public Flashcard createFlashcard(Locale locale) {

@@ -278,6 +278,51 @@ class FlashcardBlueprintTest {
         assertEquals(blueprint.generateSnapshot(), restored.generateSnapshot());
     }
 
+    @Test
+    public void testShouldNotModifyLocalizationsViaSnapshot() {
+        //given
+        var blueprint = buildFlashcardBlueprint()
+                .fromSource("Java OCP")
+                .withTags("JAVA", "OCP", "Basic")
+                .defineLocalization()
+                .forLanguage("EN")
+                .attachQuestion("Question?")
+                .withAnswer("Answer")
+                .done()
+                .create();
+
+        var snapshot = blueprint.generateSnapshot();
+
+        //when
+        assertThrows(UnsupportedOperationException.class, () -> snapshot.getLocalizations().clear());
+
+        //then
+        assertBlueprintHaveLocalizationFor(blueprint, "EN", "Question?", "Answer");
+    }
+
+    @Test
+    public void testShouldNotModifyTagsViaSnapshot() {
+        //given
+        var blueprint = buildFlashcardBlueprint()
+                .fromSource("Java OCP")
+                .withTags("JAVA", "OCP", "Basic")
+                .defineLocalization()
+                .forLanguage("EN")
+                .attachQuestion("Question?")
+                .withAnswer("Answer")
+                .done()
+                .create();
+
+        var snapshot = blueprint.generateSnapshot();
+
+        //when
+        assertThrows(UnsupportedOperationException.class, () -> snapshot.getTags().clear());
+
+        //then
+        assertBlueprintHaveLocalizationFor(blueprint, "EN", "Question?", "Answer");
+    }
+
+
     private void assertBlueprintIsFrom(FlashcardBlueprint blueprint, String source) {
         assertEquals(blueprint.generateSnapshot().getSource(), source);
     }

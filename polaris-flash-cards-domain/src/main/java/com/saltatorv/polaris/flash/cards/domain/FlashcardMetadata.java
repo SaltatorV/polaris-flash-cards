@@ -17,6 +17,6 @@ public class FlashcardMetadata {
     }
 
     public Set<String> getTags() {
-        return tags;
+        return Set.copyOf(tags);
     }
 }
