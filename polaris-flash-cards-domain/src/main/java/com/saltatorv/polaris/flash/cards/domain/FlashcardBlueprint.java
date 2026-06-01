@@ -48,10 +48,6 @@ public class FlashcardBlueprint {
         return new Flashcard(flashcardBlueprintId.getId(), chosenLocalization.getQuestion(), chosenLocalization.getAnswer());
     }
 
-    public FlashcardMetadata getMetadata() {
-        return metadata;
-    }
-
     public void addNewLocalization(FlashcardLocalization newLocalization) {
         FlashcardLocalization found = findLocalization(newLocalization.getLocale().toLanguageTag());
 
