@@ -40,8 +40,8 @@ class FlashcardReviewTest {
 
         //then
         waitSomeTime();
-        assertTrue(review.getStartDate()>0);
-        assertTrue(review.getStartDate()<getCurrentDate());
+        assertTrue(review.getStartDate() > 0);
+        assertTrue(review.getStartDate() < getCurrentDate());
     }
 
     @Test
@@ -87,7 +87,7 @@ class FlashcardReviewTest {
         review.finish();
 
         //then
-        assertTrue(review.getStartDate()<review.getFinishDate());
+        assertTrue(review.getStartDate() < review.getFinishDate());
     }
 
     @Test
@@ -328,6 +328,128 @@ class FlashcardReviewTest {
         assertThrows(NoFlashcardReceivedFromReviewDomainException.class, () -> correctAnswer(review));
     }
 
+    @Test
+    public void testShouldRestoreNewlyCreatedReviewFromSnapshot() {
+        //given
+        FlashcardReview review = buildFlashcardReview()
+                .addFlashcard("Question-1", "Answer-1")
+                .addFlashcard("Question-2", "Answer-2")
+                .addFlashcard("Question-3", "Answer-3")
+                .create();
+
+        var snapshot = review.generateSnapshot();
+
+        //when
+        var restored = FlashcardReview.restore(snapshot);
+
+        //then
+        assertStartTimeIs(restored, 0L);
+        assertFinishTimeIs(restored, 0L);
+        assertCorrectAnswerCountIs(restored, 0);
+        assertIncorrectAnswerCountIs(restored, 0);
+        assertGeneratedSnapshotIsValid(snapshot, restored, List.of(NOT_ANSWERED, NOT_ANSWERED, NOT_ANSWERED));
+    }
+
+    @Test
+    public void testShouldRestoreBaganReviewFromSnapshot() {
+        //given
+        FlashcardReview review = buildFlashcardReview()
+                .addFlashcard("Question-1", "Answer-1")
+                .addFlashcard("Question-2", "Answer-2")
+                .addFlashcard("Question-3", "Answer-3")
+                .create();
+
+        var timestamp = System.currentTimeMillis();
+
+        waitSomeTime();
+
+        review.begin();
+
+        var snapshot = review.generateSnapshot();
+
+        //when
+        var restored = FlashcardReview.restore(snapshot);
+
+        //then
+        assertStartTimeIsAfter(restored, timestamp);
+        assertFinishTimeIs(restored, 0L);
+        assertCorrectAnswerCountIs(restored, 0);
+        assertIncorrectAnswerCountIs(restored, 0);
+        assertGeneratedSnapshotIsValid(snapshot, restored, List.of(NOT_ANSWERED, NOT_ANSWERED, NOT_ANSWERED));
+    }
+
+    @Test
+    public void testShouldRestoreAnsweredReviewFromSnapshot() {
+        //given
+        FlashcardReview review = buildFlashcardReview()
+                .addFlashcard("Question-1", "Answer-1")
+                .addFlashcard("Question-2", "Answer-2")
+                .addFlashcard("Question-3", "Answer-3")
+                .create();
+
+        var timestamp = System.currentTimeMillis();
+
+        waitSomeTime();
+
+        review.begin();
+        review.next();
+        review.markFlashcardAsCorrect();
+        review.next();
+        review.markFlashcardAsIncorrect();
+        review.next();
+
+        var snapshot = review.generateSnapshot();
+
+        //when
+        var restored = FlashcardReview.restore(snapshot);
+
+        //then
+        assertStartTimeIsAfter(restored, timestamp);
+        assertFinishTimeIs(restored, 0L);
+        assertCorrectAnswerCountIs(restored, 1);
+        assertIncorrectAnswerCountIs(restored, 1);
+        assertGeneratedSnapshotIsValid(snapshot, restored, List.of(CORRECT, INCORRECT, REVIEWED));
+    }
+
+    @Test
+    public void testShouldRestoreFinishedReviewFromSnapshot() {
+        //given
+        FlashcardReview review = buildFlashcardReview()
+                .addFlashcard("Question-1", "Answer-1")
+                .addFlashcard("Question-2", "Answer-2")
+                .addFlashcard("Question-3", "Answer-3")
+                .create();
+
+        var beforeStartTimestamp = System.currentTimeMillis();
+
+        waitSomeTime();
+
+        review.begin();
+        review.next();
+        review.markFlashcardAsCorrect();
+        review.next();
+        review.markFlashcardAsIncorrect();
+        review.next();
+
+        waitSomeTime();
+        var afterStartTimestamp = System.currentTimeMillis();
+        waitSomeTime();
+
+        review.finish();
+
+        var snapshot = review.generateSnapshot();
+
+        //when
+        var restored = FlashcardReview.restore(snapshot);
+
+        //then
+        assertStartTimeIsAfter(restored, beforeStartTimestamp);
+        assertFinishTimeIsAfter(restored, afterStartTimestamp);
+        assertCorrectAnswerCountIs(restored, 1);
+        assertIncorrectAnswerCountIs(restored, 2);
+        assertGeneratedSnapshotIsValid(snapshot, restored, List.of(CORRECT, INCORRECT, INCORRECT));
+    }
+
     private Long getCurrentDate() {
         return System.currentTimeMillis();
     }
@@ -376,4 +498,27 @@ class FlashcardReviewTest {
         }
     }
 
+    private void assertStartTimeIs(FlashcardReview restored, long expectedTime) {
+        assertEquals(restored.getStartDate(), expectedTime);
+    }
+
+    private void assertFinishTimeIs(FlashcardReview restored, long expectedTime) {
+        assertEquals(restored.getFinishDate(), expectedTime);
+    }
+
+    private void assertStartTimeIsAfter(FlashcardReview review, long timestamp) {
+        assertTrue(review.getStartDate() > timestamp);
+    }
+
+    private void assertFinishTimeIsAfter(FlashcardReview review, long timestamp) {
+        assertTrue(review.getFinishDate() > timestamp);
+    }
+
+    private void assertCorrectAnswerCountIs(FlashcardReview review, int count) {
+        assertEquals(count, review.getCorrectAnswers());
+    }
+
+    private void assertIncorrectAnswerCountIs(FlashcardReview review, int count) {
+        assertEquals(count, review.getIncorrectAnswers());
+    }
 }
