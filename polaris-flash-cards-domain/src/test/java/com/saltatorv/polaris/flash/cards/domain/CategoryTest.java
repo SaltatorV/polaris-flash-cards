@@ -2,6 +2,7 @@ package com.saltatorv.polaris.flash.cards.domain;
 
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class CategoryTest {
@@ -59,5 +60,9 @@ class CategoryTest {
         assertThrows(RuntimeException.class, () -> fourthGeneration.createChild("HashMap"));
 
         //then
+    }
+
+    private void assertCategoryDepthIs(int depth, Category category) {
+        assertEquals(depth, category.getDepth());
     }
 }
