@@ -8,7 +8,7 @@ public class FlashcardReviewId extends Id {
         super(id);
     }
 
-    public FlashcardReviewId() {
+    private FlashcardReviewId() {
         super();
     }
 

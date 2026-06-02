@@ -6,7 +6,7 @@ public class FlashcardBlueprintId extends Id {
         super(id);
     }
 
-    public FlashcardBlueprintId() {
+    private FlashcardBlueprintId() {
         super();
     }
 
