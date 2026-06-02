@@ -1,5 +1,6 @@
 package com.saltatorv.polaris.flash.cards.domain;
 
+import com.saltatorv.polaris.flash.cards.domain.exception.category.CategoryMaxDepthReachedDomainException;
 import com.saltatorv.polaris.flash.cards.domain.shared.CategoryId;
 
 public class Category {
@@ -27,7 +28,7 @@ public class Category {
     public Category createChild(String categoryName) {
 
         if (depth + 1 > MAX_AVAILABLE_DEPTH) {
-            throw new RuntimeException("Max depth reached");
+            throw new CategoryMaxDepthReachedDomainException(categoryName, parent);
         }
 
         return new Category(depth + 1, categoryName, id);

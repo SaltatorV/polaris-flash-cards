@@ -1,5 +1,6 @@
 package com.saltatorv.polaris.flash.cards.domain;
 
+import com.saltatorv.polaris.flash.cards.domain.exception.category.CategoryMaxDepthReachedDomainException;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -57,7 +58,7 @@ class CategoryTest {
         var fourthGeneration = thirdGeneration.createChild("Map");
 
         //when
-        assertThrows(RuntimeException.class, () -> fourthGeneration.createChild("HashMap"));
+        assertThrows(CategoryMaxDepthReachedDomainException.class, () -> fourthGeneration.createChild("HashMap"));
 
         //then
     }
