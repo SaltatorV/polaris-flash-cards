@@ -2,7 +2,7 @@ package com.saltatorv.polaris.flash.cards.domain;
 
 import java.util.Locale;
 
-class FlashcardLocalization {
+public class FlashcardLocalization {
     private final Locale locale;
     private final String question;
     private final String answer;
