@@ -3,16 +3,16 @@ package com.saltatorv.polaris.flash.cards.application.command.blueprint.dto;
 import java.util.List;
 import java.util.Locale;
 
-public class FlashcardBlueprintDataDto {
+public class FlashcardBlueprintDto {
     private String question;
     private String definition;
     private String source;
     private List<String> tags;
     private String language;
 
-    public FlashcardBlueprintDataDto(String question,
-                                     String definition, String source,
-                                     List<String> tags, String language) {
+    public FlashcardBlueprintDto(String question,
+                                 String definition, String source,
+                                 List<String> tags, String language) {
         this.question = question;
         this.definition = definition;
         this.source = source;
@@ -20,7 +20,7 @@ public class FlashcardBlueprintDataDto {
         this.language = language;
     }
 
-    public FlashcardBlueprintDataDto() {
+    public FlashcardBlueprintDto() {
     }
 
     public String getQuestion() {

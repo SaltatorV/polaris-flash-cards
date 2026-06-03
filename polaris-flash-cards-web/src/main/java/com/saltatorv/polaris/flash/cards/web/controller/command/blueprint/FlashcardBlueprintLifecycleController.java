@@ -1,7 +1,7 @@
 package com.saltatorv.polaris.flash.cards.web.controller.command.blueprint;
 
 import com.saltatorv.polaris.flash.cards.application.command.blueprint.lifecycle.AddFlashcardBlueprintUseCase;
-import com.saltatorv.polaris.flash.cards.application.command.blueprint.dto.FlashcardBlueprintDataDto;
+import com.saltatorv.polaris.flash.cards.application.command.blueprint.dto.FlashcardBlueprintDto;
 import com.saltatorv.polaris.flash.cards.web.BaseController;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,7 +20,7 @@ public class FlashcardBlueprintLifecycleController extends BaseController {
     }
 
     @PostMapping(FLASHCARD_BLUEPRINT_CREATE_ENDPOINT)
-    public void createFlashcardBlueprints(@RequestBody List<FlashcardBlueprintDataDto> requests) {
+    public void createFlashcardBlueprints(@RequestBody List<FlashcardBlueprintDto> requests) {
         addFlashcardBlueprintUseCase.addFlashcardBlueprints(requests);
     }
 }

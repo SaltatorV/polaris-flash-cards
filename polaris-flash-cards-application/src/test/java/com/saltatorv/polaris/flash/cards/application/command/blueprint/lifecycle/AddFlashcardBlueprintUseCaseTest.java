@@ -1,7 +1,7 @@
 package com.saltatorv.polaris.flash.cards.application.command.blueprint.lifecycle;
 
 import com.saltatorv.polaris.flash.cards.application.FlashcardBlueprintIdCache;
-import com.saltatorv.polaris.flash.cards.application.command.blueprint.dto.FlashcardBlueprintDataDto;
+import com.saltatorv.polaris.flash.cards.application.command.blueprint.dto.FlashcardBlueprintDto;
 import com.saltatorv.polaris.flash.cards.domain.FlashcardBlueprint;
 import com.saltatorv.polaris.flash.cards.domain.FlashcardBlueprintRepository;
 import com.saltatorv.polaris.flash.cards.domain.FlashcardBlueprintSnapshot;
@@ -23,7 +23,7 @@ import static org.mockito.Mockito.when;
 public class AddFlashcardBlueprintUseCaseTest {
 
     private List<FlashcardBlueprint> blueprints;
-    private List<FlashcardBlueprintDataDto> blueprintDataDtos;
+    private List<FlashcardBlueprintDto> blueprintDataDtos;
 
     @Mock
     private FlashcardBlueprintIdCache flashcardBlueprintIdCache;
@@ -58,7 +58,7 @@ public class AddFlashcardBlueprintUseCaseTest {
     private void generateFlashcardBlueprintDtos(int size) {
         blueprintDataDtos = new ArrayList<>();
         for (int i = 0; i < size; i++) {
-            blueprintDataDtos.add(new FlashcardBlueprintDataDto("Question-%s".formatted(i),
+            blueprintDataDtos.add(new FlashcardBlueprintDto("Question-%s".formatted(i),
                     "Answer-%s".formatted(i), "Source-%s".formatted(i),
                     List.of("Tag-%s.1".formatted(i), "Tag-%s.2".formatted(i)),
                     "PL"));
@@ -73,7 +73,7 @@ public class AddFlashcardBlueprintUseCaseTest {
     private void assertBlueprintsAreCreatedFromDtos() {
         for (int i = 0; i < blueprints.size(); i++) {
             FlashcardBlueprint blueprint = blueprints.get(i);
-            FlashcardBlueprintDataDto blueprintDataDto = blueprintDataDtos.get(i);
+            FlashcardBlueprintDto blueprintDataDto = blueprintDataDtos.get(i);
 
             assertEquals(blueprintDataDto.getQuestion(), blueprint.createFlashcard().getQuestion());
             assertEquals(blueprintDataDto.getDefinition(), blueprint.createFlashcard().getDefinition());

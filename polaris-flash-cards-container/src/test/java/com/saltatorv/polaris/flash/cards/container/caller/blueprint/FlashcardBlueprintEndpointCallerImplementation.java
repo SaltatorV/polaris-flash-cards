@@ -1,6 +1,6 @@
 package com.saltatorv.polaris.flash.cards.container.caller.blueprint;
 
-import com.saltatorv.polaris.flash.cards.application.command.blueprint.dto.FlashcardBlueprintDataDto;
+import com.saltatorv.polaris.flash.cards.application.command.blueprint.dto.FlashcardBlueprintDto;
 import com.saltatorv.polaris.flash.cards.container.caller.EndpointCaller;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -14,7 +14,7 @@ import static io.restassured.RestAssured.given;
 
 public class FlashcardBlueprintEndpointCallerImplementation implements EndpointCaller, FlashcardBlueprintEndpointCaller, CreateBlueprintEndpointCaller {
 
-    private List<FlashcardBlueprintDataDto> dtos;
+    private List<FlashcardBlueprintDto> dtos;
 
     private FlashcardBlueprintEndpointCallerImplementation() {
         dtos = new ArrayList<>();
@@ -35,7 +35,7 @@ public class FlashcardBlueprintEndpointCallerImplementation implements EndpointC
     @Override
     public CreateBlueprintEndpointCaller addDefaultBlueprintToRequestBody(int times) {
         for (int i = 0; i < times; i++) {
-            dtos.add(new FlashcardBlueprintDataDto(
+            dtos.add(new FlashcardBlueprintDto(
                     String.format("Question-%d", i),
                     String.format("Definition-%d", i),
                     String.format("Source-%d", i),
