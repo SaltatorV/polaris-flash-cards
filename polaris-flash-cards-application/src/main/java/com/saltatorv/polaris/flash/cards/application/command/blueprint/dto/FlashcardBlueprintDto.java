@@ -1,45 +1,38 @@
 package com.saltatorv.polaris.flash.cards.application.command.blueprint.dto;
 
 import java.util.List;
-import java.util.Locale;
+import java.util.Set;
 
 public class FlashcardBlueprintDto {
-    private String question;
-    private String definition;
+    private String categoryId;
     private String source;
-    private List<String> tags;
-    private String language;
+    private Set<String> tags;
+    private List<FlashcardLocalizationDto> localizations;
 
-    public FlashcardBlueprintDto(String question,
-                                 String definition, String source,
-                                 List<String> tags, String language) {
-        this.question = question;
-        this.definition = definition;
+    public FlashcardBlueprintDto(String categoryId, String source,
+                                 Set<String> tags, List<FlashcardLocalizationDto> localizations) {
+        this.categoryId = categoryId;
         this.source = source;
         this.tags = tags;
-        this.language = language;
+        this.localizations = localizations;
     }
 
     public FlashcardBlueprintDto() {
     }
 
-    public String getQuestion() {
-        return question;
-    }
-
-    public String getDefinition() {
-        return definition;
+    public String getCategoryId() {
+        return categoryId;
     }
 
     public String getSource() {
         return source;
     }
 
-    public List<String> getTags() {
+    public Set<String> getTags() {
         return tags;
     }
 
-    public Locale getLanguage() {
-        return Locale.forLanguageTag(language);
+    public List<FlashcardLocalizationDto> getLocalizations() {
+        return localizations;
     }
 }
