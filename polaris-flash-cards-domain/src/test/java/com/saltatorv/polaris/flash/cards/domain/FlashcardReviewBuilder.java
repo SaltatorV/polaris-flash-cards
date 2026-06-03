@@ -1,5 +1,7 @@
 package com.saltatorv.polaris.flash.cards.domain;
 
+import com.saltatorv.polaris.flash.cards.domain.shared.CategoryId;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -21,7 +23,7 @@ class FlashcardReviewBuilder {
         List<FlashcardLocalization> localizations = new ArrayList<>();
         localizations.add(new FlashcardLocalization(Locale.of("EN"), question, answer));
 
-        flashcardBlueprints.add(new FlashcardBlueprint(localizations,
+        flashcardBlueprints.add(new FlashcardBlueprint(CategoryId.generate(), localizations,
                 new FlashcardMetadata("source", Set.of("tag"))));
         return this;
     }

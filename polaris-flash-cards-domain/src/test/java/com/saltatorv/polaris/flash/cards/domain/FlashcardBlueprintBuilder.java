@@ -4,6 +4,7 @@ import com.saltatorv.polaris.flash.cards.domain.creator.FlashcardBlueprintBuilde
 import com.saltatorv.polaris.flash.cards.domain.creator.FlashcardBlueprintBuilderTagsStep;
 import com.saltatorv.polaris.flash.cards.domain.creator.FlashcardBlueprintLocalizationDataStep;
 import com.saltatorv.polaris.flash.cards.domain.creator.FlashcardBlueprintLocalizationStep;
+import com.saltatorv.polaris.flash.cards.domain.shared.CategoryId;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -82,6 +83,6 @@ class FlashcardBlueprintBuilder implements FlashcardBlueprintBuilderSourceStep, 
 
         FlashcardMetadata metadata = new FlashcardMetadata(source, tags);
 
-        return new FlashcardBlueprint(localizations, metadata);
+        return new FlashcardBlueprint(CategoryId.generate(), localizations, metadata);
     }
 }

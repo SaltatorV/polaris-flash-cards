@@ -6,12 +6,14 @@ import java.util.Set;
 
 public class FlashcardBlueprintSnapshot {
     private final String flashcardBlueprintId;
+    private final String categoryId;
     private final List<FlashcardLocalization> localizations;
     private final String source;
     private final Set<String> tags;
 
-    public FlashcardBlueprintSnapshot(String flashcardBlueprintId, List<FlashcardLocalization> localizations, String source, Set<String> tags) {
+    public FlashcardBlueprintSnapshot(String flashcardBlueprintId, String categoryId, List<FlashcardLocalization> localizations, String source, Set<String> tags) {
         this.flashcardBlueprintId = flashcardBlueprintId;
+        this.categoryId = categoryId;
         this.localizations = localizations;
         this.source = source;
         this.tags = tags;
@@ -19,6 +21,10 @@ public class FlashcardBlueprintSnapshot {
 
     public String getFlashcardBlueprintId() {
         return flashcardBlueprintId;
+    }
+
+    public String getCategoryId() {
+        return categoryId;
     }
 
     public List<FlashcardLocalization> getLocalizations() {

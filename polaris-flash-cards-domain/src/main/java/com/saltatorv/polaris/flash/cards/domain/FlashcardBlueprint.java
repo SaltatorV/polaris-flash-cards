@@ -3,28 +3,32 @@ package com.saltatorv.polaris.flash.cards.domain;
 import com.saltatorv.polaris.flash.cards.domain.exception.blueprint.FlashcardBlueprintLocalizationAlreadyExistsDomainException;
 import com.saltatorv.polaris.flash.cards.domain.exception.blueprint.FlashcardBlueprintLocalizationDoNotExistsDomainException;
 import com.saltatorv.polaris.flash.cards.domain.exception.blueprint.FlashcardBlueprintWithoutLocalizationDomainException;
+import com.saltatorv.polaris.flash.cards.domain.shared.CategoryId;
 import com.saltatorv.polaris.flash.cards.domain.shared.FlashcardBlueprintId;
 
 import java.util.List;
 import java.util.Locale;
 
 public class FlashcardBlueprint {
+    private final CategoryId categoryId;
     private final FlashcardBlueprintId flashcardBlueprintId;
     private final List<FlashcardLocalization> localizations;
     private final FlashcardMetadata metadata;
 
-    public FlashcardBlueprint(List<FlashcardLocalization> localizations, FlashcardMetadata metadata) {
+    public FlashcardBlueprint(CategoryId categoryId, List<FlashcardLocalization> localizations, FlashcardMetadata metadata) {
         if (localizations.isEmpty()) {
             throw new FlashcardBlueprintWithoutLocalizationDomainException();
         }
 
+        this.categoryId = categoryId;
         this.flashcardBlueprintId = FlashcardBlueprintId.generate();
         this.localizations = localizations;
         this.metadata = metadata;
     }
 
-    private FlashcardBlueprint(FlashcardBlueprintId flashcardBlueprintId, List<FlashcardLocalization> localizations, FlashcardMetadata metadata) {
+    private FlashcardBlueprint(FlashcardBlueprintId flashcardBlueprintId, CategoryId categoryId, List<FlashcardLocalization> localizations, FlashcardMetadata metadata) {
         this.flashcardBlueprintId = flashcardBlueprintId;
+        this.categoryId = categoryId;
         this.localizations = localizations;
         this.metadata = metadata;
     }
@@ -35,12 +39,13 @@ public class FlashcardBlueprint {
                 snapshot.getTags());
 
         return new FlashcardBlueprint(new FlashcardBlueprintId(snapshot.getFlashcardBlueprintId()),
+                new CategoryId(snapshot.getCategoryId()),
                 snapshot.getLocalizations(),
                 flashcardMetadata);
     }
 
     public FlashcardBlueprintSnapshot generateSnapshot() {
-        return new FlashcardBlueprintSnapshot(flashcardBlueprintId.getId(), List.copyOf(localizations), metadata.getSource(), metadata.getTags());
+        return new FlashcardBlueprintSnapshot(flashcardBlueprintId.getId(), categoryId.getId(), List.copyOf(localizations), metadata.getSource(), metadata.getTags());
     }
 
     public Flashcard createFlashcard(Locale locale) {
