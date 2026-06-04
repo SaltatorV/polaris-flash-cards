@@ -11,6 +11,7 @@
     <artifactId>polaris-flash-cards-application</artifactId>
     <name>polaris-flash-cards-application</name>
     <description>polaris-flash-cards-application</description>
+    <version>0.0.2</version>
 
     <build>
         <plugins>
