@@ -1,5 +1,6 @@
 package com.saltatorv.polaris.flash.cards.domain;
 
+import com.saltatorv.polaris.flash.cards.domain.shared.CategoryId;
 import com.saltatorv.polaris.flash.cards.domain.shared.FlashcardBlueprintId;
 
 import java.util.List;
@@ -15,5 +16,5 @@ public interface FlashcardBlueprintRepository {
 
     List<FlashcardBlueprintSnapshot> findAll();
 
-    List<FlashcardBlueprintSnapshot> findAllByCategoryId(String categoryId);
+    List<FlashcardBlueprintSnapshot> findAllByCategoryId(CategoryId categoryId);
 }
