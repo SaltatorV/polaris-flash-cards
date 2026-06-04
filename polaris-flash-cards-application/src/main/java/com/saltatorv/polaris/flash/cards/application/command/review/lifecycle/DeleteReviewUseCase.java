@@ -16,7 +16,9 @@ class DeleteReviewUseCase extends FlashcardReviewUseCaseBase {
 
     void deleteReview(FlashcardReviewId id) {
         FlashcardReview review = getReviewFromRepository(id, flashcardReviewRepository);
-        flashcardReviewRepository.deleteById(review.getId());
+        if(!(review == null)) {
+            flashcardReviewRepository.deleteById(id);
+        }
     }
 
 }
