@@ -1,6 +1,6 @@
 package com.saltatorv.polaris.flash.cards.application.query.blueprint.view;
 
-import com.saltatorv.polaris.flash.cards.application.query.blueprint.dto.FlashcardBlueprintQueryDto;
+import com.saltatorv.polaris.flash.cards.application.query.blueprint.dto.FlashcardBlueprintSummaryQueryDto;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -11,7 +11,7 @@ public class FlashcardBlueprintViewFacade {
         this.getFlashcardBlueprintDataUseCase = getFlashcardBlueprintDataUseCase;
     }
 
-    public FlashcardBlueprintQueryDto getFlashcardBlueprintData() {
+    public FlashcardBlueprintSummaryQueryDto getFlashcardBlueprintData() {
         return null;
     }
 }
