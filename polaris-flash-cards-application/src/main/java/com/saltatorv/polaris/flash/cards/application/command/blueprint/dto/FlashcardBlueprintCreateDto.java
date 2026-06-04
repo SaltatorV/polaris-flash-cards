@@ -3,21 +3,21 @@ package com.saltatorv.polaris.flash.cards.application.command.blueprint.dto;
 import java.util.List;
 import java.util.Set;
 
-public class FlashcardBlueprintDto {
+public class FlashcardBlueprintCreateDto {
     private String categoryId;
     private String source;
     private Set<String> tags;
-    private List<FlashcardLocalizationDto> localizations;
+    private List<FlashcardLocalizationCreateDto> localizations;
 
-    public FlashcardBlueprintDto(String categoryId, String source,
-                                 Set<String> tags, List<FlashcardLocalizationDto> localizations) {
+    public FlashcardBlueprintCreateDto(String categoryId, String source,
+                                       Set<String> tags, List<FlashcardLocalizationCreateDto> localizations) {
         this.categoryId = categoryId;
         this.source = source;
         this.tags = tags;
         this.localizations = localizations;
     }
 
-    public FlashcardBlueprintDto() {
+    public FlashcardBlueprintCreateDto() {
     }
 
     public String getCategoryId() {
@@ -32,7 +32,7 @@ public class FlashcardBlueprintDto {
         return tags;
     }
 
-    public List<FlashcardLocalizationDto> getLocalizations() {
+    public List<FlashcardLocalizationCreateDto> getLocalizations() {
         return localizations;
     }
 }

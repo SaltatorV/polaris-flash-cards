@@ -5,7 +5,7 @@ import com.saltatorv.polaris.flash.cards.domain.shared.FlashcardBlueprintId;
 import java.util.List;
 import java.util.Locale;
 
-public class FlashcardBlueprintDataDto {
+public class FlashcardBlueprintQueryDto {
     private final FlashcardBlueprintId flashcardBlueprintId;
     private final String question;
     private final String definition;
@@ -13,9 +13,9 @@ public class FlashcardBlueprintDataDto {
     private final List<String> tags;
     private final String language;
 
-    public FlashcardBlueprintDataDto(FlashcardBlueprintId flashcardBlueprintId, String question,
-                                     String definition, String source,
-                                     List<String> tags, Locale language) {
+    public FlashcardBlueprintQueryDto(FlashcardBlueprintId flashcardBlueprintId, String question,
+                                      String definition, String source,
+                                      List<String> tags, Locale language) {
         this.flashcardBlueprintId = flashcardBlueprintId;
         this.question = question;
         this.definition = definition;

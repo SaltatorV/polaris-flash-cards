@@ -1,7 +1,7 @@
 package com.saltatorv.polaris.flash.cards.application.command.blueprint.lifecycle;
 
 import com.saltatorv.polaris.flash.cards.application.FlashcardBlueprintIdCache;
-import com.saltatorv.polaris.flash.cards.application.command.blueprint.dto.FlashcardBlueprintDto;
+import com.saltatorv.polaris.flash.cards.application.command.blueprint.dto.FlashcardBlueprintCreateDto;
 import com.saltatorv.polaris.flash.cards.domain.FlashcardBlueprint;
 import com.saltatorv.polaris.flash.cards.domain.FlashcardBlueprintRepository;
 import com.saltatorv.polaris.flash.cards.domain.FlashcardLocalization;
@@ -21,8 +21,8 @@ public class AddFlashcardBlueprintUseCase {
         this.flashcardBlueprintIdCache = flashcardBlueprintIdCache;
     }
 
-    public void addFlashcardBlueprints(List<FlashcardBlueprintDto> dtos) {
-        for (FlashcardBlueprintDto dto : dtos) {
+    public void addFlashcardBlueprints(List<FlashcardBlueprintCreateDto> dtos) {
+        for (FlashcardBlueprintCreateDto dto : dtos) {
 
             CategoryId categoryId = new CategoryId(dto.getCategoryId());
             List<FlashcardLocalization> localizations = dto.getLocalizations()
