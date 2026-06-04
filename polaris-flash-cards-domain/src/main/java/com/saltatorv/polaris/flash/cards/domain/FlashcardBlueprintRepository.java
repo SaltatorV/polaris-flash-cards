@@ -14,4 +14,6 @@ public interface FlashcardBlueprintRepository {
     List<FlashcardBlueprintSnapshot> findByIds(List<FlashcardBlueprintId> ids);
 
     List<FlashcardBlueprintSnapshot> findAll();
+
+    List<FlashcardBlueprintSnapshot> findAllByCategoryId(String categoryId);
 }
