@@ -17,7 +17,7 @@ class GetFlashcardBlueprintDataUseCase {
         this.flashcardBlueprintRepository = flashcardBlueprintRepository;
     }
 
-    List<FlashcardBlueprintSummaryQueryDto> getFlashcardBlueprintsForCategory(CategoryId categoryId) {
+    List<FlashcardBlueprintSummaryQueryDto> getFlashcardBlueprintSummariesForCategory(CategoryId categoryId) {
         List<FlashcardBlueprintSnapshot> blueprints = flashcardBlueprintRepository.findAllByCategoryId(categoryId);
         List<FlashcardBlueprintSummaryQueryDto> dtos = new ArrayList<>();
 
