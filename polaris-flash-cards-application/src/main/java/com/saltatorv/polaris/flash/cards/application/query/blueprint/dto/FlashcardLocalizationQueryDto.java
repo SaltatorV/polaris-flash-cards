@@ -2,7 +2,7 @@ package com.saltatorv.polaris.flash.cards.application.query.blueprint.dto;
 
 import java.util.Locale;
 
-class FlashcardLocalizationQueryDto {
+public class FlashcardLocalizationQueryDto {
     private final Locale locale;
     private final String question;
     private final String answer;
