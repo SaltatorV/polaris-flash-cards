@@ -1,4 +1,4 @@
-package com.saltatorv.polaris.flash.cards.application.command.blueprint.dto;
+package com.saltatorv.polaris.flash.cards.application.blueprint.command.dto;
 
 import java.util.Locale;
 
