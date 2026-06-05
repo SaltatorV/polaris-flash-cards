@@ -16,4 +16,6 @@ public interface CategoryRepository {
     List<Category> findByParentId(CategoryId parentId);
 
     Optional<Category> findByNameAndDepth(String categoryName, int depth);
+
+    List<Category> findByDepth(int depth);
 }
