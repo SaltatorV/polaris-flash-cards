@@ -37,4 +37,8 @@ public class Category {
     public int getDepth() {
         return depth;
     }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
 }
