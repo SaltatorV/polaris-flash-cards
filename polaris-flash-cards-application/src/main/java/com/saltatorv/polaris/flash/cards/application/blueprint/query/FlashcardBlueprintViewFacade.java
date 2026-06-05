@@ -1,6 +1,6 @@
-package com.saltatorv.polaris.flash.cards.application.query.blueprint.view;
+package com.saltatorv.polaris.flash.cards.application.blueprint.query;
 
-import com.saltatorv.polaris.flash.cards.application.query.blueprint.dto.FlashcardBlueprintSummaryQueryDto;
+import com.saltatorv.polaris.flash.cards.application.blueprint.query.dto.FlashcardBlueprintSummaryQueryDto;
 import org.springframework.stereotype.Service;
 
 @Service

@@ -1,6 +1,4 @@
-package com.saltatorv.polaris.flash.cards.application.query.blueprint.dto;
-
-import com.saltatorv.polaris.flash.cards.domain.FlashcardLocalization;
+package com.saltatorv.polaris.flash.cards.application.blueprint.query.dto;
 
 import java.util.List;
 import java.util.Set;

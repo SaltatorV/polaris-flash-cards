@@ -1,8 +1,8 @@
-package com.saltatorv.polaris.flash.cards.application.query.blueprint.view;
+package com.saltatorv.polaris.flash.cards.application.blueprint.query;
 
-import com.saltatorv.polaris.flash.cards.application.query.blueprint.dto.FlashcardBlueprintQueryDto;
-import com.saltatorv.polaris.flash.cards.application.query.blueprint.dto.FlashcardBlueprintSummaryQueryDto;
-import com.saltatorv.polaris.flash.cards.application.query.blueprint.dto.FlashcardLocalizationQueryDto;
+import com.saltatorv.polaris.flash.cards.application.blueprint.query.dto.FlashcardBlueprintQueryDto;
+import com.saltatorv.polaris.flash.cards.application.blueprint.query.dto.FlashcardBlueprintSummaryQueryDto;
+import com.saltatorv.polaris.flash.cards.application.blueprint.query.dto.FlashcardLocalizationQueryDto;
 import com.saltatorv.polaris.flash.cards.domain.FlashcardBlueprintRepository;
 import com.saltatorv.polaris.flash.cards.domain.FlashcardBlueprintSnapshot;
 import com.saltatorv.polaris.flash.cards.domain.shared.CategoryId;

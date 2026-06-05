@@ -1,4 +1,4 @@
-package com.saltatorv.polaris.flash.cards.application.query.blueprint.dto;
+package com.saltatorv.polaris.flash.cards.application.blueprint.query.dto;
 
 import com.saltatorv.polaris.flash.cards.domain.shared.FlashcardBlueprintId;
 
