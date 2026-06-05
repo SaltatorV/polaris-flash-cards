@@ -16,10 +16,12 @@
         <dependency>
             <groupId>com.saltatorv</groupId>
             <artifactId>polaris-flash-cards-domain</artifactId>
+            <version>0.0.4</version>
         </dependency>
         <dependency>
             <groupId>com.saltatorv</groupId>
             <artifactId>polaris-flash-cards-application</artifactId>
+            <version>0.0.2</version>
         </dependency>
 
         <!-- SPRING -->
