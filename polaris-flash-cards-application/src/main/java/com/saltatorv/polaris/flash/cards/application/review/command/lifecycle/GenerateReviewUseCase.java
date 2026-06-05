@@ -1,4 +1,4 @@
-package com.saltatorv.polaris.flash.cards.application.command.review.lifecycle;
+package com.saltatorv.polaris.flash.cards.application.review.command.lifecycle;
 
 import com.saltatorv.polaris.flash.cards.application.FlashcardBlueprintIdCache;
 import com.saltatorv.polaris.flash.cards.domain.*;

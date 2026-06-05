@@ -1,4 +1,4 @@
-package com.saltatorv.polaris.flash.cards.application.query.review.dto;
+package com.saltatorv.polaris.flash.cards.application.review.query.dto;
 
 
 

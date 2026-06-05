@@ -1,5 +1,6 @@
-package com.saltatorv.polaris.flash.cards.application.command.review.operation;
+package com.saltatorv.polaris.flash.cards.application.review.query;
 
+import com.saltatorv.polaris.flash.cards.application.review.query.dto.FlashcardReviewDataDto;
 import com.saltatorv.polaris.flash.cards.application.shared.FlashcardReviewUseCaseBase;
 import com.saltatorv.polaris.flash.cards.domain.FlashcardReview;
 import com.saltatorv.polaris.flash.cards.domain.FlashcardReviewRepository;
@@ -7,18 +8,17 @@ import com.saltatorv.polaris.flash.cards.domain.shared.FlashcardReviewId;
 import org.springframework.stereotype.Service;
 
 @Service
-class BeginReviewUseCase extends FlashcardReviewUseCaseBase {
+class GetReviewDataUseCase extends FlashcardReviewUseCaseBase {
     private final FlashcardReviewRepository flashcardReviewRepository;
 
-    BeginReviewUseCase(FlashcardReviewRepository flashcardReviewRepository) {
+    GetReviewDataUseCase(FlashcardReviewRepository flashcardReviewRepository) {
         this.flashcardReviewRepository = flashcardReviewRepository;
     }
 
-    void beginReview(FlashcardReviewId id) {
+    FlashcardReviewDataDto getReviewData(FlashcardReviewId id) {
         FlashcardReview review = getReviewFromRepository(id, flashcardReviewRepository);
-
-        review.begin();
-
-        flashcardReviewRepository.save(review.generateSnapshot());
+        return new FlashcardReviewDataDto(id.getId(), review.getCorrectAnswers(),
+                review.getIncorrectAnswers(), review.flashcardCount(),
+                review.getStartDate(), review.getFinishDate());
     }
 }

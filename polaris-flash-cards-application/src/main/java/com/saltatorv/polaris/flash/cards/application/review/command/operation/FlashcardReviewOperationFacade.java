@@ -1,6 +1,6 @@
-package com.saltatorv.polaris.flash.cards.application.command.review.operation;
+package com.saltatorv.polaris.flash.cards.application.review.command.operation;
 
-import com.saltatorv.polaris.flash.cards.application.command.review.dto.FlashcardDto;
+import com.saltatorv.polaris.flash.cards.application.review.command.dto.FlashcardDto;
 import com.saltatorv.polaris.flash.cards.domain.shared.FlashcardReviewId;
 import org.springframework.stereotype.Service;
 

@@ -1,4 +1,4 @@
-package com.saltatorv.polaris.flash.cards.application.command.review.dto;
+package com.saltatorv.polaris.flash.cards.application.review.command.dto;
 
 public class FlashcardDto {
     private final String question;
