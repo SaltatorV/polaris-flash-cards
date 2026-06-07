@@ -1,6 +1,5 @@
 package com.saltatorv.polaris.flash.cards.domain.snapshot;
 
-import com.saltatorv.polaris.flash.cards.domain.FlashcardSnapshot;
 import com.saltatorv.polaris.flash.cards.domain.Generated;
 
 import java.util.List;

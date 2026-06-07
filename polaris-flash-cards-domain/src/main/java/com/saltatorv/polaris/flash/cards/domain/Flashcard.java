@@ -1,5 +1,7 @@
 package com.saltatorv.polaris.flash.cards.domain;
 
+import com.saltatorv.polaris.flash.cards.domain.snapshot.FlashcardSnapshot;
+
 public class Flashcard {
     private final String blueprintId;
     private final String question;

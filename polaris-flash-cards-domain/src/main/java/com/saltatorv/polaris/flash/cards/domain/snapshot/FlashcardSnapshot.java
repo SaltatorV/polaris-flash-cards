@@ -1,6 +1,10 @@
-package com.saltatorv.polaris.flash.cards.domain;
+package com.saltatorv.polaris.flash.cards.domain.snapshot;
 
 
+import com.saltatorv.polaris.flash.cards.domain.Answer;
+import com.saltatorv.polaris.flash.cards.domain.Generated;
+
+@Generated
 public class FlashcardSnapshot {
     private final String flashcardBlueprintId;
     private final String question;
@@ -49,14 +53,21 @@ public class FlashcardSnapshot {
     }
 
     @Override
-    public String toString() {
-        return "FlashcardSnapshot{" +
-                "flashcardBlueprintId='" + flashcardBlueprintId + '\'' +
-                ", question='" + question + '\'' +
-                ", definition='" + definition + '\'' +
-                ", answer='" + answer + '\'' +
-                ", startDate=" + startDate +
-                ", finishDate=" + finishDate +
-                '}';
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+
+        FlashcardSnapshot that = (FlashcardSnapshot) o;
+        return flashcardBlueprintId.equals(that.flashcardBlueprintId) && question.equals(that.question) && definition.equals(that.definition) && answer.equals(that.answer) && startDate.equals(that.startDate) && finishDate.equals(that.finishDate);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = flashcardBlueprintId.hashCode();
+        result = 31 * result + question.hashCode();
+        result = 31 * result + definition.hashCode();
+        result = 31 * result + answer.hashCode();
+        result = 31 * result + startDate.hashCode();
+        result = 31 * result + finishDate.hashCode();
+        return result;
     }
 }
