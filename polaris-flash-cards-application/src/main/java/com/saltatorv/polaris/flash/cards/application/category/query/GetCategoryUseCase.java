@@ -3,6 +3,7 @@ package com.saltatorv.polaris.flash.cards.application.category.query;
 import com.saltatorv.polaris.flash.cards.application.category.query.dto.CategoryDto;
 import com.saltatorv.polaris.flash.cards.domain.Category;
 import com.saltatorv.polaris.flash.cards.domain.CategoryRepository;
+import com.saltatorv.polaris.flash.cards.domain.snapshot.CategorySnapshot;
 
 import java.util.List;
 
@@ -15,7 +16,7 @@ class GetCategoryUseCase {
     }
 
     List<CategoryDto> getCategoriesForSpecificDepth(int depth) {
-        List<Category> categories = categoryRepository.findByDepth(depth);
+        List<CategorySnapshot> categories = categoryRepository.findByDepth(depth);
 
         return categories
                 .stream()

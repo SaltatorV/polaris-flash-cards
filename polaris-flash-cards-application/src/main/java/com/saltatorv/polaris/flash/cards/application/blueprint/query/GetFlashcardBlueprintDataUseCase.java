@@ -54,8 +54,8 @@ class GetFlashcardBlueprintDataUseCase {
                 .stream()
                 .map(localization ->
                         localizationDtos.add(new FlashcardLocalizationQueryDto(localization.getLocale(),
-                                localization.getQuestion(),
-                                localization.getAnswer())));
+                                localization.getContent().getQuestion(),
+                                localization.getContent().getAnswer())));
 
         return new FlashcardBlueprintQueryDto(blueprint.getFlashcardBlueprintId(),
                 blueprint.getSource(), blueprint.getTags(), localizationDtos);

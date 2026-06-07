@@ -2,10 +2,7 @@ package com.saltatorv.polaris.flash.cards.application.blueprint.command;
 
 import com.saltatorv.polaris.flash.cards.application.FlashcardBlueprintIdCache;
 import com.saltatorv.polaris.flash.cards.application.blueprint.command.dto.FlashcardBlueprintCreateDto;
-import com.saltatorv.polaris.flash.cards.domain.FlashcardBlueprint;
-import com.saltatorv.polaris.flash.cards.domain.FlashcardBlueprintRepository;
-import com.saltatorv.polaris.flash.cards.domain.FlashcardLocalization;
-import com.saltatorv.polaris.flash.cards.domain.FlashcardMetadata;
+import com.saltatorv.polaris.flash.cards.domain.*;
 import com.saltatorv.polaris.flash.cards.domain.shared.CategoryId;
 import org.springframework.stereotype.Service;
 
@@ -29,8 +26,8 @@ public class AddFlashcardBlueprintUseCase {
                     .stream()
                     .map(newLocalization ->
                             new FlashcardLocalization(newLocalization.getLocale(),
-                                    newLocalization.getQuestion(),
-                                    newLocalization.getAnswer()))
+                                    new FlashcardContent(newLocalization.getQuestion(),
+                                            newLocalization.getAnswer())))
                     .toList();
 
             FlashcardBlueprint blueprint = new FlashcardBlueprint(categoryId,

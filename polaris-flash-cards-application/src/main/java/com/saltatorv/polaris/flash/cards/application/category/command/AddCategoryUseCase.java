@@ -4,6 +4,7 @@ import com.saltatorv.polaris.flash.cards.application.category.command.dto.Catego
 import com.saltatorv.polaris.flash.cards.domain.Category;
 import com.saltatorv.polaris.flash.cards.domain.CategoryRepository;
 import com.saltatorv.polaris.flash.cards.domain.shared.CategoryId;
+import com.saltatorv.polaris.flash.cards.domain.snapshot.CategorySnapshot;
 
 import java.util.Optional;
 
@@ -19,11 +20,11 @@ class AddCategoryUseCase {
 
         Category parentCategory = null;
         if (categoryDto.getParentCategoryId() != null) {
-            Optional<Category> optionalCategory = categoryRepository.findById(new CategoryId(categoryDto.getParentCategoryId()));
+            Optional<CategorySnapshot> optionalCategory = categoryRepository.findById(new CategoryId(categoryDto.getParentCategoryId()));
             if (optionalCategory.isEmpty()) {
                 throw new IllegalArgumentException("Parent category with id " + categoryDto.getParentCategoryId() + " does not exist.");
             }
-            parentCategory = optionalCategory.get();
+            parentCategory = Category.restore(optionalCategory.get());
         }
 
         Category categoryToSave;
@@ -33,14 +34,14 @@ class AddCategoryUseCase {
             categoryToSave = parentCategory.createChild(categoryDto.getCategoryName());
         }
 
-        Optional<Category> duplicatedCategory = categoryRepository.findByNameAndDepth(categoryToSave.getCategoryName(), categoryToSave.getDepth());
+        Optional<CategorySnapshot> duplicatedCategory = categoryRepository.findByNameAndDepth(categoryToSave.getCategoryName(), categoryToSave.getDepth());
 
         if (duplicatedCategory.isPresent()) {
             throw new IllegalArgumentException("Category with name: %s already exists on depth level: %s"
                     .formatted(categoryToSave.getCategoryName(), categoryToSave.getDepth()));
         }
 
-        categoryRepository.save(categoryToSave);
+        categoryRepository.save(categoryToSave.generateSnapshot());
 
     }
 }
