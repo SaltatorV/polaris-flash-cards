@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+@Generated
 public class FlashcardBlueprintSnapshot {
     private final String flashcardBlueprintId;
     private final String categoryId;

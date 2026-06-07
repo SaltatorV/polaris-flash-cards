@@ -1,9 +1,11 @@
 package com.saltatorv.polaris.flash.cards.domain.snapshot;
 
 import com.saltatorv.polaris.flash.cards.domain.FlashcardSnapshot;
+import com.saltatorv.polaris.flash.cards.domain.Generated;
 
 import java.util.List;
 
+@Generated
 public class FlashcardReviewSnapshot {
     private final String flashcardReviewId;
     private final Long startDate;
@@ -34,11 +36,19 @@ public class FlashcardReviewSnapshot {
     }
 
     @Override
-    public String toString() {
-        return "FlashcardReviewSnapshot{" +
-                "startDate=" + startDate +
-                ", finishDate=" + finishDate +
-                ", flashcardSnapshots=" + flashcardSnapshots +
-                '}';
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+
+        FlashcardReviewSnapshot that = (FlashcardReviewSnapshot) o;
+        return flashcardReviewId.equals(that.flashcardReviewId) && startDate.equals(that.startDate) && finishDate.equals(that.finishDate) && flashcardSnapshots.equals(that.flashcardSnapshots);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = flashcardReviewId.hashCode();
+        result = 31 * result + startDate.hashCode();
+        result = 31 * result + finishDate.hashCode();
+        result = 31 * result + flashcardSnapshots.hashCode();
+        return result;
     }
 }
