@@ -2,7 +2,7 @@ package com.saltatorv.polaris.flash.cards.data.access;
 
 import com.saltatorv.polaris.flash.cards.application.FlashcardBlueprintIdCache;
 import com.saltatorv.polaris.flash.cards.domain.FlashcardBlueprintRepository;
-import com.saltatorv.polaris.flash.cards.domain.FlashcardBlueprintSnapshot;
+import com.saltatorv.polaris.flash.cards.domain.snapshot.FlashcardBlueprintSnapshot;
 import com.saltatorv.polaris.flash.cards.domain.shared.FlashcardBlueprintId;
 import org.springframework.stereotype.Repository;
 

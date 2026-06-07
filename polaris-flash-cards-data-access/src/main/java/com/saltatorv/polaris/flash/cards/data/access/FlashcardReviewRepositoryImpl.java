@@ -6,7 +6,7 @@ import com.saltatorv.polaris.flash.cards.data.access.entity.FlashcardRevisionEnt
 import com.saltatorv.polaris.flash.cards.data.access.repository.SqlFlashcardBlueprintRepository;
 import com.saltatorv.polaris.flash.cards.data.access.repository.SqlFlashcardReviewRepository;
 import com.saltatorv.polaris.flash.cards.domain.FlashcardReviewRepository;
-import com.saltatorv.polaris.flash.cards.domain.FlashcardReviewSnapshot;
+import com.saltatorv.polaris.flash.cards.domain.snapshot.FlashcardReviewSnapshot;
 import com.saltatorv.polaris.flash.cards.domain.FlashcardSnapshot;
 import com.saltatorv.polaris.flash.cards.domain.shared.FlashcardReviewId;
 import org.springframework.stereotype.Repository;

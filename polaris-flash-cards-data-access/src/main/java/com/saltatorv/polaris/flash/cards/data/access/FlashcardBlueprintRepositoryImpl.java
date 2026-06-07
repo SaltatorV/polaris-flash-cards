@@ -3,14 +3,13 @@ package com.saltatorv.polaris.flash.cards.data.access;
 import com.saltatorv.polaris.flash.cards.data.access.entity.FlashcardBlueprintEntity;
 import com.saltatorv.polaris.flash.cards.data.access.repository.SqlFlashcardBlueprintRepository;
 import com.saltatorv.polaris.flash.cards.domain.FlashcardBlueprintRepository;
-import com.saltatorv.polaris.flash.cards.domain.FlashcardBlueprintSnapshot;
+import com.saltatorv.polaris.flash.cards.domain.snapshot.FlashcardBlueprintSnapshot;
 import com.saltatorv.polaris.flash.cards.domain.shared.FlashcardBlueprintId;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Repository
 class FlashcardBlueprintRepositoryImpl implements FlashcardBlueprintRepository {
