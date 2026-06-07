@@ -2,6 +2,7 @@ package com.saltatorv.polaris.flash.cards.domain;
 
 import com.saltatorv.polaris.flash.cards.domain.shared.CategoryId;
 import com.saltatorv.polaris.flash.cards.domain.shared.FlashcardBlueprintId;
+import com.saltatorv.polaris.flash.cards.domain.snapshot.FlashcardBlueprintSnapshot;
 
 import java.util.List;
 import java.util.Optional;

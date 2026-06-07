@@ -5,6 +5,7 @@ import com.saltatorv.polaris.flash.cards.domain.exception.blueprint.FlashcardBlu
 import com.saltatorv.polaris.flash.cards.domain.exception.blueprint.FlashcardBlueprintWithoutLocalizationDomainException;
 import com.saltatorv.polaris.flash.cards.domain.shared.CategoryId;
 import com.saltatorv.polaris.flash.cards.domain.shared.FlashcardBlueprintId;
+import com.saltatorv.polaris.flash.cards.domain.snapshot.FlashcardBlueprintSnapshot;
 
 import java.util.List;
 import java.util.Locale;

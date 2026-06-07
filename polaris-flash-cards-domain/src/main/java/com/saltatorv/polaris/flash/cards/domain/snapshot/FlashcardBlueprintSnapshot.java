@@ -1,4 +1,7 @@
-package com.saltatorv.polaris.flash.cards.domain;
+package com.saltatorv.polaris.flash.cards.domain.snapshot;
+
+import com.saltatorv.polaris.flash.cards.domain.FlashcardLocalization;
+import com.saltatorv.polaris.flash.cards.domain.Generated;
 
 import java.util.List;
 import java.util.Objects;

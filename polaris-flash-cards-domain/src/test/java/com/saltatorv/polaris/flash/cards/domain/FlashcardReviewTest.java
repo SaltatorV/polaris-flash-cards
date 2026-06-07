@@ -1,6 +1,7 @@
 package com.saltatorv.polaris.flash.cards.domain;
 
 import com.saltatorv.polaris.flash.cards.domain.exception.review.*;
+import com.saltatorv.polaris.flash.cards.domain.snapshot.FlashcardReviewSnapshot;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
