@@ -76,8 +76,9 @@ class FlashcardBlueprintBuilder implements FlashcardBlueprintBuilderSourceStep, 
             localizations.add(
                     new FlashcardLocalization(
                             Locale.of(languages.get(i)),
-                            questions.get(i),
-                            answers.get(i))
+                            new FlashcardContent(
+                                    questions.get(i),
+                                    answers.get(i)))
             );
         }
 

@@ -4,24 +4,18 @@ import java.util.Locale;
 
 public class FlashcardLocalization {
     private final Locale locale;
-    private final String question;
-    private final String answer;
+    private final FlashcardContent content;
 
-    public FlashcardLocalization(Locale locale, String question, String answer) {
+    public FlashcardLocalization(Locale locale, FlashcardContent content) {
         this.locale = locale;
-        this.question = question;
-        this.answer = answer;
+        this.content = content;
     }
 
     public Locale getLocale() {
         return locale;
     }
 
-    public String getQuestion() {
-        return question;
-    }
-
-    public String getAnswer() {
-        return answer;
+    public FlashcardContent getContent() {
+        return content;
     }
 }

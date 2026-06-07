@@ -51,7 +51,8 @@ public class FlashcardBlueprint {
 
     public Flashcard createFlashcard(Locale locale) {
         FlashcardLocalization chosenLocalization = findLocalizationOrThrow(locale.toLanguageTag());
-        return new Flashcard(flashcardBlueprintId.getId(), chosenLocalization.getQuestion(), chosenLocalization.getAnswer());
+        return new Flashcard(flashcardBlueprintId.getId(), chosenLocalization.getContent().getQuestion(),
+                chosenLocalization.getContent().getAnswer());
     }
 
     public void addNewLocalization(FlashcardLocalization newLocalization) {
@@ -75,12 +76,12 @@ public class FlashcardBlueprint {
         localizations.remove(found);
     }
 
-    public void updateLocalization(String locale, String question, String answer) {
+    public void updateLocalization(String locale, FlashcardContent content) {
         FlashcardLocalization found = findLocalizationOrThrow(locale);
 
         localizations.remove(found);
 
-        localizations.add(new FlashcardLocalization(Locale.forLanguageTag(locale), question, answer));
+        localizations.add(new FlashcardLocalization(Locale.forLanguageTag(locale), content));
     }
 
     private FlashcardLocalization findLocalizationOrThrow(String locale) {

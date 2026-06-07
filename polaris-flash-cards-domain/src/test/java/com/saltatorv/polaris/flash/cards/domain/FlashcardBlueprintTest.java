@@ -90,7 +90,7 @@ class FlashcardBlueprintTest {
                 .done()
                 .create();
 
-        var newLocalization = new FlashcardLocalization(Locale.of("PL"), "Pytanie?", "Odpowiedz");
+        var newLocalization = createNewLocalization("PL", "Pytanie?", "Odpowiedz");
 
         // when
         blueprint.addNewLocalization(newLocalization);
@@ -113,9 +113,9 @@ class FlashcardBlueprintTest {
                 .done()
                 .create();
 
-        var first = new FlashcardLocalization(Locale.of("PL"), "Pytanie?", "Odpowiedz");
-        var second = new FlashcardLocalization(Locale.of("DE"), "Frage?", "Antwort");
-        var third = new FlashcardLocalization(Locale.of("FR"), "Question?", "Reponse");
+        var first = createNewLocalization("PL", "Pytanie?", "Odpowiedz");
+        var second = createNewLocalization("DE", "Frage?", "Antwort");
+        var third = createNewLocalization("FR", "Question?", "Reponse");
 
         // when
         blueprint.addNewLocalization(first);
@@ -142,7 +142,7 @@ class FlashcardBlueprintTest {
                 .done()
                 .create();
 
-        var newLocalization = new FlashcardLocalization(Locale.of("EN"), "Question?", "Answer?");
+        var newLocalization = createNewLocalization("EN", "Question?", "Answer?");
 
         //when
         assertThrows(FlashcardBlueprintLocalizationAlreadyExistsDomainException.class, () -> blueprint.addNewLocalization(newLocalization));
@@ -229,7 +229,7 @@ class FlashcardBlueprintTest {
                 .create();
 
         // when
-        blueprint.updateLocalization("EN", "Question2?", "Answer");
+        updateLocalization(blueprint, "EN", "Question2?", "Answer");
 
         // then
     }
@@ -248,7 +248,7 @@ class FlashcardBlueprintTest {
                 .create();
 
         // when
-        assertThrows(FlashcardBlueprintLocalizationDoNotExistsDomainException.class, () -> blueprint.updateLocalization("PL", "Pytanie?", "Odpowiedz"));
+        assertThrows(FlashcardBlueprintLocalizationDoNotExistsDomainException.class, () -> updateLocalization(blueprint, "PL", "Pytanie?", "Odpowiedz"));
     }
 
     @Test
@@ -264,8 +264,8 @@ class FlashcardBlueprintTest {
                 .done()
                 .create();
 
-        var first = new FlashcardLocalization(Locale.of("PL"), "Pytanie?", "Odpowiedz");
-        var second = new FlashcardLocalization(Locale.of("DE"), "Frage?", "Antwort");
+        var first = createNewLocalization("PL", "Pytanie?", "Odpowiedz");
+        var second = createNewLocalization("DE", "Frage?", "Antwort");
 
         blueprint.addNewLocalization(first);
         blueprint.addNewLocalization(second);
@@ -323,6 +323,14 @@ class FlashcardBlueprintTest {
         assertBlueprintHaveLocalizationFor(blueprint, "EN", "Question?", "Answer");
     }
 
+    private FlashcardLocalization createNewLocalization(String locale, String question, String answer) {
+        return new FlashcardLocalization(Locale.of(locale), new FlashcardContent(question, answer));
+    }
+
+    private void updateLocalization(FlashcardBlueprint blueprint, String locale, String question, String answer) {
+        blueprint.updateLocalization(locale, new FlashcardContent(question, answer));
+    }
+
 
     private void assertBlueprintIsFrom(FlashcardBlueprint blueprint, String source) {
         assertEquals(blueprint.generateSnapshot().getSource(), source);
@@ -340,8 +348,7 @@ class FlashcardBlueprintTest {
                         localization.getLocale().equals(Locale.of(locale)))
                 .findFirst()
                 .ifPresent(localization -> {
-                    assertEquals(localization.getQuestion(), question);
-                    assertEquals(localization.getAnswer(), answer);
+                    assertEquals(localization.getContent(), new FlashcardContent(question, answer));
                 });
     }
 

@@ -23,4 +23,19 @@ public class FlashcardContent {
     public String getAnswer() {
         return answer;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+
+        FlashcardContent that = (FlashcardContent) o;
+        return question.equals(that.question) && answer.equals(that.answer);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = question.hashCode();
+        result = 31 * result + answer.hashCode();
+        return result;
+    }
 }

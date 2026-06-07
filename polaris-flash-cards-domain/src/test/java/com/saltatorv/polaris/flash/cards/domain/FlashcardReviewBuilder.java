@@ -21,7 +21,8 @@ class FlashcardReviewBuilder {
     FlashcardReviewBuilder addFlashcard(String question, String answer) {
 
         List<FlashcardLocalization> localizations = new ArrayList<>();
-        localizations.add(new FlashcardLocalization(Locale.of("EN"), question, answer));
+        localizations.add(new FlashcardLocalization(Locale.of("EN"),
+                new FlashcardContent(question, answer)));
 
         flashcardBlueprints.add(new FlashcardBlueprint(CategoryId.generate(), localizations,
                 new FlashcardMetadata("source", Set.of("tag"))));
