@@ -1,5 +1,7 @@
 package com.saltatorv.polaris.flash.cards.domain;
 
+import com.saltatorv.polaris.flash.cards.domain.exception.blueprint.FlashcardContentCannotBeEmptyDomainException;
+
 public class FlashcardContent {
 
     private final String question;
@@ -7,7 +9,7 @@ public class FlashcardContent {
 
     public FlashcardContent(String question, String answer) {
         if (question == null || answer == null) {
-            throw new IllegalArgumentException("Question and answer must be not null");
+            throw new FlashcardContentCannotBeEmptyDomainException();
         }
 
         this.question = question;
