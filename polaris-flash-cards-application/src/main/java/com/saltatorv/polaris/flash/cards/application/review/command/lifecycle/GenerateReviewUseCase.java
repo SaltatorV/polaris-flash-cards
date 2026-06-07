@@ -4,6 +4,8 @@ import com.saltatorv.polaris.flash.cards.application.FlashcardBlueprintIdCache;
 import com.saltatorv.polaris.flash.cards.domain.*;
 import com.saltatorv.polaris.flash.cards.domain.shared.FlashcardBlueprintId;
 import com.saltatorv.polaris.flash.cards.domain.shared.FlashcardReviewId;
+import com.saltatorv.polaris.flash.cards.domain.snapshot.FlashcardBlueprintSnapshot;
+import com.saltatorv.polaris.flash.cards.domain.snapshot.FlashcardReviewSnapshot;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

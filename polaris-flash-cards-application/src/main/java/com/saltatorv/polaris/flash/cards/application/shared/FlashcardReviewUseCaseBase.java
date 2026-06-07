@@ -2,7 +2,7 @@ package com.saltatorv.polaris.flash.cards.application.shared;
 
 import com.saltatorv.polaris.flash.cards.domain.FlashcardReview;
 import com.saltatorv.polaris.flash.cards.domain.FlashcardReviewRepository;
-import com.saltatorv.polaris.flash.cards.domain.FlashcardReviewSnapshot;
+import com.saltatorv.polaris.flash.cards.domain.snapshot.FlashcardReviewSnapshot;
 import com.saltatorv.polaris.flash.cards.domain.shared.FlashcardReviewId;
 
 import java.util.Optional;

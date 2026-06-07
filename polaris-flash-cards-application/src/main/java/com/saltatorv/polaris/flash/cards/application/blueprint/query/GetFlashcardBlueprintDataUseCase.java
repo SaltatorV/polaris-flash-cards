@@ -4,7 +4,7 @@ import com.saltatorv.polaris.flash.cards.application.blueprint.query.dto.Flashca
 import com.saltatorv.polaris.flash.cards.application.blueprint.query.dto.FlashcardBlueprintSummaryQueryDto;
 import com.saltatorv.polaris.flash.cards.application.blueprint.query.dto.FlashcardLocalizationQueryDto;
 import com.saltatorv.polaris.flash.cards.domain.FlashcardBlueprintRepository;
-import com.saltatorv.polaris.flash.cards.domain.FlashcardBlueprintSnapshot;
+import com.saltatorv.polaris.flash.cards.domain.snapshot.FlashcardBlueprintSnapshot;
 import com.saltatorv.polaris.flash.cards.domain.shared.CategoryId;
 import com.saltatorv.polaris.flash.cards.domain.shared.FlashcardBlueprintId;
 import org.springframework.stereotype.Service;
