@@ -8,7 +8,8 @@ public class FlashcardContent {
     private final String answer;
 
     public FlashcardContent(String question, String answer) {
-        if (question == null || answer == null) {
+        if (question == null || question.isBlank() ||
+                answer == null || answer.isBlank()) {
             throw new FlashcardContentCannotBeEmptyDomainException();
         }
 
