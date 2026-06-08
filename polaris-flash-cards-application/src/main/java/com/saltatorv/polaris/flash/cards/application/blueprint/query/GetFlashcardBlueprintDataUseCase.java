@@ -4,9 +4,10 @@ import com.saltatorv.polaris.flash.cards.application.blueprint.query.dto.Flashca
 import com.saltatorv.polaris.flash.cards.application.blueprint.query.dto.FlashcardBlueprintSummaryQueryDto;
 import com.saltatorv.polaris.flash.cards.application.blueprint.query.dto.FlashcardLocalizationQueryDto;
 import com.saltatorv.polaris.flash.cards.domain.FlashcardBlueprintRepository;
-import com.saltatorv.polaris.flash.cards.domain.snapshot.FlashcardBlueprintSnapshot;
+import com.saltatorv.polaris.flash.cards.domain.FlashcardLocalization;
 import com.saltatorv.polaris.flash.cards.domain.shared.CategoryId;
 import com.saltatorv.polaris.flash.cards.domain.shared.FlashcardBlueprintId;
+import com.saltatorv.polaris.flash.cards.domain.snapshot.FlashcardBlueprintSnapshot;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -48,17 +49,20 @@ class GetFlashcardBlueprintDataUseCase {
 
         FlashcardBlueprintSnapshot blueprint = optional.get();
 
-        List<FlashcardLocalizationQueryDto> localizationDtos = new ArrayList<>();
-
-        blueprint.getLocalizations()
+        List<FlashcardLocalizationQueryDto> localizationDtos = blueprint.getLocalizations()
                 .stream()
-                .map(localization ->
-                        localizationDtos.add(new FlashcardLocalizationQueryDto(localization.getLocale(),
-                                localization.getContent().getQuestion(),
-                                localization.getContent().getAnswer())));
+                .map(this::mapFlashcardLocalizationToDto)
+                .toList();
+
 
         return new FlashcardBlueprintQueryDto(blueprint.getFlashcardBlueprintId(),
                 blueprint.getSource(), blueprint.getTags(), localizationDtos);
+    }
+
+    private FlashcardLocalizationQueryDto mapFlashcardLocalizationToDto(FlashcardLocalization localization) {
+        return new FlashcardLocalizationQueryDto(localization.getLocale(),
+                localization.getContent().getQuestion(),
+                localization.getContent().getAnswer());
     }
 
 }
