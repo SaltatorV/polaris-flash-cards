@@ -10,11 +10,11 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class AddFlashcardBlueprintUseCase {
+class AddFlashcardBlueprintUseCase {
     private final FlashcardBlueprintRepository flashcardBlueprintRepository;
     private final FlashcardBlueprintIdCache flashcardBlueprintIdCache;
 
-    public AddFlashcardBlueprintUseCase(FlashcardBlueprintRepository flashcardBlueprintRepository, FlashcardBlueprintIdCache flashcardBlueprintIdCache) {
+    AddFlashcardBlueprintUseCase(FlashcardBlueprintRepository flashcardBlueprintRepository, FlashcardBlueprintIdCache flashcardBlueprintIdCache) {
         this.flashcardBlueprintRepository = flashcardBlueprintRepository;
         this.flashcardBlueprintIdCache = flashcardBlueprintIdCache;
     }
