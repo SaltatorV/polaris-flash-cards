@@ -1,7 +1,6 @@
 package com.saltatorv.polaris.flash.cards.application.category.query;
 
 import com.saltatorv.polaris.flash.cards.application.category.query.dto.CategoryDto;
-import com.saltatorv.polaris.flash.cards.domain.Category;
 import com.saltatorv.polaris.flash.cards.domain.CategoryRepository;
 import com.saltatorv.polaris.flash.cards.domain.snapshot.CategorySnapshot;
 
@@ -20,8 +19,11 @@ class GetCategoryUseCase {
 
         return categories
                 .stream()
-                .map(category ->
-                        new CategoryDto(category.getCategoryName()))
+                .map(this::mapCategoryToDto)
                 .toList();
+    }
+
+    private CategoryDto mapCategoryToDto(CategorySnapshot snapshot) {
+        return new CategoryDto(snapshot.getCategoryName());
     }
 }
