@@ -5,9 +5,11 @@ import com.saltatorv.polaris.flash.cards.domain.Category;
 import com.saltatorv.polaris.flash.cards.domain.CategoryRepository;
 import com.saltatorv.polaris.flash.cards.domain.shared.CategoryId;
 import com.saltatorv.polaris.flash.cards.domain.snapshot.CategorySnapshot;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+@Service
 class AddCategoryUseCase {
 
     private final CategoryRepository categoryRepository;
