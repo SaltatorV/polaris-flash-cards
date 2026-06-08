@@ -5,7 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 
 @Entity
-public class Category {
+public class CategoryEntity {
     @Id
     @Column(length = 36)
     private String id;
@@ -15,10 +15,10 @@ public class Category {
     @Column(length = 150)
     private String categoryName;
 
-    public Category() {
+    public CategoryEntity() {
     }
 
-    public Category(String id, String parent, int depth, String categoryName) {
+    public CategoryEntity(String id, String parent, int depth, String categoryName) {
         this.id = id;
         this.parent = parent;
         this.depth = depth;
