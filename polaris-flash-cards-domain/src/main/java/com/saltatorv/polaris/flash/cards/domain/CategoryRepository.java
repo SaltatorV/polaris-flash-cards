@@ -10,7 +10,7 @@ public interface CategoryRepository {
 
     Optional<CategorySnapshot> findById(CategoryId id);
 
-    Category save(CategorySnapshot category);
+    CategorySnapshot save(CategorySnapshot category);
 
     void deleteById(CategoryId id);
 
