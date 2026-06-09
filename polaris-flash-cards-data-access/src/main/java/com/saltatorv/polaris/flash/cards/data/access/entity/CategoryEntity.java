@@ -17,17 +17,8 @@ public class CategoryEntity {
     public CategoryEntity() {
     }
 
-    public CategoryEntity(String id, CategoryEntity parent, int depth, String categoryName) {
+    public CategoryEntity(String id) {
         this.id = id;
-        this.parent = parent;
-        this.depth = depth;
-        this.categoryName = categoryName;
-    }
-
-    public CategoryEntity(String id, int depth, String categoryName) {
-        this.id = id;
-        this.depth = depth;
-        this.categoryName = categoryName;
     }
 
     public String getId() {
@@ -38,11 +29,23 @@ public class CategoryEntity {
         return parent;
     }
 
+    public void setParent(CategoryEntity parent) {
+        this.parent = parent;
+    }
+
     public int getDepth() {
         return depth;
     }
 
+    public void setDepth(int depth) {
+        this.depth = depth;
+    }
+
     public String getCategoryName() {
         return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
     }
 }
