@@ -1,22 +1,22 @@
 package com.saltatorv.polaris.flash.cards.data.access.repository;
 
-import com.saltatorv.polaris.flash.cards.data.access.entity.Category;
+import com.saltatorv.polaris.flash.cards.data.access.entity.CategoryEntity;
 import org.springframework.data.repository.Repository;
 
 import java.util.List;
 import java.util.Optional;
 
-public interface SqlCategoryRepository extends Repository<Category, String> {
+public interface SqlCategoryRepository extends Repository<CategoryEntity, String> {
 
-    Optional<Category> findById(String id);
+    Optional<CategoryEntity> findById(String id);
 
-    List<Category> findByParentId(String parentId);
+    List<CategoryEntity> findByParentId(String parentId);
 
-    List<Category> findByDepth(int depth);
+    List<CategoryEntity> findByDepth(int depth);
 
-    Optional<Category> findByNameAndDepth(String categoryName, int depth);
+    Optional<CategoryEntity> findByNameAndDepth(String categoryName, int depth);
 
-    Category save(Category category);
+    CategoryEntity save(CategoryEntity category);
 
     void deleteById(String id);
 }
