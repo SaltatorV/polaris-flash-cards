@@ -1,16 +1,15 @@
 package com.saltatorv.polaris.flash.cards.data.access.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
 public class CategoryEntity {
     @Id
     @Column(length = 36)
     private String id;
-    @Column(length = 36)
-    private String parent;
+    @ManyToOne
+    @JoinColumn(name = "parent_id")
+    private CategoryEntity parent;
     private int depth;
     @Column(length = 150)
     private String categoryName;
@@ -18,9 +17,15 @@ public class CategoryEntity {
     public CategoryEntity() {
     }
 
-    public CategoryEntity(String id, String parent, int depth, String categoryName) {
+    public CategoryEntity(String id, CategoryEntity parent, int depth, String categoryName) {
         this.id = id;
         this.parent = parent;
+        this.depth = depth;
+        this.categoryName = categoryName;
+    }
+
+    public CategoryEntity(String id, int depth, String categoryName) {
+        this.id = id;
         this.depth = depth;
         this.categoryName = categoryName;
     }
@@ -29,7 +34,7 @@ public class CategoryEntity {
         return id;
     }
 
-    public String getParent() {
+    public CategoryEntity getParent() {
         return parent;
     }
 
