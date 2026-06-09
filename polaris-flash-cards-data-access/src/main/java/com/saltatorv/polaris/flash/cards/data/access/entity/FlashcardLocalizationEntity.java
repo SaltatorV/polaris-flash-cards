@@ -1,11 +1,9 @@
 package com.saltatorv.polaris.flash.cards.data.access.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 
-class FlashcardLocalizationEntity {
+@Entity
+public class FlashcardLocalizationEntity {
 
     @Id
     @Column(length = 36)
