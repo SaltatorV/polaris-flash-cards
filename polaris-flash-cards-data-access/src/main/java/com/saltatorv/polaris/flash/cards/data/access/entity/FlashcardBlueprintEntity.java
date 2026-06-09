@@ -1,57 +1,46 @@
 package com.saltatorv.polaris.flash.cards.data.access.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class FlashcardBlueprintEntity {
     @Id
     private String id;
-    @Column(columnDefinition = "TEXT")
-    private String question;
-    @Column(columnDefinition = "TEXT")
-    private String definition;
     @Column(length = 40)
     private String tags;
-    @Column(length = 3)
-    private String language;
     @Column(length = 200)
     private String source;
     @Column(length = 100)
     private String author;
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private CategoryEntity category;
+    @OneToMany(mappedBy = "flashcardBlueprint", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<FlashcardLocalizationEntity> flashcardLocalizations = new ArrayList<>();
 
     public FlashcardBlueprintEntity() {
     }
 
-    public FlashcardBlueprintEntity(String id, String question, String definition, String tags, String language, String source, String author) {
+    public FlashcardBlueprintEntity(String id, String tags, String source,
+                                    String author, CategoryEntity category,
+                                    List<FlashcardLocalizationEntity> flashcardLocalizations) {
         this.id = id;
-        this.question = question;
-        this.definition = definition;
         this.tags = tags;
-        this.language = language;
         this.source = source;
         this.author = author;
+        this.category = category;
+        this.flashcardLocalizations = flashcardLocalizations;
     }
 
     public String getId() {
         return id;
     }
 
-    public String getQuestion() {
-        return question;
-    }
-
-    public String getDefinition() {
-        return definition;
-    }
-
     public String getTags() {
         return tags;
-    }
-
-    public String getLanguage() {
-        return language;
     }
 
     public String getSource() {
@@ -60,5 +49,13 @@ public class FlashcardBlueprintEntity {
 
     public String getAuthor() {
         return author;
+    }
+
+    public CategoryEntity getCategory() {
+        return category;
+    }
+
+    public List<FlashcardLocalizationEntity> getFlashcardLocalizations() {
+        return flashcardLocalizations;
     }
 }
