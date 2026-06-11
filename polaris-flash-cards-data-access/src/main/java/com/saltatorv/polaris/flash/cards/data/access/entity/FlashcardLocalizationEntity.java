@@ -7,7 +7,7 @@ public class FlashcardLocalizationEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id;
+    private Long id;
     @ManyToOne
     @JoinColumn(name = "flashcard_blueprint_id")
     private FlashcardBlueprintEntity flashcardBlueprint;
