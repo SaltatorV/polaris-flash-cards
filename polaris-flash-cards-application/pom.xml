@@ -80,7 +80,6 @@
         <dependency>
             <groupId>com.saltatorv</groupId>
             <artifactId>polaris-flash-cards-domain</artifactId>
-            <version>0.0.5</version>
         </dependency>
 
         <!-- SPRING -->

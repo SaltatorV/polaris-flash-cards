@@ -11,7 +11,6 @@
     <artifactId>polaris-flash-cards-domain</artifactId>
     <name>polaris-flash-cards-domain</name>
     <description>polaris-flash-cards-domain</description>
-    <version>0.0.5</version>
 
     <build>
         <plugins>
