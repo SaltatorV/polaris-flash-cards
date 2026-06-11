@@ -7,8 +7,8 @@ import com.saltatorv.polaris.flash.cards.data.access.repository.SqlFlashcardBlue
 import com.saltatorv.polaris.flash.cards.data.access.repository.SqlFlashcardReviewRepository;
 import com.saltatorv.polaris.flash.cards.domain.FlashcardReviewRepository;
 import com.saltatorv.polaris.flash.cards.domain.snapshot.FlashcardReviewSnapshot;
-import com.saltatorv.polaris.flash.cards.domain.FlashcardSnapshot;
 import com.saltatorv.polaris.flash.cards.domain.shared.FlashcardReviewId;
+import com.saltatorv.polaris.flash.cards.domain.snapshot.FlashcardSnapshot;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -46,7 +46,8 @@ class FlashcardReviewRepositoryImpl implements FlashcardReviewRepository {
             FlashcardBlueprintEntity blueprint = revisionEntity.getFlashcardBlueprint();
 
             flashcardSnapshots.add(new FlashcardSnapshot(blueprint.getId(),
-                    blueprint.getQuestion(), blueprint.getDefinition(),
+                    blueprint.getFlashcardLocalizations().getFirst().getQuestion(),
+                    blueprint.getFlashcardLocalizations().getFirst().getDefinition(),
                     revisionEntity.getStatus(),
                     revisionEntity.getStartDate(),
                     revisionEntity.getFinishDate()));
