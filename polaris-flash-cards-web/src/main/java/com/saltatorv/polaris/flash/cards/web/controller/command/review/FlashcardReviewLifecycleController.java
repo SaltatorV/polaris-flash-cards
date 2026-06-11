@@ -1,6 +1,6 @@
 package com.saltatorv.polaris.flash.cards.web.controller.command.review;
 
-import com.saltatorv.polaris.flash.cards.application.command.review.lifecycle.FlashcardReviewLifecycleFacade;
+import com.saltatorv.polaris.flash.cards.application.review.command.lifecycle.FlashcardReviewLifecycleFacade;
 import com.saltatorv.polaris.flash.cards.domain.shared.FlashcardReviewId;
 import com.saltatorv.polaris.flash.cards.web.BaseController;
 import org.springframework.web.bind.annotation.PostMapping;

@@ -1,7 +1,7 @@
 package com.saltatorv.polaris.flash.cards.web.controller.query.review;
 
-import com.saltatorv.polaris.flash.cards.application.query.review.dto.FlashcardReviewDataDto;
-import com.saltatorv.polaris.flash.cards.application.query.review.view.FlashcardReviewViewFacade;
+import com.saltatorv.polaris.flash.cards.application.review.query.FlashcardReviewViewFacade;
+import com.saltatorv.polaris.flash.cards.application.review.query.dto.FlashcardReviewDataDto;
 import com.saltatorv.polaris.flash.cards.domain.shared.FlashcardReviewId;
 import com.saltatorv.polaris.flash.cards.web.BaseController;
 import org.springframework.web.bind.annotation.GetMapping;
