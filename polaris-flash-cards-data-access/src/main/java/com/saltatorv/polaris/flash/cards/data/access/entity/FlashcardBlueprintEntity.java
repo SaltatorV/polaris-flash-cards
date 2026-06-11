@@ -35,6 +35,14 @@ public class FlashcardBlueprintEntity {
         this.flashcardLocalizations = flashcardLocalizations;
     }
 
+    public FlashcardBlueprintEntity(CategoryEntity category, String author, String source, String tags, String id) {
+        this.category = category;
+        this.author = author;
+        this.source = source;
+        this.tags = tags;
+        this.id = id;
+    }
+
     public String getId() {
         return id;
     }
@@ -57,5 +65,9 @@ public class FlashcardBlueprintEntity {
 
     public List<FlashcardLocalizationEntity> getFlashcardLocalizations() {
         return flashcardLocalizations;
+    }
+
+    public void setFlashcardLocalizations(List<FlashcardLocalizationEntity> flashcardLocalizations) {
+        this.flashcardLocalizations = flashcardLocalizations;
     }
 }

@@ -1,23 +1,29 @@
 package com.saltatorv.polaris.flash.cards.data.access;
 
+import com.saltatorv.polaris.flash.cards.data.access.entity.CategoryEntity;
 import com.saltatorv.polaris.flash.cards.data.access.entity.FlashcardBlueprintEntity;
+import com.saltatorv.polaris.flash.cards.data.access.entity.FlashcardLocalizationEntity;
+import com.saltatorv.polaris.flash.cards.data.access.repository.SqlCategoryRepository;
 import com.saltatorv.polaris.flash.cards.data.access.repository.SqlFlashcardBlueprintRepository;
 import com.saltatorv.polaris.flash.cards.domain.FlashcardBlueprintRepository;
-import com.saltatorv.polaris.flash.cards.domain.snapshot.FlashcardBlueprintSnapshot;
+import com.saltatorv.polaris.flash.cards.domain.FlashcardContent;
+import com.saltatorv.polaris.flash.cards.domain.FlashcardLocalization;
+import com.saltatorv.polaris.flash.cards.domain.shared.CategoryId;
 import com.saltatorv.polaris.flash.cards.domain.shared.FlashcardBlueprintId;
+import com.saltatorv.polaris.flash.cards.domain.snapshot.FlashcardBlueprintSnapshot;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Repository
 class FlashcardBlueprintRepositoryImpl implements FlashcardBlueprintRepository {
 
     private final SqlFlashcardBlueprintRepository sqlFlashcardBlueprintRepository;
+    private final SqlCategoryRepository sqlCategoryRepository;
 
-    FlashcardBlueprintRepositoryImpl(SqlFlashcardBlueprintRepository sqlFlashcardBlueprintRepository) {
+    FlashcardBlueprintRepositoryImpl(SqlFlashcardBlueprintRepository sqlFlashcardBlueprintRepository, SqlCategoryRepository sqlCategoryRepository) {
         this.sqlFlashcardBlueprintRepository = sqlFlashcardBlueprintRepository;
+        this.sqlCategoryRepository = sqlCategoryRepository;
     }
 
     @Override
@@ -28,36 +34,48 @@ class FlashcardBlueprintRepositoryImpl implements FlashcardBlueprintRepository {
             return Optional.empty();
         }
         FlashcardBlueprintEntity entity = found.get();
+        List<FlashcardLocalization> localizationEntities = entity.getFlashcardLocalizations()
+                .stream()
+                .map(flashcardLocalizationEntity -> new FlashcardLocalization(
+                        Locale.of(flashcardLocalizationEntity.getLanguage()),
+                        new FlashcardContent(flashcardLocalizationEntity.getQuestion(), flashcardLocalizationEntity.getDefinition())
+                ))
+                .toList();
 
         FlashcardBlueprintSnapshot snapshot = new FlashcardBlueprintSnapshot(
                 entity.getId(),
-                entity.getQuestion(),
-                entity.getDefinition(),
+                entity.getCategory().getId(),
+                localizationEntities,
                 entity.getSource(),
-                List.of(entity.getTags().split(";")),
-                entity.getLanguage()
+                Set.of(entity.getTags().split(";"))
         );
         return Optional.of(snapshot);
     }
 
     @Override
     public FlashcardBlueprintSnapshot save(FlashcardBlueprintSnapshot flashcardBlueprintSnapshot) {
+        CategoryEntity category = sqlCategoryRepository.findById(flashcardBlueprintSnapshot.getCategoryId()).get();
 
         FlashcardBlueprintEntity entity = new FlashcardBlueprintEntity(
-                flashcardBlueprintSnapshot.getFlashcardBlueprintId(),
-                flashcardBlueprintSnapshot.getQuestion(),
-                flashcardBlueprintSnapshot.getDefinition(),
-                String.join(";", flashcardBlueprintSnapshot.getTags()),
-                flashcardBlueprintSnapshot.getLanguage(),
+                category,
+                "test",
                 flashcardBlueprintSnapshot.getSource(),
-                "Test"
+                String.join(";", flashcardBlueprintSnapshot.getTags()),
+                flashcardBlueprintSnapshot.getFlashcardBlueprintId()
         );
+
+        List<FlashcardLocalizationEntity> localizations = flashcardBlueprintSnapshot.getLocalizations()
+                .stream()
+                .map(localization -> new FlashcardLocalizationEntity())
+                .toList();
+
+        entity.setFlashcardLocalizations(localizations);
 
         sqlFlashcardBlueprintRepository.save(entity);
 
         return findById(
                 new FlashcardBlueprintId(
-                                flashcardBlueprintSnapshot.getFlashcardBlueprintId()))
+                        flashcardBlueprintSnapshot.getFlashcardBlueprintId()))
                 .get();
     }
 
@@ -71,13 +89,20 @@ class FlashcardBlueprintRepositoryImpl implements FlashcardBlueprintRepository {
         List<FlashcardBlueprintSnapshot> snapshots = new ArrayList<>();
 
         for (FlashcardBlueprintEntity entity : entities) {
+            List<FlashcardLocalization> localizationEntities = entity.getFlashcardLocalizations()
+                    .stream()
+                    .map(flashcardLocalizationEntity -> new FlashcardLocalization(
+                            Locale.of(flashcardLocalizationEntity.getLanguage()),
+                            new FlashcardContent(flashcardLocalizationEntity.getQuestion(), flashcardLocalizationEntity.getDefinition())
+                    ))
+                    .toList();
+
             snapshots.add(new FlashcardBlueprintSnapshot(
                     entity.getId(),
-                    entity.getQuestion(),
-                    entity.getDefinition(),
+                    entity.getCategory().getId(),
+                    localizationEntities,
                     entity.getSource(),
-                    List.of(entity.getTags().split(";")),
-                    entity.getLanguage()));
+                    Set.of(entity.getTags().split(";"))));
         }
 
         return snapshots;
@@ -90,15 +115,28 @@ class FlashcardBlueprintRepositoryImpl implements FlashcardBlueprintRepository {
         List<FlashcardBlueprintSnapshot> snapshots = new ArrayList<>();
 
         for (FlashcardBlueprintEntity entity : entities) {
+
+            List<FlashcardLocalization> localizationEntities = entity.getFlashcardLocalizations()
+                    .stream()
+                    .map(flashcardLocalizationEntity -> new FlashcardLocalization(
+                            Locale.of(flashcardLocalizationEntity.getLanguage()),
+                            new FlashcardContent(flashcardLocalizationEntity.getQuestion(), flashcardLocalizationEntity.getDefinition())
+                    ))
+                    .toList();
+
             snapshots.add(new FlashcardBlueprintSnapshot(
                     entity.getId(),
-                    entity.getQuestion(),
-                    entity.getDefinition(),
+                    entity.getCategory().getId(),
+                    localizationEntities,
                     entity.getSource(),
-                    List.of(entity.getTags().split(";")),
-                    entity.getLanguage()));
+                    Set.of(entity.getTags().split(";"))));
         }
 
         return snapshots;
+    }
+
+    @Override
+    public List<FlashcardBlueprintSnapshot> findAllByCategoryId(CategoryId categoryId) {
+        return List.of();
     }
 }
