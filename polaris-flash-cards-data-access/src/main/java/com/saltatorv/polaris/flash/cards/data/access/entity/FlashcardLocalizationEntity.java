@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 public class FlashcardLocalizationEntity {
 
     @Id
-    @Column(length = 36)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
     @ManyToOne
     @JoinColumn(name = "flashcard_blueprint_id")
@@ -23,17 +23,12 @@ public class FlashcardLocalizationEntity {
     public FlashcardLocalizationEntity() {
     }
 
-    public FlashcardLocalizationEntity(String id, FlashcardBlueprintEntity flashcardBlueprint, String question, String definition, String tags, String language) {
-        this.id = id;
+    public FlashcardLocalizationEntity(FlashcardBlueprintEntity flashcardBlueprint, String question, String definition, String tags, String language) {
         this.flashcardBlueprint = flashcardBlueprint;
         this.question = question;
         this.definition = definition;
         this.tags = tags;
         this.language = language;
-    }
-
-    public String getId() {
-        return id;
     }
 
     public FlashcardBlueprintEntity getFlashcardBlueprint() {
