@@ -65,7 +65,7 @@ class CategoryRepositoryImpl implements CategoryRepository {
 
     @Override
     public Optional<CategorySnapshot> findByNameAndDepth(String categoryName, int depth) {
-        Optional<CategoryEntity> optional = sqlCategoryRepository.findByNameAndDepth(categoryName, depth);
+        Optional<CategoryEntity> optional = sqlCategoryRepository.findByCategoryNameAndDepth(categoryName, depth);
         return optional.map(this::mapEntityToSnapshot);
     }
 
