@@ -18,5 +18,7 @@ public class BaseE2ETest extends RestAssuredConfiguration {
                 "FOR r IN (SELECT tablename FROM pg_tables WHERE schemaname = 'public') LOOP " +
                 "EXECUTE 'TRUNCATE TABLE ' || quote_ident(r.tablename) || ' RESTART IDENTITY CASCADE'; " +
                 "END LOOP; END $$;");
+
+        jdbcTemplate.execute("INSERT INTO category_entity (id, category_name, depth) values ('01976e3e-6c52-7000-8c3f-2c4e5d6f7a8b', 'Java', 1)");
     }
 }

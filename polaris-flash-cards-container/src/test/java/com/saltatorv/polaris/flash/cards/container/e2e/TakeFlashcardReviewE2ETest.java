@@ -1,6 +1,6 @@
 package com.saltatorv.polaris.flash.cards.container.e2e;
 
-import com.saltatorv.polaris.flash.cards.application.query.review.dto.FlashcardReviewDataDto;
+import com.saltatorv.polaris.flash.cards.application.review.query.dto.FlashcardReviewDataDto;
 import com.saltatorv.polaris.flash.cards.container.caller.blueprint.FlashcardBlueprintEndpointCallerImplementation;
 import com.saltatorv.polaris.flash.cards.container.caller.flashcard.FlashcardReviewEndpointCallerImplementation;
 import com.saltatorv.polaris.flash.cards.container.configuration.BaseE2ETest;
@@ -26,7 +26,8 @@ class TakeFlashcardReviewE2ETest extends BaseE2ETest {
                 Arguments.of(FlashcardReviewAnswers.of(true, false, false, false, false, false, false, false, false, false)),
                 Arguments.of(FlashcardReviewAnswers.of(true, true, true, true, true, true, true, true, true, true)),
                 Arguments.of(FlashcardReviewAnswers.of(true, false, true, false, true, false, true, false, true, false)),
-                Arguments.of(FlashcardReviewAnswers.of(true, false, false, false, false, false, false, false, true, false))
+                Arguments.of(FlashcardReviewAnswers.of(true, false, false, false, false, false, false, false, true, false)),
+                Arguments.of(FlashcardReviewAnswers.of(true, false, false, true, false, true, true, false, true, false, false, true, false, true))
         );
     }
 
