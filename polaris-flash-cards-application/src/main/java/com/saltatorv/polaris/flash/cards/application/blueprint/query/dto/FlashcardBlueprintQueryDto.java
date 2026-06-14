@@ -4,10 +4,10 @@ import java.util.List;
 import java.util.Set;
 
 public class FlashcardBlueprintQueryDto {
-    private final String flashcardBlueprintId;
-    private final String source;
-    private final Set<String> tags;
-    private final List<FlashcardLocalizationQueryDto> flashcardLocalizations;
+    private String flashcardBlueprintId;
+    private String source;
+    private Set<String> tags;
+    private List<FlashcardLocalizationQueryDto> flashcardLocalizations;
 
     public FlashcardBlueprintQueryDto(String flashcardBlueprintId, String source,
                                       Set<String> tags, List<FlashcardLocalizationQueryDto> flashcardLocalizations) {
@@ -15,6 +15,9 @@ public class FlashcardBlueprintQueryDto {
         this.source = source;
         this.tags = tags;
         this.flashcardLocalizations = flashcardLocalizations;
+    }
+
+    public FlashcardBlueprintQueryDto() {
     }
 
     public String getFlashcardBlueprintId() {

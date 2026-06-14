@@ -7,6 +7,9 @@ public class FlashcardLocalizationCreateDto {
     private String question;
     private String answer;
 
+    public FlashcardLocalizationCreateDto() {
+    }
+
     public FlashcardLocalizationCreateDto(Locale locale, String question, String answer) {
         this.locale = locale;
         this.question = question;
