@@ -15,19 +15,16 @@ public class FlashcardLocalizationEntity {
     private String question;
     @Column(columnDefinition = "TEXT")
     private String definition;
-    @Column(length = 40)
-    private String tags;
     @Column(length = 3)
     private String language;
 
     public FlashcardLocalizationEntity() {
     }
 
-    public FlashcardLocalizationEntity(FlashcardBlueprintEntity flashcardBlueprint, String question, String definition, String tags, String language) {
+    public FlashcardLocalizationEntity(FlashcardBlueprintEntity flashcardBlueprint, String question, String definition, String language) {
         this.flashcardBlueprint = flashcardBlueprint;
         this.question = question;
         this.definition = definition;
-        this.tags = tags;
         this.language = language;
     }
 
@@ -41,10 +38,6 @@ public class FlashcardLocalizationEntity {
 
     public String getDefinition() {
         return definition;
-    }
-
-    public String getTags() {
-        return tags;
     }
 
     public String getLanguage() {
