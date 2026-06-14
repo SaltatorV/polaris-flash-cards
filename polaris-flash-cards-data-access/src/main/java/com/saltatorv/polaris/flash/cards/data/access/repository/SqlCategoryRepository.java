@@ -14,7 +14,7 @@ public interface SqlCategoryRepository extends Repository<CategoryEntity, String
 
     List<CategoryEntity> findByDepth(int depth);
 
-    Optional<CategoryEntity> findByNameAndDepth(String categoryName, int depth);
+    Optional<CategoryEntity> findByCategoryNameAndDepth(String categoryName, int depth);
 
     CategoryEntity save(CategoryEntity category);
 

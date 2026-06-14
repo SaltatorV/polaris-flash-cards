@@ -66,7 +66,10 @@ class FlashcardBlueprintRepositoryImpl implements FlashcardBlueprintRepository {
 
         List<FlashcardLocalizationEntity> localizations = flashcardBlueprintSnapshot.getLocalizations()
                 .stream()
-                .map(localization -> new FlashcardLocalizationEntity())
+                .map(localization ->
+                        new FlashcardLocalizationEntity(entity,
+                                localization.getContent().getQuestion(), localization.getContent().getAnswer(),
+                                localization.getLocale().getLanguage()))
                 .toList();
 
         entity.setFlashcardLocalizations(localizations);
