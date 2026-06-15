@@ -1,22 +1,20 @@
 package com.saltatorv.polaris.flash.cards.application.blueprint.command.dto;
 
-import java.util.Locale;
-
 public class FlashcardLocalizationCreateDto {
-    private Locale locale;
+    private String locale;
     private String question;
     private String answer;
 
     public FlashcardLocalizationCreateDto() {
     }
 
-    public FlashcardLocalizationCreateDto(Locale locale, String question, String answer) {
+    public FlashcardLocalizationCreateDto(String locale, String question, String answer) {
         this.locale = locale;
         this.question = question;
         this.answer = answer;
     }
 
-    public Locale getLocale() {
+    public String getLocale() {
         return locale;
     }
 

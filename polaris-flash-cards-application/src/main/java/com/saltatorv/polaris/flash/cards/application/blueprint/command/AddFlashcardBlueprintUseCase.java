@@ -8,6 +8,7 @@ import com.saltatorv.polaris.flash.cards.domain.shared.CategoryId;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Locale;
 
 @Service
 public class AddFlashcardBlueprintUseCase {
@@ -21,7 +22,8 @@ public class AddFlashcardBlueprintUseCase {
 
     public void addFlashcardBlueprints(List<FlashcardBlueprintCreateDto> dtos) {
         for (FlashcardBlueprintCreateDto dto : dtos) {
-
+            System.out.println(dto.getCategoryId() + " " + dto.getSource() + " " + dto.getTags());
+            dto.getLocalizations().forEach(l -> System.out.println(l.getLocale() + " " + l.getQuestion() + " " + l.getAnswer()));
             CategoryId categoryId = new CategoryId(dto.getCategoryId());
             List<FlashcardLocalization> localizations = dto.getLocalizations()
                     .stream()
@@ -39,7 +41,7 @@ public class AddFlashcardBlueprintUseCase {
     }
 
     private FlashcardLocalization mapToFlashcardLocalization(FlashcardLocalizationCreateDto dto) {
-        return new FlashcardLocalization(dto.getLocale(),
+        return new FlashcardLocalization(Locale.forLanguageTag(dto.getLocale()),
                 new FlashcardContent(dto.getQuestion(), dto.getAnswer()));
     }
 }
