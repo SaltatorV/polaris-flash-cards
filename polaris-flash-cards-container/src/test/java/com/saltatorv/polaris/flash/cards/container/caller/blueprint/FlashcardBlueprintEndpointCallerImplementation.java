@@ -40,7 +40,7 @@ public class FlashcardBlueprintEndpointCallerImplementation implements EndpointC
         for (int i = 0; i < times; i++) {
 
             List<FlashcardLocalizationCreateDto> localizationCreateDtos =
-                    List.of(new FlashcardLocalizationCreateDto(Locale.ENGLISH, String.format("Question-%d", i),
+                    List.of(new FlashcardLocalizationCreateDto(Locale.ENGLISH.toLanguageTag(), String.format("Question-%d", i),
                             String.format("Definition-%d", i)));
 
             dtos.add(new FlashcardBlueprintCreateDto(

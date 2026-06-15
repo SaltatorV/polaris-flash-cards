@@ -9,7 +9,6 @@
     </parent>
 
     <artifactId>polaris-flash-cards-container</artifactId>
-    <version>0.0.2-SNAPSHOT</version>
     <name>polaris-flash-cards-container</name>
 
     <properties>
