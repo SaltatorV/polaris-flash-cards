@@ -5,7 +5,7 @@
 
     <groupId>com.saltatorv</groupId>
     <artifactId>polaris-flash-cards</artifactId>
-    <version>0.0.1</version>
+    <version>${polaris-flash-cards.version}</version>
     <name>polaris-flash-cards</name>
     <description>polaris-flash-cards</description>
 
@@ -21,16 +21,17 @@
 
     <properties>
         <!-- CORE -->
+        <polaris-flash-cards.version>1.0.0</polaris-flash-cards.version>
         <java.version>21</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <maven.compiler.release>21</maven.compiler.release>
 
         <!--POLARIS-FLASH-CARDS-->
-        <polaris.flash.cards.domain.version>0.0.1</polaris.flash.cards.domain.version>
-        <polaris.flash.cards.application.version>0.0.1</polaris.flash.cards.application.version>
-        <polaris.flash.cards.data-access.version>0.0.1</polaris.flash.cards.data-access.version>
-        <polaris.flash.cards.web.version>0.0.1</polaris.flash.cards.web.version>
+        <polaris.flash.cards.domain.version>${polaris-flash-cards.version}</polaris.flash.cards.domain.version>
+        <polaris.flash.cards.application.version>${polaris-flash-cards.version}</polaris.flash.cards.application.version>
+        <polaris.flash.cards.data-access.version>${polaris-flash-cards.version}</polaris.flash.cards.data-access.version>
+        <polaris.flash.cards.web.version>${polaris-flash-cards.version}</polaris.flash.cards.web.version>
 
         <!-- SPRING -->
         <spring.boot.version>4.0.3</spring.boot.version>
