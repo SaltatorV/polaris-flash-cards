@@ -18,7 +18,7 @@ public class FlashcardBlueprintEntity {
     @ManyToOne
     @JoinColumn(name = "category_id")
     private CategoryEntity category;
-    @OneToMany(mappedBy = "flashcardBlueprint", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "flashcardBlueprint", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<FlashcardLocalizationEntity> flashcardLocalizations = new ArrayList<>();
 
     public FlashcardBlueprintEntity() {
