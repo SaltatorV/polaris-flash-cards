@@ -16,11 +16,11 @@ class DeleteFlashcardLocalizationUseCase {
 
     private final FlashcardBlueprintRepository flashcardBlueprintRepository;
 
-    public DeleteFlashcardLocalizationUseCase(FlashcardBlueprintRepository flashcardBlueprintRepository) {
+    DeleteFlashcardLocalizationUseCase(FlashcardBlueprintRepository flashcardBlueprintRepository) {
         this.flashcardBlueprintRepository = flashcardBlueprintRepository;
     }
 
-    public void deleteLocalizations(String blueprintId, List<FlashcardBlueprintLocalizationDeleteDto> dtos) {
+    void deleteLocalizations(String blueprintId, List<FlashcardBlueprintLocalizationDeleteDto> dtos) {
         Optional<FlashcardBlueprintSnapshot> optional = flashcardBlueprintRepository.findById(new FlashcardBlueprintId(blueprintId));
 
         if (optional.isEmpty()) {

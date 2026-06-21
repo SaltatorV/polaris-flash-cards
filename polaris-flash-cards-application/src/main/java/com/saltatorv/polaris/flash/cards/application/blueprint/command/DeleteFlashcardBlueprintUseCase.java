@@ -9,11 +9,11 @@ class DeleteFlashcardBlueprintUseCase {
 
     private final FlashcardBlueprintRepository flashcardBlueprintRepository;
 
-    public DeleteFlashcardBlueprintUseCase(FlashcardBlueprintRepository flashcardBlueprintRepository) {
+    DeleteFlashcardBlueprintUseCase(FlashcardBlueprintRepository flashcardBlueprintRepository) {
         this.flashcardBlueprintRepository = flashcardBlueprintRepository;
     }
 
-    public void deleteBlueprint(String blueprintId) {
+    void deleteBlueprint(String blueprintId) {
         flashcardBlueprintRepository.deleteById(new FlashcardBlueprintId(blueprintId));
     }
 }
