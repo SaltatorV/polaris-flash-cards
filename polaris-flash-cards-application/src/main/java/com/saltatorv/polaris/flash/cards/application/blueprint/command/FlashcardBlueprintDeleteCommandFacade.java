@@ -7,11 +7,21 @@ import java.util.List;
 
 @Service
 public class FlashcardBlueprintDeleteCommandFacade {
-    public void deleteBlueprintById(String blueprintId) {
 
+    private final DeleteFlashcardBlueprintUseCase deleteFlashcardBlueprintUseCase;
+    private final DeleteFlashcardLocalizationUseCase deleteFlashcardLocalizationUseCase;
+
+    public FlashcardBlueprintDeleteCommandFacade(DeleteFlashcardBlueprintUseCase deleteFlashcardBlueprintUseCase,
+                                                 DeleteFlashcardLocalizationUseCase deleteFlashcardLocalizationUseCase) {
+        this.deleteFlashcardBlueprintUseCase = deleteFlashcardBlueprintUseCase;
+        this.deleteFlashcardLocalizationUseCase = deleteFlashcardLocalizationUseCase;
+    }
+
+    public void deleteBlueprintById(String blueprintId) {
+        deleteFlashcardBlueprintUseCase.deleteBlueprint(blueprintId);
     }
 
     public void deleteBlueprintLocalizations(String blueprintId, List<FlashcardBlueprintLocalizationDeleteDto> dtos) {
-
+        deleteFlashcardLocalizationUseCase.deleteLocalizations(blueprintId, dtos);
     }
 }
