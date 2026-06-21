@@ -1,7 +1,7 @@
 package com.saltatorv.polaris.flash.cards.web.controller.command.blueprint;
 
-import com.saltatorv.polaris.flash.cards.application.blueprint.command.AddFlashcardBlueprintUseCase;
 import com.saltatorv.polaris.flash.cards.application.blueprint.command.dto.FlashcardBlueprintCreateDto;
+import com.saltatorv.polaris.flash.cards.application.blueprint.command.FlashcardBlueprintCreateCommandFacade;
 import com.saltatorv.polaris.flash.cards.web.BaseController;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,15 +13,15 @@ import java.util.List;
 public class FlashcardBlueprintCreationController extends BaseController {
     public static final String FLASHCARD_BLUEPRINT_CREATE_ENDPOINT = "/flashcard/blueprint/create";
 
-    private final AddFlashcardBlueprintUseCase addFlashcardBlueprintUseCase;
+    private final FlashcardBlueprintCreateCommandFacade flashcardBlueprintCreateCommandFacade;
 
-    public FlashcardBlueprintCreationController(AddFlashcardBlueprintUseCase addFlashcardBlueprintUseCase) {
-        this.addFlashcardBlueprintUseCase = addFlashcardBlueprintUseCase;
+    public FlashcardBlueprintCreationController(FlashcardBlueprintCreateCommandFacade flashcardBlueprintCreateCommandFacade) {
+        this.flashcardBlueprintCreateCommandFacade = flashcardBlueprintCreateCommandFacade;
     }
 
     @PostMapping(FLASHCARD_BLUEPRINT_CREATE_ENDPOINT)
     public void createFlashcardBlueprints(@RequestBody List<FlashcardBlueprintCreateDto> requests) {
-        addFlashcardBlueprintUseCase.addFlashcardBlueprints(requests);
+        flashcardBlueprintCreateCommandFacade.addFlashcardBlueprints(requests);
     }
 
 }
