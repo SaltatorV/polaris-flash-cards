@@ -11,18 +11,18 @@ import java.util.List;
 import java.util.Locale;
 
 @Service
-public class AddFlashcardBlueprintUseCase {
+class CreateFlashcardBlueprintUseCase {
     private final FlashcardBlueprintRepository flashcardBlueprintRepository;
     private final FlashcardBlueprintIdCache flashcardBlueprintIdCache;
 
-    AddFlashcardBlueprintUseCase(FlashcardBlueprintRepository flashcardBlueprintRepository, FlashcardBlueprintIdCache flashcardBlueprintIdCache) {
+    CreateFlashcardBlueprintUseCase(FlashcardBlueprintRepository flashcardBlueprintRepository, FlashcardBlueprintIdCache flashcardBlueprintIdCache) {
         this.flashcardBlueprintRepository = flashcardBlueprintRepository;
         this.flashcardBlueprintIdCache = flashcardBlueprintIdCache;
     }
 
-    public void addFlashcardBlueprints(List<FlashcardBlueprintCreateDto> dtos) {
+    void addFlashcardBlueprints(List<FlashcardBlueprintCreateDto> dtos) {
         for (FlashcardBlueprintCreateDto dto : dtos) {
-            System.out.println(dto.getCategoryId() + " " + dto.getSource() + " " + dto.getTags());
+
             dto.getLocalizations().forEach(l -> System.out.println(l.getLocale() + " " + l.getQuestion() + " " + l.getAnswer()));
             CategoryId categoryId = new CategoryId(dto.getCategoryId());
             List<FlashcardLocalization> localizations = dto.getLocalizations()
