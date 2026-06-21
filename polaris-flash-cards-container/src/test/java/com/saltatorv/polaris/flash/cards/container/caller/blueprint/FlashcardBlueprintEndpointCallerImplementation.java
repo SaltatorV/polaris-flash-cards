@@ -12,7 +12,7 @@ import java.util.Locale;
 import java.util.Set;
 
 import static com.saltatorv.polaris.flash.cards.web.BaseController.BASE_API_ENDPOINT;
-import static com.saltatorv.polaris.flash.cards.web.controller.command.blueprint.FlashcardBlueprintLifecycleController.FLASHCARD_BLUEPRINT_CREATE_ENDPOINT;
+import static com.saltatorv.polaris.flash.cards.web.controller.command.blueprint.FlashcardBlueprintCreationController.FLASHCARD_BLUEPRINT_CREATE_ENDPOINT;
 import static io.restassured.RestAssured.given;
 
 public class FlashcardBlueprintEndpointCallerImplementation implements EndpointCaller, FlashcardBlueprintEndpointCaller, CreateBlueprintEndpointCaller {
