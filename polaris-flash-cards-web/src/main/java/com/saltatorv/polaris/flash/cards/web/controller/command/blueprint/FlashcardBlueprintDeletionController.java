@@ -19,7 +19,8 @@ public class FlashcardBlueprintDeletionController {
     }
 
     @DeleteMapping(FLASHCARD_BLUEPRINT_LOCALIZATIONS_DELETE_ENDPOINT)
-    public void deleteLocalizations(List<FlashcardBlueprintLocalizationDeleteDto> dtos) {
+    public void deleteLocalizations(@PathVariable("id") String id,
+                                    List<FlashcardBlueprintLocalizationDeleteDto> dtos) {
 
     }
 }
