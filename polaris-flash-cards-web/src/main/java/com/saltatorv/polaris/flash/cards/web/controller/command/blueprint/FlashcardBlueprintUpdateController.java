@@ -10,8 +10,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class FlashcardBlueprintUpdateController {
-    public static final String FLASHCARD_BLUEPRINT_UPDATE_METADATA_ENDPOINT = "/flashcard/blueprint/{id}/updateMetadata";
-    public static final String FLASHCARD_BLUEPRINT_UPDATE_LOCALIZATION_ENDPOINT = "/flashcard/blueprint/{id}/localization/{locale}/update";
+    private static final String BASE_ENDPOINT = "/flashcard/blueprint";
+
+    public static final String FLASHCARD_BLUEPRINT_UPDATE_METADATA_ENDPOINT = BASE_ENDPOINT + "/{id}/updateMetadata";
+    public static final String FLASHCARD_BLUEPRINT_UPDATE_LOCALIZATION_ENDPOINT = BASE_ENDPOINT + "/{id}/localization/{locale}/update";
 
     private final FlashcardBlueprintUpdateCommandFacade flashcardBlueprintUpdateCommandFacade;
 

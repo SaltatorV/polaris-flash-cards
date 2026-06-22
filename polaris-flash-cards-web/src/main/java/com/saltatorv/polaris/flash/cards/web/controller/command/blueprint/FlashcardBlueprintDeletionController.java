@@ -10,8 +10,10 @@ import java.util.List;
 
 @RestController
 public class FlashcardBlueprintDeletionController {
-    public static final String FLASHCARD_BLUEPRINT_DELETE_ENDPOINT = "/flashcard/blueprint/{id}/delete";
-    public static final String FLASHCARD_BLUEPRINT_LOCALIZATIONS_DELETE_ENDPOINT = "/flashcard/blueprint/{id}/localizations/delete";
+    private static final String BASE_ENDPOINT = "/flashcard/blueprint";
+
+    public static final String FLASHCARD_BLUEPRINT_DELETE_ENDPOINT = BASE_ENDPOINT + "/{id}/delete";
+    public static final String FLASHCARD_BLUEPRINT_LOCALIZATIONS_DELETE_ENDPOINT = BASE_ENDPOINT + "/{id}/localizations/delete";
 
     private final FlashcardBlueprintDeleteCommandFacade flashcardBlueprintDeleteCommandFacade;
 
