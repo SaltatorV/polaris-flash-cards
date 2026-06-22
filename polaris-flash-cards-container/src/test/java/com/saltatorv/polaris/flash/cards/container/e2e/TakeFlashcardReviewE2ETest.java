@@ -72,7 +72,7 @@ class TakeFlashcardReviewE2ETest extends BaseE2ETest {
     }
 
     private void assertEveryDrewQuestionIsDifferent(ArrayList<String> drewQuestions) {
-        assertTrue(drewQuestions.stream().distinct().count() == drewQuestions.size());
+        assertEquals(drewQuestions.stream().distinct().count(), drewQuestions.size());
     }
 
     private void assertFlashcardCount(FlashcardReviewAnswers flashcardReviewAnswers, FlashcardReviewDataDto reviewResult) {
