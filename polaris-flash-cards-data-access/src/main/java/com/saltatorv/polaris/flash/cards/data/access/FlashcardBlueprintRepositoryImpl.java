@@ -142,4 +142,9 @@ class FlashcardBlueprintRepositoryImpl implements FlashcardBlueprintRepository {
     public List<FlashcardBlueprintSnapshot> findAllByCategoryId(CategoryId categoryId) {
         return List.of();
     }
+
+    @Override
+    public void deleteById(FlashcardBlueprintId blueprintId) {
+        sqlFlashcardBlueprintRepository.deleteById(blueprintId.getId());
+    }
 }
