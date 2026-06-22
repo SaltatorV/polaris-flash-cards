@@ -4,11 +4,11 @@ import com.saltatorv.polaris.flash.cards.application.category.command.dto.Catego
 import org.springframework.stereotype.Service;
 
 @Service
-public class CategoryCommandFacade {
+public class CategoryCreateCommandFacade {
 
     private final AddCategoryUseCase addCategoryUseCase;
 
-    public CategoryCommandFacade(AddCategoryUseCase addCategoryUseCase) {
+    public CategoryCreateCommandFacade(AddCategoryUseCase addCategoryUseCase) {
         this.addCategoryUseCase = addCategoryUseCase;
     }
 
