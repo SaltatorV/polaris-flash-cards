@@ -3,6 +3,7 @@ package com.saltatorv.polaris.flash.cards.application.blueprint.command;
 import com.saltatorv.polaris.flash.cards.application.blueprint.command.dto.FlashcardBlueprintMetadataUpdateDto;
 import com.saltatorv.polaris.flash.cards.domain.FlashcardBlueprint;
 import com.saltatorv.polaris.flash.cards.domain.FlashcardBlueprintRepository;
+import com.saltatorv.polaris.flash.cards.domain.FlashcardMetadata;
 import com.saltatorv.polaris.flash.cards.domain.shared.FlashcardBlueprintId;
 import com.saltatorv.polaris.flash.cards.domain.snapshot.FlashcardBlueprintSnapshot;
 import org.springframework.stereotype.Service;
@@ -28,7 +29,7 @@ class UpdateBlueprintMetadataUseCase {
 
         FlashcardBlueprint blueprint = FlashcardBlueprint.restore(optional.get());
 
-        blueprint.updateMetadata(dto.getSource(), dto.getTags());
+        blueprint.updateMetadata(new FlashcardMetadata(dto.getSource(), dto.getTags()));
 
         flashcardBlueprintRepository.save(blueprint.generateSnapshot());
     }
