@@ -10,9 +10,7 @@ import java.util.List;
 
 @RestController
 public class CategoryViewController {
-    private final static String BASE_LIFECYCLE_ENDPOINT = "/flashcard/blueprint";
-
-    public final static String CATEGORY_GET_ENDPOINT = BASE_LIFECYCLE_ENDPOINT + "/category";
+    public final static String BASE_LIFECYCLE_ENDPOINT = "/flashcard/category";
 
     private final CategoryQueryFacade categoryQueryFacade;
 
@@ -20,7 +18,7 @@ public class CategoryViewController {
         this.categoryQueryFacade = categoryQueryFacade;
     }
 
-    @GetMapping(CATEGORY_GET_ENDPOINT)
+    @GetMapping(BASE_LIFECYCLE_ENDPOINT)
     public List<CategoryDto> getCategory(@RequestParam(defaultValue = "0") int depth) {
         return categoryQueryFacade.getCategoriesForSpecificDepth(depth);
     }
