@@ -19,7 +19,7 @@ public class CategoryQueryController {
     }
 
     @GetMapping(BASE_CATEGORY_QUERY_ENDPOINT)
-    public List<CategoryDto> getCategory(@RequestParam(defaultValue = "0") int depth) {
+    public List<CategoryDto> getCategory(@RequestParam(name = "depth", defaultValue = "1") int depth) {
         return categoryQueryFacade.getCategoriesForSpecificDepth(depth);
     }
 
