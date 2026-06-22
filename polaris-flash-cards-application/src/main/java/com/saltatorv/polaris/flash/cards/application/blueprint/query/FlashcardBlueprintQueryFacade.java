@@ -16,11 +16,11 @@ public class FlashcardBlueprintQueryFacade {
         this.getFlashcardBlueprintDataUseCase = getFlashcardBlueprintDataUseCase;
     }
 
-    public List<FlashcardBlueprintSummaryQueryDto> getFlashcardBlueprintSummariesForCategory(CategoryId categoryId) {
-        return getFlashcardBlueprintDataUseCase.getFlashcardBlueprintSummariesForCategory(categoryId);
+    public List<FlashcardBlueprintSummaryQueryDto> getFlashcardBlueprintSummariesForCategory(String categoryId) {
+        return getFlashcardBlueprintDataUseCase.getFlashcardBlueprintSummariesForCategory(new CategoryId(categoryId));
     }
 
-    public FlashcardBlueprintQueryDto getFlashcardBlueprint(FlashcardBlueprintId id) {
-        return getFlashcardBlueprintDataUseCase.getFlashcardBlueprint(id);
+    public FlashcardBlueprintQueryDto getFlashcardBlueprint(String blueprintId) {
+        return getFlashcardBlueprintDataUseCase.getFlashcardBlueprint(new FlashcardBlueprintId(blueprintId));
     }
 }
