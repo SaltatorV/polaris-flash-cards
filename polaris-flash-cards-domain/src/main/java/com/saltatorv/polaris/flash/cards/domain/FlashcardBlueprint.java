@@ -14,7 +14,8 @@ public class FlashcardBlueprint {
     private final CategoryId categoryId;
     private final FlashcardBlueprintId flashcardBlueprintId;
     private final List<FlashcardLocalization> localizations;
-    private final FlashcardMetadata metadata;
+
+    private FlashcardMetadata metadata;
 
     public FlashcardBlueprint(CategoryId categoryId, List<FlashcardLocalization> localizations, FlashcardMetadata metadata) {
         if (localizations.isEmpty()) {
@@ -82,6 +83,10 @@ public class FlashcardBlueprint {
         localizations.remove(found);
 
         localizations.add(new FlashcardLocalization(Locale.forLanguageTag(locale), content));
+    }
+
+    public void updateMetadata(FlashcardMetadata metadata) {
+        this.metadata = metadata;
     }
 
     private FlashcardLocalization findLocalizationOrThrow(String locale) {
