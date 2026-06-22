@@ -11,15 +11,15 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-public class FlashcardBlueprintViewController extends BaseController {
-    private final static String BASE_LIFECYCLE_ENDPOINT = "/flashcard/blueprint";
+public class FlashcardBlueprintQueryController extends BaseController {
+    private final static String BASE_BLUEPRINT_QUERY_ENDPOINT = "/flashcard/blueprint";
 
-    public final static String FLASHCARD_BLUEPRINT_GET_ENDPOINT = BASE_LIFECYCLE_ENDPOINT + "/{id}";
-    public final static String FLASHCARD_BLUEPRINT_GET_BY_CATEGORY_ENDPOINT = BASE_LIFECYCLE_ENDPOINT + "/category/{categoryId}";
+    public final static String FLASHCARD_BLUEPRINT_GET_ENDPOINT = BASE_BLUEPRINT_QUERY_ENDPOINT + "/{id}";
+    public final static String FLASHCARD_BLUEPRINT_GET_BY_CATEGORY_ENDPOINT = BASE_BLUEPRINT_QUERY_ENDPOINT + "/category/{categoryId}";
 
     private final FlashcardBlueprintQueryFacade flashcardBlueprintQueryFacade;
 
-    public FlashcardBlueprintViewController(FlashcardBlueprintQueryFacade flashcardBlueprintQueryFacade) {
+    public FlashcardBlueprintQueryController(FlashcardBlueprintQueryFacade flashcardBlueprintQueryFacade) {
         this.flashcardBlueprintQueryFacade = flashcardBlueprintQueryFacade;
     }
 

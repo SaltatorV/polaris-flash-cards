@@ -9,14 +9,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class FlashcardReviewViewController extends BaseController {
-    private final static String BASE_LIFECYCLE_ENDPOINT = "/flashcard/review";
+public class FlashcardReviewQueryController extends BaseController {
+    private final static String BASE_REVIEW_QUERY_ENDPOINT = "/flashcard/review";
 
-    public final static String FLASHCARD_REVIEW_GET_ENDPOINT = BASE_LIFECYCLE_ENDPOINT + "/{reviewId}";
+    public final static String FLASHCARD_REVIEW_GET_ENDPOINT = BASE_REVIEW_QUERY_ENDPOINT + "/{reviewId}";
 
     private final FlashcardReviewViewFacade flashcardReviewViewFacade;
 
-    public FlashcardReviewViewController(FlashcardReviewViewFacade flashcardReviewViewFacade) {
+    public FlashcardReviewQueryController(FlashcardReviewViewFacade flashcardReviewViewFacade) {
         this.flashcardReviewViewFacade = flashcardReviewViewFacade;
     }
 
