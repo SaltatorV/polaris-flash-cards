@@ -10,7 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class FlashcardReviewOperationController extends BaseController {
-    public final static String BASE_LIFECYCLE_ENDPOINT = "/flashcard/review";
+    private final static String BASE_LIFECYCLE_ENDPOINT = "/flashcard/review";
+
     public final static String FLASHCARD_REVIEW_BEGIN_ENDPOINT = BASE_LIFECYCLE_ENDPOINT + "/{reviewId}/begin";
     public final static String FLASHCARD_REVIEW_FINISH_ENDPOINT = BASE_LIFECYCLE_ENDPOINT + "/{reviewId}/finish";
     public final static String FLASHCARD_REVIEW_DRAW_NEXT_ENDPOINT = BASE_LIFECYCLE_ENDPOINT + "/{reviewId}/flashcard/drawNext";
