@@ -1,12 +1,15 @@
 package com.saltatorv.polaris.flash.cards.application.review.command.dto;
 
 public class FlashcardDto {
-    private final String question;
-    private final String definition;
+    private String question;
+    private String definition;
 
     public FlashcardDto(String question, String definition) {
         this.question = question;
         this.definition = definition;
+    }
+
+    public FlashcardDto() {
     }
 
     public String getQuestion() {

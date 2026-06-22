@@ -6,10 +6,10 @@ import java.util.List;
 import java.util.Set;
 
 public class FlashcardBlueprintSummaryQueryDto {
-    private final String flashcardBlueprintId;
-    private final String source;
-    private final Set<String> tags;
-    private final List<String> availableLocalizations;
+    private String flashcardBlueprintId;
+    private String source;
+    private Set<String> tags;
+    private List<String> availableLocalizations;
 
     public FlashcardBlueprintSummaryQueryDto(String flashcardBlueprintId, String source,
                                              Set<String> tags, List<String> availableLocalizations) {
@@ -17,6 +17,9 @@ public class FlashcardBlueprintSummaryQueryDto {
         this.source = source;
         this.tags = tags;
         this.availableLocalizations = availableLocalizations;
+    }
+
+    public FlashcardBlueprintSummaryQueryDto() {
     }
 
     public String getFlashcardBlueprintId() {

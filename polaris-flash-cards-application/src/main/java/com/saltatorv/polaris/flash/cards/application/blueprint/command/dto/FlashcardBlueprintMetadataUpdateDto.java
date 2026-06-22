@@ -1,12 +1,10 @@
 package com.saltatorv.polaris.flash.cards.application.blueprint.command.dto;
 
-import java.util.List;
 import java.util.Set;
 
 public class FlashcardBlueprintMetadataUpdateDto {
     private String source;
     private Set<String> tags;
-
 
     public FlashcardBlueprintMetadataUpdateDto() {
     }
