@@ -40,7 +40,11 @@ class CategoryRepositoryImpl implements CategoryRepository {
 
         toSave.setDepth(category.getDepth());
         toSave.setCategoryName(category.getCategoryName());
-        CategoryEntity parent = sqlCategoryRepository.findById(category.getParentID()).orElse(null);
+
+        CategoryEntity parent = null;
+        if(category.getParentID() != null) {
+            parent = sqlCategoryRepository.findById(category.getParentID()).orElse(null);
+        }
 
         toSave.setParent(parent);
 
@@ -78,6 +82,7 @@ class CategoryRepositoryImpl implements CategoryRepository {
     }
 
     private CategorySnapshot mapEntityToSnapshot(CategoryEntity entity) {
-        return new CategorySnapshot(entity.getId(), entity.getDepth(), entity.getCategoryName(), entity.getParent().getId());
+        String parentId = entity.getParent() == null ? null : entity.getParent().getId();
+        return new CategorySnapshot(entity.getId(), entity.getDepth(), entity.getCategoryName(), parentId);
     }
 }
