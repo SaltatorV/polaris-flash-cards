@@ -34,14 +34,17 @@ public class Category {
     }
 
     public static Category restore(CategorySnapshot snapshot) {
+        CategoryId parent = snapshot.getParentID() == null ? null : new CategoryId(snapshot.getParentID());
+
         return new Category(new CategoryId(snapshot.getId()),
                 snapshot.getCategoryName(),
                 snapshot.getDepth(),
-                new CategoryId(snapshot.getParentID()));
+                parent);
     }
 
     public CategorySnapshot generateSnapshot() {
-        return new CategorySnapshot(id.getId(), depth, categoryName, parent.getId());
+        String parentId = parent == null ? null : parent.getId();
+        return new CategorySnapshot(id.getId(), depth, categoryName, parentId);
     }
 
     public Category createChild(String categoryName) {
