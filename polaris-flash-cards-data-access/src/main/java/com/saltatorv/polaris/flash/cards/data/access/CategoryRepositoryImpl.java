@@ -27,9 +27,9 @@ class CategoryRepositoryImpl implements CategoryRepository {
             return Optional.empty();
         }
         CategoryEntity entity = optional.get();
-
+        String parentId = entity.getParent() == null ? null : entity.getParent().getId();
         CategorySnapshot snapshot = new CategorySnapshot(entity.getId(), entity.getDepth(),
-                entity.getCategoryName(), entity.getParent().getId());
+                entity.getCategoryName(), parentId);
         return Optional.of(snapshot);
     }
 
