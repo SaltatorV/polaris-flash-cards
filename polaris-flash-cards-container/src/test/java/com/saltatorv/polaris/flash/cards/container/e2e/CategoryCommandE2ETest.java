@@ -7,7 +7,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
 import static com.saltatorv.polaris.flash.cards.web.controller.command.category.CategoryCreationController.BASE_LIFECYCLE_ENDPOINT;
+import static com.saltatorv.polaris.flash.cards.web.controller.query.category.CategoryQueryController.BASE_CATEGORY_QUERY_ENDPOINT;
 import static io.restassured.RestAssured.given;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class CategoryCommandE2ETest extends BaseE2ETest {
 
@@ -26,5 +28,19 @@ class CategoryCommandE2ETest extends BaseE2ETest {
                 .statusCode(HttpStatus.OK.value());
 
         // then
+        var listOfCategories = given()
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .when()
+                .get(BASE_CATEGORY_QUERY_ENDPOINT)
+                .then()
+                .statusCode(HttpStatus.OK.value())
+                .extract().jsonPath()
+                .getList(".", com.saltatorv.polaris.flash.cards.application.category.query.dto.CategoryDto.class);
+
+        var programmingCategory = listOfCategories.stream().filter(c -> c.getCategoryName().equals("Programming")).findFirst();
+        var javaCategory = listOfCategories.stream().filter(c -> c.getCategoryName().equals("Java")).findFirst();
+
+        assertNotNull(programmingCategory);
+        assertNotNull(javaCategory);
     }
 }

@@ -14,7 +14,7 @@ import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class TakeFlashcardReviewE2ETest extends BaseE2ETest {
+class FlashcardReviewE2ETest extends BaseE2ETest {
 
     static Stream<Arguments> provideCorrectAndIncorrectAnswersForReview() {
         return Stream.of(
