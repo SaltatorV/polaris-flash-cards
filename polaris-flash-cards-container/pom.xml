@@ -41,6 +41,13 @@
             <artifactId>polaris-flash-cards-web</artifactId>
         </dependency>
 
+        <!-- Serialization -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <scope>test</scope>
+        </dependency>
+
         <!-- Test Containers-->
         <dependency>
             <groupId>org.testcontainers</groupId>
