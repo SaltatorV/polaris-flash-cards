@@ -18,4 +18,6 @@ public interface FlashcardBlueprintRepository {
     List<FlashcardBlueprintSnapshot> findAll();
 
     List<FlashcardBlueprintSnapshot> findAllByCategoryId(CategoryId categoryId);
+
+    void deleteById(FlashcardBlueprintId blueprintId);
 }
