@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class TakeFlashcardReviewE2ETest extends BaseE2ETest {
 
