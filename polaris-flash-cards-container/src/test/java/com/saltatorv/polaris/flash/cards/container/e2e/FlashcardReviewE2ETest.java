@@ -65,7 +65,7 @@ class FlashcardReviewE2ETest extends BaseE2ETest {
 
         reviewCommandCaller.finish();
 
-        FlashcardReviewDataDto reviewResult = reviewCommandCaller.query().getReview();
+        FlashcardReviewDataDto reviewResult = reviewCommandCaller.getReview();
 
         assertDrewQuestionCount(predictedResult, drewQuestions);
         assertEveryDrewQuestionIsDifferent(drewQuestions);
