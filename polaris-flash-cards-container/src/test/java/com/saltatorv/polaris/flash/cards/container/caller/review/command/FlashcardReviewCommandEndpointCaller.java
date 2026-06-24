@@ -12,15 +12,14 @@ import static com.saltatorv.polaris.flash.cards.web.controller.command.review.Fl
 import static com.saltatorv.polaris.flash.cards.web.controller.query.review.FlashcardReviewQueryController.FLASHCARD_REVIEW_GET_ENDPOINT;
 import static io.restassured.RestAssured.given;
 
-public class FlashcardReviewCommandEndpointCallerImplementation {
+public class FlashcardReviewCommandEndpointCaller {
     String flashcardReviewId;
 
-    public static FlashcardReviewCommandEndpointCallerImplementation build() {
-        return new FlashcardReviewCommandEndpointCallerImplementation();
+    public static FlashcardReviewCommandEndpointCaller build() {
+        return new FlashcardReviewCommandEndpointCaller();
     }
 
-    // FlashcardReviewEndpointCaller
-    public FlashcardReviewCommandEndpointCallerImplementation generateRandomFlashcardReview(int flashcardCount) {
+    public FlashcardReviewCommandEndpointCaller generateRandomFlashcardReview(int flashcardCount) {
         flashcardReviewId = given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .when()
@@ -33,12 +32,7 @@ public class FlashcardReviewCommandEndpointCallerImplementation {
         return this;
     }
 
-    public FlashcardReviewCommandEndpointCallerImplementation query() {
-        return this;
-    }
-
-    // LifecycleFlashcardReviewEndpointCaller
-    public FlashcardReviewCommandEndpointCallerImplementation begin() {
+    public FlashcardReviewCommandEndpointCaller begin() {
         given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .when()
@@ -46,10 +40,11 @@ public class FlashcardReviewCommandEndpointCallerImplementation {
                 .post(BASE_API_ENDPOINT + FLASHCARD_REVIEW_BEGIN_ENDPOINT)
                 .then()
                 .statusCode(HttpStatus.OK.value());
+
         return this;
     }
 
-    public FlashcardReviewCommandEndpointCallerImplementation finish() {
+    public FlashcardReviewCommandEndpointCaller finish() {
         given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .when()
@@ -57,10 +52,11 @@ public class FlashcardReviewCommandEndpointCallerImplementation {
                 .post(BASE_API_ENDPOINT + FLASHCARD_REVIEW_FINISH_ENDPOINT)
                 .then()
                 .statusCode(HttpStatus.OK.value());
+
         return this;
     }
 
-    public FlashcardReviewCommandEndpointCallerImplementation drawNext(List<String> drewQuestions) {
+    public FlashcardReviewCommandEndpointCaller drawNext(List<String> drewQuestions) {
         String question = given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .when()
@@ -75,7 +71,7 @@ public class FlashcardReviewCommandEndpointCallerImplementation {
         return this;
     }
 
-    public FlashcardReviewCommandEndpointCallerImplementation markAsIncorrect() {
+    public FlashcardReviewCommandEndpointCaller markAsIncorrect() {
         given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .when()
@@ -83,10 +79,11 @@ public class FlashcardReviewCommandEndpointCallerImplementation {
                 .post(BASE_API_ENDPOINT + FLASHCARD_REVIEW_MARK_INCORRECT_ENDPOINT)
                 .then()
                 .statusCode(HttpStatus.OK.value());
+
         return this;
     }
 
-    public FlashcardReviewCommandEndpointCallerImplementation markAsCorrect() {
+    public FlashcardReviewCommandEndpointCaller markAsCorrect() {
         given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .when()
@@ -94,12 +91,11 @@ public class FlashcardReviewCommandEndpointCallerImplementation {
                 .post(BASE_API_ENDPOINT + FLASHCARD_REVIEW_MARK_CORRECT_ENDPOINT)
                 .then()
                 .statusCode(HttpStatus.OK.value());
+
         return this;
     }
 
-    // LifecycleFlashcardReviewEndpointCaller
-
-    public FlashcardReviewCommandEndpointCallerImplementation lifecycle() {
+    public FlashcardReviewCommandEndpointCaller lifecycle() {
         return this;
     }
 
