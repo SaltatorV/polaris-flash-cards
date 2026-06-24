@@ -3,6 +3,7 @@ package com.saltatorv.polaris.flash.cards.container.e2e;
 import com.saltatorv.polaris.flash.cards.application.review.query.dto.FlashcardReviewDataDto;
 import com.saltatorv.polaris.flash.cards.container.caller.blueprint.FlashcardBlueprintEndpointCallerImplementation;
 import com.saltatorv.polaris.flash.cards.container.caller.review.command.FlashcardReviewCommandEndpointCaller;
+import com.saltatorv.polaris.flash.cards.container.caller.review.query.FlashcardReviewQueryEndpointCaller;
 import com.saltatorv.polaris.flash.cards.container.configuration.BaseE2ETest;
 import com.saltatorv.polaris.flash.cards.container.e2e.model.FlashcardReviewAnswers;
 import org.junit.jupiter.api.BeforeEach;
@@ -18,6 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class FlashcardReviewE2ETest extends BaseE2ETest {
 
     FlashcardReviewCommandEndpointCaller reviewCommandCaller;
+    FlashcardReviewQueryEndpointCaller reviewQueryCaller;
 
     static Stream<Arguments> provideCorrectAndIncorrectAnswersForReview() {
         return Stream.of(
@@ -36,6 +38,7 @@ class FlashcardReviewE2ETest extends BaseE2ETest {
     @BeforeEach
     public void setup() {
         reviewCommandCaller = FlashcardReviewCommandEndpointCaller.build();
+        reviewQueryCaller = FlashcardReviewQueryEndpointCaller.build();
     }
 
     @MethodSource("provideCorrectAndIncorrectAnswersForReview")
@@ -65,7 +68,7 @@ class FlashcardReviewE2ETest extends BaseE2ETest {
 
         reviewCommandCaller.finish();
 
-        FlashcardReviewDataDto reviewResult = reviewCommandCaller.getReview();
+        FlashcardReviewDataDto reviewResult = reviewQueryCaller.getReview(reviewCommandCaller.getCurrentFlashcardReviewId());
 
         assertDrewQuestionCount(predictedResult, drewQuestions);
         assertEveryDrewQuestionIsDifferent(drewQuestions);
