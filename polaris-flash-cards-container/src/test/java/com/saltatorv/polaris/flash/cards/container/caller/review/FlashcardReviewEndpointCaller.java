@@ -1,4 +1,4 @@
-package com.saltatorv.polaris.flash.cards.container.caller.flashcard;
+package com.saltatorv.polaris.flash.cards.container.caller.review;
 
 public interface FlashcardReviewEndpointCaller {
 

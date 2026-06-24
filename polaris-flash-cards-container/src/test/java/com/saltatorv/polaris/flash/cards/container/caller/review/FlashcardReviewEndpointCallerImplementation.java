@@ -1,4 +1,4 @@
-package com.saltatorv.polaris.flash.cards.container.caller.flashcard;
+package com.saltatorv.polaris.flash.cards.container.caller.review;
 
 import com.saltatorv.polaris.flash.cards.application.review.query.dto.FlashcardReviewDataDto;
 import org.springframework.http.HttpStatus;

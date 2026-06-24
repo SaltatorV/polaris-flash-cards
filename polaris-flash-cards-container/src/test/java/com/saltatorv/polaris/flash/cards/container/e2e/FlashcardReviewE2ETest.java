@@ -2,7 +2,7 @@ package com.saltatorv.polaris.flash.cards.container.e2e;
 
 import com.saltatorv.polaris.flash.cards.application.review.query.dto.FlashcardReviewDataDto;
 import com.saltatorv.polaris.flash.cards.container.caller.blueprint.FlashcardBlueprintEndpointCallerImplementation;
-import com.saltatorv.polaris.flash.cards.container.caller.flashcard.FlashcardReviewEndpointCallerImplementation;
+import com.saltatorv.polaris.flash.cards.container.caller.review.FlashcardReviewEndpointCallerImplementation;
 import com.saltatorv.polaris.flash.cards.container.configuration.BaseE2ETest;
 import com.saltatorv.polaris.flash.cards.container.e2e.model.FlashcardReviewAnswers;
 import org.junit.jupiter.params.ParameterizedTest;
