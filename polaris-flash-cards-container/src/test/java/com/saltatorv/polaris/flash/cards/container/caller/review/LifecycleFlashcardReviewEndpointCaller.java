@@ -6,13 +6,11 @@ public interface LifecycleFlashcardReviewEndpointCaller {
 
     LifecycleFlashcardReviewEndpointCaller begin();
 
-    LifecycleFlashcardReviewEndpointCaller finish();
+    FlashcardReviewEndpointCaller finish();
 
     LifecycleFlashcardReviewEndpointCaller drawNext(List<String> drewQuestions);
 
     LifecycleFlashcardReviewEndpointCaller markAsIncorrect();
 
     LifecycleFlashcardReviewEndpointCaller markAsCorrect();
-
-    ViewFlashcardReviewEndpointCaller query();
 }

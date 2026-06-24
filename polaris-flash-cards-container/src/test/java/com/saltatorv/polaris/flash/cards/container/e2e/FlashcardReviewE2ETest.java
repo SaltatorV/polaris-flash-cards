@@ -5,6 +5,7 @@ import com.saltatorv.polaris.flash.cards.container.caller.blueprint.FlashcardBlu
 import com.saltatorv.polaris.flash.cards.container.caller.review.FlashcardReviewEndpointCallerImplementation;
 import com.saltatorv.polaris.flash.cards.container.configuration.BaseE2ETest;
 import com.saltatorv.polaris.flash.cards.container.e2e.model.FlashcardReviewAnswers;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -15,6 +16,8 @@ import java.util.stream.Stream;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class FlashcardReviewE2ETest extends BaseE2ETest {
+
+    FlashcardReviewEndpointCallerImplementation reviewCommandCaller;
 
     static Stream<Arguments> provideCorrectAndIncorrectAnswersForReview() {
         return Stream.of(
@@ -30,39 +33,45 @@ class FlashcardReviewE2ETest extends BaseE2ETest {
         );
     }
 
+    @BeforeEach
+    public void setup() {
+        reviewCommandCaller = FlashcardReviewEndpointCallerImplementation.build();
+    }
+
     @MethodSource("provideCorrectAndIncorrectAnswersForReview")
     @ParameterizedTest
-    void testShouldAddFlashcardBlueprint(FlashcardReviewAnswers flashcardReviewAnswers) {
+    void testShouldAddFlashcardBlueprint(FlashcardReviewAnswers predictedResult) {
         //given
         var drewQuestions = new ArrayList<String>();
         FlashcardBlueprintEndpointCallerImplementation.build()
                 .createBlueprint()
-                .addDefaultBlueprintToRequestBody(flashcardReviewAnswers.answers().size() * 2)
+                .addDefaultBlueprintToRequestBody(predictedResult.answers().size() * 2)
                 .executeCreateAPICall();
 
         //when
-        var caller = FlashcardReviewEndpointCallerImplementation.build()
-                .generateRandomFlashcardReview(flashcardReviewAnswers.answers().size())
-                .begin();
 
-        for (Boolean answer : flashcardReviewAnswers.answers()) {
-            caller.drawNext(drewQuestions);
+        reviewCommandCaller.generateRandomFlashcardReview(predictedResult.answers().size());
+
+        reviewCommandCaller.begin();
+
+        for (Boolean answer : predictedResult.answers()) {
+            reviewCommandCaller.drawNext(drewQuestions);
             if (answer) {
-                caller.markAsCorrect();
+                reviewCommandCaller.markAsCorrect();
             } else {
-                caller.markAsIncorrect();
+                reviewCommandCaller.markAsIncorrect();
             }
         }
 
-        caller.finish();
+        reviewCommandCaller.finish();
 
-        FlashcardReviewDataDto reviewResult = caller.query().getReview();
+        FlashcardReviewDataDto reviewResult = reviewCommandCaller.query().getReview();
 
-        assertDrewQuestionCount(flashcardReviewAnswers, drewQuestions);
+        assertDrewQuestionCount(predictedResult, drewQuestions);
         assertEveryDrewQuestionIsDifferent(drewQuestions);
-        assertFlashcardCount(flashcardReviewAnswers, reviewResult);
-        assertCorrectAnswerCountIs(flashcardReviewAnswers, reviewResult);
-        assertIncorrectAnswerCountIs(flashcardReviewAnswers, reviewResult);
+        assertFlashcardCount(predictedResult, reviewResult);
+        assertCorrectAnswerCountIs(predictedResult, reviewResult);
+        assertIncorrectAnswerCountIs(predictedResult, reviewResult);
     }
 
 

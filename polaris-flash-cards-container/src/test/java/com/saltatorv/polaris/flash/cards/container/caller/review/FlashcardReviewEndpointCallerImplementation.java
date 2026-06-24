@@ -17,7 +17,7 @@ public class FlashcardReviewEndpointCallerImplementation implements FlashcardRev
         LifecycleFlashcardReviewEndpointCaller, ViewFlashcardReviewEndpointCaller {
     String flashcardReviewId;
 
-    public static FlashcardReviewEndpointCaller build() {
+    public static FlashcardReviewEndpointCallerImplementation build() {
         return new FlashcardReviewEndpointCallerImplementation();
     }
 
@@ -37,15 +37,7 @@ public class FlashcardReviewEndpointCallerImplementation implements FlashcardRev
     }
 
     @Override
-    public LifecycleFlashcardReviewEndpointCaller generateFlashcardReview() {
-        //to-change
-        flashcardReviewId = UUID.randomUUID().toString();
-        return this;
-    }
-
-    @Override
-    public LifecycleFlashcardReviewEndpointCaller generateInvalidFlashcardReview() {
-        flashcardReviewId = UUID.randomUUID().toString();
+    public ViewFlashcardReviewEndpointCaller query() {
         return this;
     }
 
@@ -63,7 +55,7 @@ public class FlashcardReviewEndpointCallerImplementation implements FlashcardRev
     }
 
     @Override
-    public LifecycleFlashcardReviewEndpointCaller finish() {
+    public FlashcardReviewEndpointCaller finish() {
         given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .when()
@@ -111,11 +103,6 @@ public class FlashcardReviewEndpointCallerImplementation implements FlashcardRev
                 .post(BASE_API_ENDPOINT + FLASHCARD_REVIEW_MARK_CORRECT_ENDPOINT)
                 .then()
                 .statusCode(HttpStatus.OK.value());
-        return this;
-    }
-
-    @Override
-    public ViewFlashcardReviewEndpointCaller query() {
         return this;
     }
 

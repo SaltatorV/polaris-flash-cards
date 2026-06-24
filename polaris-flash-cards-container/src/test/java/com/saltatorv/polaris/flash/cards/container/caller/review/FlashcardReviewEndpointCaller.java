@@ -4,7 +4,5 @@ public interface FlashcardReviewEndpointCaller {
 
     LifecycleFlashcardReviewEndpointCaller generateRandomFlashcardReview(int flashcardCount);
 
-    LifecycleFlashcardReviewEndpointCaller generateFlashcardReview();
-
-    LifecycleFlashcardReviewEndpointCaller generateInvalidFlashcardReview();
+    ViewFlashcardReviewEndpointCaller query();
 }
