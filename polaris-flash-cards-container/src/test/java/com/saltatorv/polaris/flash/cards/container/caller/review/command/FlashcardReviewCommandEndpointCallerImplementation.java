@@ -1,11 +1,10 @@
-package com.saltatorv.polaris.flash.cards.container.caller.review;
+package com.saltatorv.polaris.flash.cards.container.caller.review.command;
 
 import com.saltatorv.polaris.flash.cards.application.review.query.dto.FlashcardReviewDataDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
 import java.util.List;
-import java.util.UUID;
 
 import static com.saltatorv.polaris.flash.cards.web.BaseController.BASE_API_ENDPOINT;
 import static com.saltatorv.polaris.flash.cards.web.controller.command.review.FlashcardReviewLifecycleController.FLASHCARD_REVIEW_GENERATE_RANDOM_ENDPOINT;
@@ -13,17 +12,15 @@ import static com.saltatorv.polaris.flash.cards.web.controller.command.review.Fl
 import static com.saltatorv.polaris.flash.cards.web.controller.query.review.FlashcardReviewQueryController.FLASHCARD_REVIEW_GET_ENDPOINT;
 import static io.restassured.RestAssured.given;
 
-public class FlashcardReviewEndpointCallerImplementation implements FlashcardReviewEndpointCaller,
-        LifecycleFlashcardReviewEndpointCaller, ViewFlashcardReviewEndpointCaller {
+public class FlashcardReviewCommandEndpointCallerImplementation {
     String flashcardReviewId;
 
-    public static FlashcardReviewEndpointCallerImplementation build() {
-        return new FlashcardReviewEndpointCallerImplementation();
+    public static FlashcardReviewCommandEndpointCallerImplementation build() {
+        return new FlashcardReviewCommandEndpointCallerImplementation();
     }
 
     // FlashcardReviewEndpointCaller
-    @Override
-    public LifecycleFlashcardReviewEndpointCaller generateRandomFlashcardReview(int flashcardCount) {
+    public FlashcardReviewCommandEndpointCallerImplementation generateRandomFlashcardReview(int flashcardCount) {
         flashcardReviewId = given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .when()
@@ -36,14 +33,12 @@ public class FlashcardReviewEndpointCallerImplementation implements FlashcardRev
         return this;
     }
 
-    @Override
-    public ViewFlashcardReviewEndpointCaller query() {
+    public FlashcardReviewCommandEndpointCallerImplementation query() {
         return this;
     }
 
     // LifecycleFlashcardReviewEndpointCaller
-    @Override
-    public LifecycleFlashcardReviewEndpointCaller begin() {
+    public FlashcardReviewCommandEndpointCallerImplementation begin() {
         given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .when()
@@ -54,8 +49,7 @@ public class FlashcardReviewEndpointCallerImplementation implements FlashcardRev
         return this;
     }
 
-    @Override
-    public FlashcardReviewEndpointCaller finish() {
+    public FlashcardReviewCommandEndpointCallerImplementation finish() {
         given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .when()
@@ -66,8 +60,7 @@ public class FlashcardReviewEndpointCallerImplementation implements FlashcardRev
         return this;
     }
 
-    @Override
-    public LifecycleFlashcardReviewEndpointCaller drawNext(List<String> drewQuestions) {
+    public FlashcardReviewCommandEndpointCallerImplementation drawNext(List<String> drewQuestions) {
         String question = given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .when()
@@ -82,8 +75,7 @@ public class FlashcardReviewEndpointCallerImplementation implements FlashcardRev
         return this;
     }
 
-    @Override
-    public LifecycleFlashcardReviewEndpointCaller markAsIncorrect() {
+    public FlashcardReviewCommandEndpointCallerImplementation markAsIncorrect() {
         given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .when()
@@ -94,8 +86,7 @@ public class FlashcardReviewEndpointCallerImplementation implements FlashcardRev
         return this;
     }
 
-    @Override
-    public LifecycleFlashcardReviewEndpointCaller markAsCorrect() {
+    public FlashcardReviewCommandEndpointCallerImplementation markAsCorrect() {
         given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .when()
@@ -108,12 +99,10 @@ public class FlashcardReviewEndpointCallerImplementation implements FlashcardRev
 
     // LifecycleFlashcardReviewEndpointCaller
 
-    @Override
-    public LifecycleFlashcardReviewEndpointCaller lifecycle() {
+    public FlashcardReviewCommandEndpointCallerImplementation lifecycle() {
         return this;
     }
 
-    @Override
     public FlashcardReviewDataDto getReview() {
         return given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
