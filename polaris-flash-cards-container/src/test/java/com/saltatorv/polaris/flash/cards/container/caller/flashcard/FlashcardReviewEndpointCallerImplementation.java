@@ -115,7 +115,7 @@ public class FlashcardReviewEndpointCallerImplementation implements FlashcardRev
     }
 
     @Override
-    public ViewFlashcardReviewEndpointCaller view() {
+    public ViewFlashcardReviewEndpointCaller query() {
         return this;
     }
 
