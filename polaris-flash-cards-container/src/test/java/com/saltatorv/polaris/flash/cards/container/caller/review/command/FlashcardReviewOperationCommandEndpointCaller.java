@@ -6,31 +6,17 @@ import org.springframework.http.MediaType;
 import java.util.List;
 
 import static com.saltatorv.polaris.flash.cards.web.BaseController.BASE_API_ENDPOINT;
-import static com.saltatorv.polaris.flash.cards.web.controller.command.review.FlashcardReviewLifecycleController.FLASHCARD_REVIEW_GENERATE_RANDOM_ENDPOINT;
 import static com.saltatorv.polaris.flash.cards.web.controller.command.review.FlashcardReviewOperationController.*;
 import static io.restassured.RestAssured.given;
 
-public class FlashcardReviewCommandEndpointCaller {
+public class FlashcardReviewOperationCommandEndpointCaller {
     String flashcardReviewId;
 
-    public static FlashcardReviewCommandEndpointCaller build() {
-        return new FlashcardReviewCommandEndpointCaller();
+    public static FlashcardReviewOperationCommandEndpointCaller build() {
+        return new FlashcardReviewOperationCommandEndpointCaller();
     }
 
-    public FlashcardReviewCommandEndpointCaller generateRandomFlashcardReview(int flashcardCount) {
-        flashcardReviewId = given()
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .when()
-                .body(flashcardCount)
-                .post(BASE_API_ENDPOINT + FLASHCARD_REVIEW_GENERATE_RANDOM_ENDPOINT)
-                .then()
-                .extract()
-                .asString();
-
-        return this;
-    }
-
-    public FlashcardReviewCommandEndpointCaller begin() {
+    public FlashcardReviewOperationCommandEndpointCaller begin() {
         given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .when()
@@ -42,7 +28,7 @@ public class FlashcardReviewCommandEndpointCaller {
         return this;
     }
 
-    public FlashcardReviewCommandEndpointCaller finish() {
+    public FlashcardReviewOperationCommandEndpointCaller finish() {
         given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .when()
@@ -54,7 +40,7 @@ public class FlashcardReviewCommandEndpointCaller {
         return this;
     }
 
-    public FlashcardReviewCommandEndpointCaller drawNext(List<String> drewQuestions) {
+    public FlashcardReviewOperationCommandEndpointCaller drawNext(List<String> drewQuestions) {
         String question = given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .when()
@@ -69,7 +55,7 @@ public class FlashcardReviewCommandEndpointCaller {
         return this;
     }
 
-    public FlashcardReviewCommandEndpointCaller markAsIncorrect() {
+    public FlashcardReviewOperationCommandEndpointCaller markAsIncorrect() {
         given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .when()
@@ -81,7 +67,7 @@ public class FlashcardReviewCommandEndpointCaller {
         return this;
     }
 
-    public FlashcardReviewCommandEndpointCaller markAsCorrect() {
+    public FlashcardReviewOperationCommandEndpointCaller markAsCorrect() {
         given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .when()
@@ -93,7 +79,13 @@ public class FlashcardReviewCommandEndpointCaller {
         return this;
     }
 
+    public void setupReview(String currentFlashcardReviewId) {
+        this.flashcardReviewId = currentFlashcardReviewId;
+    }
+
     public String getCurrentFlashcardReviewId() {
         return flashcardReviewId;
     }
+
+
 }

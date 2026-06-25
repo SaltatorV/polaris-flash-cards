@@ -2,7 +2,8 @@ package com.saltatorv.polaris.flash.cards.container.e2e;
 
 import com.saltatorv.polaris.flash.cards.application.review.query.dto.FlashcardReviewDataDto;
 import com.saltatorv.polaris.flash.cards.container.caller.blueprint.FlashcardBlueprintEndpointCallerImplementation;
-import com.saltatorv.polaris.flash.cards.container.caller.review.command.FlashcardReviewCommandEndpointCaller;
+import com.saltatorv.polaris.flash.cards.container.caller.review.command.FlashcardReviewLifecycleCommandEndpointCaller;
+import com.saltatorv.polaris.flash.cards.container.caller.review.command.FlashcardReviewOperationCommandEndpointCaller;
 import com.saltatorv.polaris.flash.cards.container.caller.review.query.FlashcardReviewQueryEndpointCaller;
 import com.saltatorv.polaris.flash.cards.container.configuration.BaseE2ETest;
 import com.saltatorv.polaris.flash.cards.container.e2e.model.FlashcardReviewAnswers;
@@ -18,7 +19,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class FlashcardReviewE2ETest extends BaseE2ETest {
 
-    FlashcardReviewCommandEndpointCaller reviewCommandCaller;
+    FlashcardReviewLifecycleCommandEndpointCaller reviewLifecycleCommandCaller;
+    FlashcardReviewOperationCommandEndpointCaller reviewOperationCommandCaller;
     FlashcardReviewQueryEndpointCaller reviewQueryCaller;
 
     static Stream<Arguments> provideCorrectAndIncorrectAnswersForReview() {
@@ -37,7 +39,8 @@ class FlashcardReviewE2ETest extends BaseE2ETest {
 
     @BeforeEach
     public void setup() {
-        reviewCommandCaller = FlashcardReviewCommandEndpointCaller.build();
+        reviewLifecycleCommandCaller = FlashcardReviewLifecycleCommandEndpointCaller.build();
+        reviewOperationCommandCaller = FlashcardReviewOperationCommandEndpointCaller.build();
         reviewQueryCaller = FlashcardReviewQueryEndpointCaller.build();
     }
 
@@ -53,22 +56,24 @@ class FlashcardReviewE2ETest extends BaseE2ETest {
 
         //when
 
-        reviewCommandCaller.generateRandomFlashcardReview(predictedResult.answers().size());
+        reviewLifecycleCommandCaller.generateRandomFlashcardReview(predictedResult.answers().size());
 
-        reviewCommandCaller.begin();
+        reviewOperationCommandCaller.setupReview(reviewLifecycleCommandCaller.getCurrentFlashcardReviewId());
+
+        reviewOperationCommandCaller.begin();
 
         for (Boolean answer : predictedResult.answers()) {
-            reviewCommandCaller.drawNext(drewQuestions);
+            reviewOperationCommandCaller.drawNext(drewQuestions);
             if (answer) {
-                reviewCommandCaller.markAsCorrect();
+                reviewOperationCommandCaller.markAsCorrect();
             } else {
-                reviewCommandCaller.markAsIncorrect();
+                reviewOperationCommandCaller.markAsIncorrect();
             }
         }
 
-        reviewCommandCaller.finish();
+        reviewOperationCommandCaller.finish();
 
-        FlashcardReviewDataDto reviewResult = reviewQueryCaller.getReview(reviewCommandCaller.getCurrentFlashcardReviewId());
+        FlashcardReviewDataDto reviewResult = reviewQueryCaller.getReview(reviewOperationCommandCaller.getCurrentFlashcardReviewId());
 
         assertDrewQuestionCount(predictedResult, drewQuestions);
         assertEveryDrewQuestionIsDifferent(drewQuestions);
