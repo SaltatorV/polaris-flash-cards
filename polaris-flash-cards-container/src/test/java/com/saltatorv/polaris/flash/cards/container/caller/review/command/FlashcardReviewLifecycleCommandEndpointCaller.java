@@ -7,14 +7,13 @@ import static com.saltatorv.polaris.flash.cards.web.controller.command.review.Fl
 import static io.restassured.RestAssured.given;
 
 public class FlashcardReviewLifecycleCommandEndpointCaller {
-    String flashcardReviewId;
 
     public static FlashcardReviewLifecycleCommandEndpointCaller build() {
         return new FlashcardReviewLifecycleCommandEndpointCaller();
     }
 
-    public FlashcardReviewLifecycleCommandEndpointCaller generateRandomFlashcardReview(int flashcardCount) {
-        flashcardReviewId = given()
+    public String generateRandomFlashcardReview(int flashcardCount) {
+        return given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .when()
                 .body(flashcardCount)
@@ -22,11 +21,5 @@ public class FlashcardReviewLifecycleCommandEndpointCaller {
                 .then()
                 .extract()
                 .asString();
-
-        return this;
-    }
-
-    public String getCurrentFlashcardReviewId() {
-        return flashcardReviewId;
     }
 }

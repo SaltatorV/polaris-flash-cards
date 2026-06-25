@@ -86,6 +86,4 @@ public class FlashcardReviewOperationCommandEndpointCaller {
     public String getCurrentFlashcardReviewId() {
         return flashcardReviewId;
     }
-
-
 }

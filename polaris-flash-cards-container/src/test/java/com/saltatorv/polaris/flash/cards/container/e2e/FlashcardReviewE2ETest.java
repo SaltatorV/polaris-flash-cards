@@ -67,9 +67,9 @@ class FlashcardReviewE2ETest extends BaseE2ETest {
 
         //when
 
-        reviewLifecycleCommandCaller.generateRandomFlashcardReview(predictedResult.answers().size());
+        var createdReviewId = reviewLifecycleCommandCaller.generateRandomFlashcardReview(predictedResult.answers().size());
 
-        reviewOperationCommandCaller.setupReview(reviewLifecycleCommandCaller.getCurrentFlashcardReviewId());
+        reviewOperationCommandCaller.setupReview(createdReviewId);
 
         reviewOperationCommandCaller.begin();
 
