@@ -1,7 +1,9 @@
 package com.saltatorv.polaris.flash.cards.container.e2e;
 
+import com.saltatorv.polaris.flash.cards.application.blueprint.command.dto.FlashcardBlueprintCreateDto;
+import com.saltatorv.polaris.flash.cards.application.blueprint.command.dto.FlashcardLocalizationCreateDto;
 import com.saltatorv.polaris.flash.cards.application.review.query.dto.FlashcardReviewDataDto;
-import com.saltatorv.polaris.flash.cards.container.caller.blueprint.FlashcardBlueprintEndpointCallerImplementation;
+import com.saltatorv.polaris.flash.cards.container.caller.blueprint.FlashcardBlueprintCreationEndpointCaller;
 import com.saltatorv.polaris.flash.cards.container.caller.review.command.FlashcardReviewLifecycleCommandEndpointCaller;
 import com.saltatorv.polaris.flash.cards.container.caller.review.command.FlashcardReviewOperationCommandEndpointCaller;
 import com.saltatorv.polaris.flash.cards.container.caller.review.query.FlashcardReviewQueryEndpointCaller;
@@ -13,12 +15,19 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+import java.util.Set;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class FlashcardReviewE2ETest extends BaseE2ETest {
 
+    //blueprint caller
+    FlashcardBlueprintCreationEndpointCaller blueprintCreationEndpointCaller;
+
+    //review caller
     FlashcardReviewLifecycleCommandEndpointCaller reviewLifecycleCommandCaller;
     FlashcardReviewOperationCommandEndpointCaller reviewOperationCommandCaller;
     FlashcardReviewQueryEndpointCaller reviewQueryCaller;
@@ -39,6 +48,8 @@ class FlashcardReviewE2ETest extends BaseE2ETest {
 
     @BeforeEach
     public void setup() {
+        blueprintCreationEndpointCaller = FlashcardBlueprintCreationEndpointCaller.build();
+
         reviewLifecycleCommandCaller = FlashcardReviewLifecycleCommandEndpointCaller.build();
         reviewOperationCommandCaller = FlashcardReviewOperationCommandEndpointCaller.build();
         reviewQueryCaller = FlashcardReviewQueryEndpointCaller.build();
@@ -49,10 +60,10 @@ class FlashcardReviewE2ETest extends BaseE2ETest {
     void testShouldAddFlashcardBlueprint(FlashcardReviewAnswers predictedResult) {
         //given
         var drewQuestions = new ArrayList<String>();
-        FlashcardBlueprintEndpointCallerImplementation.build()
-                .createBlueprint()
-                .addDefaultBlueprintToRequestBody(predictedResult.answers().size() * 2)
-                .executeCreateAPICall();
+
+        var blueprintsToCreate = createDefaultBlueprints(predictedResult.answers().size() * 2);
+
+        blueprintCreationEndpointCaller.executeCreateAPICall(blueprintsToCreate);
 
         //when
 
@@ -112,5 +123,26 @@ class FlashcardReviewE2ETest extends BaseE2ETest {
                         .count();
 
         assertEquals(expectedIncorrectAnswerCount, reviewResult.getIncorrectAnswers());
+    }
+
+    public List<FlashcardBlueprintCreateDto> createDefaultBlueprints(int times) {
+
+        List<FlashcardBlueprintCreateDto> dtos = new ArrayList<>();
+
+        for (int i = 0; i < times; i++) {
+
+            List<FlashcardLocalizationCreateDto> localizationCreateDtos =
+                    List.of(new FlashcardLocalizationCreateDto(Locale.ENGLISH.toLanguageTag(), String.format("Question-%d", i),
+                            String.format("Definition-%d", i)));
+
+            dtos.add(new FlashcardBlueprintCreateDto(
+                    "01976e3e-6c52-7000-8c3f-2c4e5d6f7a8b",
+                    String.format("Source-%d", i),
+                    Set.of(String.format("Tags-%d", i)),
+                    localizationCreateDtos
+            ));
+        }
+
+        return dtos;
     }
 }
