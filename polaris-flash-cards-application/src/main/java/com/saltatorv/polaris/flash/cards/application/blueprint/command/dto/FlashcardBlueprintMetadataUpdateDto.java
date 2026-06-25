@@ -9,6 +9,11 @@ public class FlashcardBlueprintMetadataUpdateDto {
     public FlashcardBlueprintMetadataUpdateDto() {
     }
 
+    public FlashcardBlueprintMetadataUpdateDto(String source, Set<String> tags) {
+        this.source = source;
+        this.tags = tags;
+    }
+
     public String getSource() {
         return source;
     }

@@ -8,6 +8,12 @@ public class FlashcardLocalizationUpdateDto {
     public FlashcardLocalizationUpdateDto() {
     }
 
+    public FlashcardLocalizationUpdateDto(String locale, String question, String answer) {
+        this.locale = locale;
+        this.question = question;
+        this.answer = answer;
+    }
+
     public String getLocale() {
         return locale;
     }
