@@ -1,4 +1,4 @@
-package com.saltatorv.polaris.flash.cards.container.caller.blueprint;
+package com.saltatorv.polaris.flash.cards.container.caller.blueprint.command;
 
 import com.saltatorv.polaris.flash.cards.application.blueprint.command.dto.FlashcardBlueprintCreateDto;
 import org.springframework.http.HttpStatus;

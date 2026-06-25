@@ -3,7 +3,7 @@ package com.saltatorv.polaris.flash.cards.container.e2e;
 import com.saltatorv.polaris.flash.cards.application.blueprint.command.dto.FlashcardBlueprintCreateDto;
 import com.saltatorv.polaris.flash.cards.application.blueprint.command.dto.FlashcardLocalizationCreateDto;
 import com.saltatorv.polaris.flash.cards.application.review.query.dto.FlashcardReviewDataDto;
-import com.saltatorv.polaris.flash.cards.container.caller.blueprint.FlashcardBlueprintCreationEndpointCaller;
+import com.saltatorv.polaris.flash.cards.container.caller.blueprint.command.FlashcardBlueprintCreationEndpointCaller;
 import com.saltatorv.polaris.flash.cards.container.caller.review.command.FlashcardReviewLifecycleCommandEndpointCaller;
 import com.saltatorv.polaris.flash.cards.container.caller.review.command.FlashcardReviewOperationCommandEndpointCaller;
 import com.saltatorv.polaris.flash.cards.container.caller.review.query.FlashcardReviewQueryEndpointCaller;
