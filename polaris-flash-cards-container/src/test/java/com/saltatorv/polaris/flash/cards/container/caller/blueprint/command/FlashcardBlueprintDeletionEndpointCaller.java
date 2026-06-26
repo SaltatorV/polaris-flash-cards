@@ -7,7 +7,9 @@ import org.springframework.http.MediaType;
 import java.util.Arrays;
 import java.util.List;
 
+import static com.saltatorv.polaris.flash.cards.web.BaseController.BASE_API_ENDPOINT;
 import static com.saltatorv.polaris.flash.cards.web.controller.command.blueprint.FlashcardBlueprintDeletionController.FLASHCARD_BLUEPRINT_DELETE_ENDPOINT;
+import static com.saltatorv.polaris.flash.cards.web.controller.command.blueprint.FlashcardBlueprintDeletionController.FLASHCARD_BLUEPRINT_LOCALIZATIONS_DELETE_ENDPOINT;
 import static io.restassured.RestAssured.given;
 
 public class FlashcardBlueprintDeletionEndpointCaller {
@@ -32,7 +34,7 @@ public class FlashcardBlueprintDeletionEndpointCaller {
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .body(createDtosForLocales(locales))
                 .when()
-                .delete(configureDeleteEndpointForBlueprint(blueprintId))
+                .delete(configureDeleteEndpointForBlueprintLocalization(blueprintId))
                 .then()
                 .statusCode(HttpStatus.OK.value());
 
@@ -40,7 +42,11 @@ public class FlashcardBlueprintDeletionEndpointCaller {
     }
 
     private String configureDeleteEndpointForBlueprint(String blueprintId) {
-        return FLASHCARD_BLUEPRINT_DELETE_ENDPOINT.replace("{id}", blueprintId);
+        return BASE_API_ENDPOINT + FLASHCARD_BLUEPRINT_DELETE_ENDPOINT.replace("{id}", blueprintId);
+    }
+
+    private String configureDeleteEndpointForBlueprintLocalization(String blueprintId) {
+        return BASE_API_ENDPOINT + FLASHCARD_BLUEPRINT_LOCALIZATIONS_DELETE_ENDPOINT.replace("{id}", blueprintId);
     }
 
     private List<FlashcardBlueprintLocalizationDeleteDto> createDtosForLocales(String... locales) {

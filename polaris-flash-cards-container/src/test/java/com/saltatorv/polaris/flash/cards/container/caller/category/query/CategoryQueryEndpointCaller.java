@@ -5,7 +5,8 @@ import org.springframework.http.MediaType;
 
 import java.util.List;
 
-import static com.saltatorv.polaris.flash.cards.web.controller.query.category.CategoryQueryController.BASE_CATEGORY_QUERY_ENDPOINT;
+import static com.saltatorv.polaris.flash.cards.web.BaseController.BASE_API_ENDPOINT;
+import static com.saltatorv.polaris.flash.cards.web.controller.query.category.CategoryQueryController.CATEGORY_GET_ENDPOINT;
 import static io.restassured.RestAssured.given;
 
 public class CategoryQueryEndpointCaller {
@@ -20,7 +21,7 @@ public class CategoryQueryEndpointCaller {
                 .given()
                 .queryParam("depth", depth)
                 .when()
-                .get(BASE_CATEGORY_QUERY_ENDPOINT)
+                .get(BASE_API_ENDPOINT + CATEGORY_GET_ENDPOINT)
                 .then()
                 .statusCode(200)
                 .extract()

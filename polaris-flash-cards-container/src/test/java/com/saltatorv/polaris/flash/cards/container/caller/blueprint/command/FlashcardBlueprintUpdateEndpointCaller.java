@@ -4,6 +4,7 @@ import com.saltatorv.polaris.flash.cards.application.blueprint.command.dto.Flash
 import com.saltatorv.polaris.flash.cards.application.blueprint.command.dto.FlashcardLocalizationUpdateDto;
 import org.springframework.http.MediaType;
 
+import static com.saltatorv.polaris.flash.cards.web.BaseController.BASE_API_ENDPOINT;
 import static com.saltatorv.polaris.flash.cards.web.controller.command.blueprint.FlashcardBlueprintUpdateController.FLASHCARD_BLUEPRINT_UPDATE_LOCALIZATION_ENDPOINT;
 import static com.saltatorv.polaris.flash.cards.web.controller.command.blueprint.FlashcardBlueprintUpdateController.FLASHCARD_BLUEPRINT_UPDATE_METADATA_ENDPOINT;
 import static io.restassured.RestAssured.given;
@@ -43,11 +44,11 @@ public class FlashcardBlueprintUpdateEndpointCaller {
     }
 
     private String configureUpdateMetadataEndpoint(String blueprintId) {
-        return FLASHCARD_BLUEPRINT_UPDATE_METADATA_ENDPOINT.replace("{id}", blueprintId);
+        return BASE_API_ENDPOINT + FLASHCARD_BLUEPRINT_UPDATE_METADATA_ENDPOINT.replace("{id}", blueprintId);
     }
 
     private String configureUpdateLocalizationEndpoint(String blueprintId, String locale) {
-        return FLASHCARD_BLUEPRINT_UPDATE_LOCALIZATION_ENDPOINT.replace("{id}", blueprintId)
+        return BASE_API_ENDPOINT + FLASHCARD_BLUEPRINT_UPDATE_LOCALIZATION_ENDPOINT.replace("{id}", blueprintId)
                 .replace("{locale}", locale);
     }
 

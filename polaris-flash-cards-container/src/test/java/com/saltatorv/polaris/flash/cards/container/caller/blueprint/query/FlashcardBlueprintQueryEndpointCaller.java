@@ -6,6 +6,7 @@ import org.springframework.http.MediaType;
 
 import java.util.List;
 
+import static com.saltatorv.polaris.flash.cards.web.BaseController.BASE_API_ENDPOINT;
 import static com.saltatorv.polaris.flash.cards.web.controller.query.blueprint.FlashcardBlueprintQueryController.FLASHCARD_BLUEPRINT_GET_BY_CATEGORY_ENDPOINT;
 import static com.saltatorv.polaris.flash.cards.web.controller.query.blueprint.FlashcardBlueprintQueryController.FLASHCARD_BLUEPRINT_GET_ENDPOINT;
 import static io.restassured.RestAssured.given;
@@ -40,10 +41,10 @@ public class FlashcardBlueprintQueryEndpointCaller {
     }
 
     private String configureGetBlueprintEndpoint(String blueprintId) {
-        return FLASHCARD_BLUEPRINT_GET_ENDPOINT.replace("{id}", blueprintId);
+        return BASE_API_ENDPOINT + FLASHCARD_BLUEPRINT_GET_ENDPOINT.replace("{id}", blueprintId);
     }
 
     private String configureGetAllBlueprintSummariesForCategory(String categoryId) {
-        return FLASHCARD_BLUEPRINT_GET_BY_CATEGORY_ENDPOINT.replace("{id}", categoryId);
+        return BASE_API_ENDPOINT + FLASHCARD_BLUEPRINT_GET_BY_CATEGORY_ENDPOINT.replace("{id}", categoryId);
     }
 }

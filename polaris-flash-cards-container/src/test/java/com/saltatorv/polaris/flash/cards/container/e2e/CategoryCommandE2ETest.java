@@ -6,8 +6,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
-import static com.saltatorv.polaris.flash.cards.web.controller.command.category.CategoryCreationController.BASE_LIFECYCLE_ENDPOINT;
-import static com.saltatorv.polaris.flash.cards.web.controller.query.category.CategoryQueryController.BASE_CATEGORY_QUERY_ENDPOINT;
+import static com.saltatorv.polaris.flash.cards.web.controller.command.category.CategoryCreationController.CATEGORY_CREATE_ENDPOINT;
+import static com.saltatorv.polaris.flash.cards.web.controller.query.category.CategoryQueryController.CATEGORY_GET_ENDPOINT;
 import static io.restassured.RestAssured.given;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -23,7 +23,7 @@ class CategoryCommandE2ETest extends BaseE2ETest {
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .when()
                 .body(category)
-                .post(BASE_LIFECYCLE_ENDPOINT)
+                .post(CATEGORY_CREATE_ENDPOINT)
                 .then()
                 .statusCode(HttpStatus.OK.value());
 
@@ -31,7 +31,7 @@ class CategoryCommandE2ETest extends BaseE2ETest {
         var listOfCategories = given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .when()
-                .get(BASE_CATEGORY_QUERY_ENDPOINT)
+                .get(CATEGORY_GET_ENDPOINT)
                 .then()
                 .statusCode(HttpStatus.OK.value())
                 .extract().jsonPath()
