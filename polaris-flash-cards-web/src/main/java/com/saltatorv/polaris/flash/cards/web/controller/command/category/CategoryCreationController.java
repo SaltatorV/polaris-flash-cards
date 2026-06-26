@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class CategoryCreationController {
-    public final static String BASE_LIFECYCLE_ENDPOINT = "/flashcard/category";
+    private final static String BASE_LIFECYCLE_ENDPOINT = "/flashcard/category";
+
+    public final static String CATEGORY_CREATE_ENDPOINT = BASE_LIFECYCLE_ENDPOINT + "/create";
 
     private final CategoryCreateCommandFacade categoryCreateCommandFacade;
 
@@ -16,7 +18,7 @@ public class CategoryCreationController {
         this.categoryCreateCommandFacade = categoryCreateCommandFacade;
     }
 
-    @PostMapping(BASE_LIFECYCLE_ENDPOINT)
+    @PostMapping(CATEGORY_CREATE_ENDPOINT)
     public void createCategory(@RequestBody CategoryDto dto) {
         categoryCreateCommandFacade.addNewCategory(dto);
     }

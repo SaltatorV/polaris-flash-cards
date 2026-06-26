@@ -10,7 +10,9 @@ import java.util.List;
 
 @RestController
 public class CategoryQueryController {
-    public final static String BASE_CATEGORY_QUERY_ENDPOINT = "/flashcard/category";
+    private final static String BASE_CATEGORY_QUERY_ENDPOINT = "/flashcard/category";
+
+    public final static String CATEGORY_GET_ENDPOINT = BASE_CATEGORY_QUERY_ENDPOINT;
 
     private final CategoryQueryFacade categoryQueryFacade;
 
@@ -18,7 +20,7 @@ public class CategoryQueryController {
         this.categoryQueryFacade = categoryQueryFacade;
     }
 
-    @GetMapping(BASE_CATEGORY_QUERY_ENDPOINT)
+    @GetMapping(CATEGORY_GET_ENDPOINT)
     public List<CategoryDto> getCategory(@RequestParam(name = "depth", defaultValue = "1") int depth) {
         return categoryQueryFacade.getCategoriesForSpecificDepth(depth);
     }
