@@ -2,6 +2,7 @@ package com.saltatorv.polaris.flash.cards.web.controller.command.blueprint;
 
 import com.saltatorv.polaris.flash.cards.application.blueprint.command.FlashcardBlueprintDeleteCommandFacade;
 import com.saltatorv.polaris.flash.cards.application.blueprint.command.dto.FlashcardBlueprintLocalizationDeleteDto;
+import com.saltatorv.polaris.flash.cards.web.BaseController;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -9,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-public class FlashcardBlueprintDeletionController {
+public class FlashcardBlueprintDeletionController extends BaseController {
     private static final String BASE_ENDPOINT = "/flashcard/blueprint";
 
     public static final String FLASHCARD_BLUEPRINT_DELETE_ENDPOINT = BASE_ENDPOINT + "/{id}/delete";
