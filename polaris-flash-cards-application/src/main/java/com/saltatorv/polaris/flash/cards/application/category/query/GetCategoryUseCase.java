@@ -18,10 +18,14 @@ class GetCategoryUseCase {
     }
 
     List<CategoryDto> getCategoriesViaParentIfExists(String parentCategoryId) {
-        List<CategorySnapshot> categories = categoryRepository.findByParentId(new CategoryId(parentCategoryId));
-        if (categories.isEmpty()) {
+        List<CategorySnapshot> categories;
+
+        if (parentCategoryId == null) {
             categories = categoryRepository.findByDepth(1);
+        } else {
+            categories = categoryRepository.findByParentId(new CategoryId(parentCategoryId));
         }
+
         return categories
                 .stream()
                 .map(this::mapCategoryToDto)
