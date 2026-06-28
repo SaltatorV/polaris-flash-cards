@@ -22,8 +22,8 @@ public class CategoryQueryController extends BaseController {
     }
 
     @GetMapping(CATEGORY_GET_ENDPOINT)
-    public List<CategoryDto> getCategory(@RequestParam(name = "depth", defaultValue = "1") int depth) {
-        return categoryQueryFacade.getCategoriesForSpecificDepth(depth);
+    public List<CategoryDto> getCategory(@RequestParam(name = "parentCategoryId") String parentCategoryId) {
+        return categoryQueryFacade.getCategoriesForSpecificDepth(parentCategoryId);
     }
 
 }
