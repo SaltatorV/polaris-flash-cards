@@ -20,7 +20,7 @@ class GetCategoryUseCase {
     List<CategoryDto> getCategoriesViaParentIfExists(String parentCategoryId) {
         List<CategorySnapshot> categories;
 
-        if (parentCategoryId == null) {
+        if (parentCategoryId == null || parentCategoryId.isBlank()) {
             categories = categoryRepository.findByDepth(1);
         } else {
             categories = categoryRepository.findByParentId(new CategoryId(parentCategoryId));
