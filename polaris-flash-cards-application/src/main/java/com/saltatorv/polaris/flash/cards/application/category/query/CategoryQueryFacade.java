@@ -13,7 +13,7 @@ public class CategoryQueryFacade {
         this.getCategoryUseCase = getCategoryUseCase;
     }
 
-    public List<CategoryDto> getCategoriesForSpecificDepth(int depth) {
-        return getCategoryUseCase.getCategoriesForSpecificDepth(depth);
+    public List<CategoryDto> getCategoriesForSpecificDepth(String parentCategoryId) {
+        return getCategoryUseCase.getCategoriesViaParentIfExists(parentCategoryId);
     }
 }

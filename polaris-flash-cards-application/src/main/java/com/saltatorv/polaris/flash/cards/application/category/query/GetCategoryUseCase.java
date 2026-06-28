@@ -2,6 +2,7 @@ package com.saltatorv.polaris.flash.cards.application.category.query;
 
 import com.saltatorv.polaris.flash.cards.application.category.query.dto.CategoryDto;
 import com.saltatorv.polaris.flash.cards.domain.CategoryRepository;
+import com.saltatorv.polaris.flash.cards.domain.shared.CategoryId;
 import com.saltatorv.polaris.flash.cards.domain.snapshot.CategorySnapshot;
 import org.springframework.stereotype.Service;
 
@@ -16,9 +17,11 @@ class GetCategoryUseCase {
         this.categoryRepository = categoryRepository;
     }
 
-    List<CategoryDto> getCategoriesForSpecificDepth(int depth) {
-        List<CategorySnapshot> categories = categoryRepository.findByDepth(depth);
-
+    List<CategoryDto> getCategoriesViaParentIfExists(String parentCategoryId) {
+        List<CategorySnapshot> categories = categoryRepository.findByParentId(new CategoryId(parentCategoryId));
+        if (categories.isEmpty()) {
+            categories = categoryRepository.findByDepth(1);
+        }
         return categories
                 .stream()
                 .map(this::mapCategoryToDto)
@@ -26,6 +29,6 @@ class GetCategoryUseCase {
     }
 
     private CategoryDto mapCategoryToDto(CategorySnapshot snapshot) {
-        return new CategoryDto(snapshot.getCategoryName());
+        return new CategoryDto(snapshot.getId(), snapshot.getCategoryName());
     }
 }
