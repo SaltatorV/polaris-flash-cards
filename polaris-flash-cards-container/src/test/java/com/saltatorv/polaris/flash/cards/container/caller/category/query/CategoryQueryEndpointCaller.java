@@ -15,11 +15,11 @@ public class CategoryQueryEndpointCaller {
         return new CategoryQueryEndpointCaller();
     }
 
-    public List<CategoryDto> getCategory(int depth) {
+    public List<CategoryDto> getCategory(String parentCategoryId) {
         return given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .given()
-                .queryParam("depth", depth)
+                .queryParam("parentCategoryId", parentCategoryId)
                 .when()
                 .get(BASE_API_ENDPOINT + CATEGORY_GET_ENDPOINT)
                 .then()
