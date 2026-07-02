@@ -1,7 +1,7 @@
 package com.saltatorv.polaris.flash.cards.application.review.command.operation;
 
 import com.saltatorv.polaris.flash.cards.application.review.command.dto.FlashcardDto;
-import com.saltatorv.polaris.flash.cards.application.shared.FlashcardReviewUseCaseBase;
+import com.saltatorv.polaris.flash.cards.application.review.shared.FlashcardReviewUseCaseBase;
 import com.saltatorv.polaris.flash.cards.domain.Flashcard;
 import com.saltatorv.polaris.flash.cards.domain.FlashcardReview;
 import com.saltatorv.polaris.flash.cards.domain.FlashcardReviewRepository;

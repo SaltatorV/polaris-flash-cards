@@ -1,4 +1,4 @@
-package com.saltatorv.polaris.flash.cards.application.shared;
+package com.saltatorv.polaris.flash.cards.application.review.shared;
 
 import com.saltatorv.polaris.flash.cards.domain.FlashcardReview;
 import com.saltatorv.polaris.flash.cards.domain.FlashcardReviewRepository;

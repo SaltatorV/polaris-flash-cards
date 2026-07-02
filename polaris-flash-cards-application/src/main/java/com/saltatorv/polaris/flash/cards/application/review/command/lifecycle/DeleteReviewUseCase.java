@@ -1,6 +1,6 @@
 package com.saltatorv.polaris.flash.cards.application.review.command.lifecycle;
 
-import com.saltatorv.polaris.flash.cards.application.shared.FlashcardReviewUseCaseBase;
+import com.saltatorv.polaris.flash.cards.application.review.shared.FlashcardReviewUseCaseBase;
 import com.saltatorv.polaris.flash.cards.domain.FlashcardReview;
 import com.saltatorv.polaris.flash.cards.domain.FlashcardReviewRepository;
 import com.saltatorv.polaris.flash.cards.domain.shared.FlashcardReviewId;

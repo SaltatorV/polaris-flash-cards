@@ -4,6 +4,7 @@ import com.saltatorv.polaris.flash.cards.application.FlashcardBlueprintIdCache;
 import com.saltatorv.polaris.flash.cards.application.blueprint.command.dto.FlashcardBlueprintCreateDto;
 import com.saltatorv.polaris.flash.cards.application.blueprint.command.dto.FlashcardLocalizationCreateDto;
 import com.saltatorv.polaris.flash.cards.domain.*;
+import com.saltatorv.polaris.flash.cards.domain.exception.blueprint.FlashcardBlueprintWithoutLocalizationDomainException;
 import com.saltatorv.polaris.flash.cards.domain.shared.CategoryId;
 import org.springframework.stereotype.Service;
 
@@ -29,10 +30,14 @@ class CreateFlashcardBlueprintUseCase {
                     .stream()
                     .map(this::mapToFlashcardLocalization)
                     .toList();
+            try {
+                FlashcardBlueprint blueprint = new FlashcardBlueprint(categoryId,
+                        localizations,
+                        new FlashcardMetadata(dto.getSource(), dto.getTags()));
+            }
+            catch (FlashcardBlueprintWithoutLocalizationDomainException ex) {
 
-            FlashcardBlueprint blueprint = new FlashcardBlueprint(categoryId,
-                    localizations,
-                    new FlashcardMetadata(dto.getSource(), dto.getTags()));
+            }
 
             flashcardBlueprintRepository.save(blueprint.generateSnapshot());
         }
