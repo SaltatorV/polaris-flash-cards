@@ -1,22 +1,20 @@
 package com.saltatorv.polaris.flash.cards.application.shared.exception;
 
-public class ApplicationException {
-    private final String httpStatusCode;
-    private final String errorCode;
+public class ApplicationException extends RuntimeException {
+    private final ExceptionConfiguration exceptionConfiguration;
     private final String message;
 
-    public ApplicationException(String httpStatusCode, String errorCode, String message) {
-        this.httpStatusCode = httpStatusCode;
-        this.errorCode = errorCode;
+    public ApplicationException(ExceptionConfiguration exceptionConfiguration, String message) {
+        this.exceptionConfiguration = exceptionConfiguration;
         this.message = message;
     }
 
-    public String getHttpStatusCode() {
-        return httpStatusCode;
+    public int getHttpStatusCode() {
+        return exceptionConfiguration.getStatusCode();
     }
 
     public String getErrorCode() {
-        return errorCode;
+        return exceptionConfiguration.name();
     }
 
     public String getMessage() {
