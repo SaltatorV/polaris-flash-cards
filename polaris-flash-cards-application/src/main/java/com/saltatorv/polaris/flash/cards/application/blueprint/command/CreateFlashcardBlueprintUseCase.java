@@ -3,6 +3,7 @@ package com.saltatorv.polaris.flash.cards.application.blueprint.command;
 import com.saltatorv.polaris.flash.cards.application.FlashcardBlueprintIdCache;
 import com.saltatorv.polaris.flash.cards.application.blueprint.command.dto.FlashcardBlueprintCreateDto;
 import com.saltatorv.polaris.flash.cards.application.blueprint.command.dto.FlashcardLocalizationCreateDto;
+import com.saltatorv.polaris.flash.cards.application.shared.exception.ApplicationException;
 import com.saltatorv.polaris.flash.cards.domain.*;
 import com.saltatorv.polaris.flash.cards.domain.exception.blueprint.FlashcardBlueprintWithoutLocalizationDomainException;
 import com.saltatorv.polaris.flash.cards.domain.shared.CategoryId;
@@ -10,6 +11,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Locale;
+
+import static com.saltatorv.polaris.flash.cards.application.blueprint.command.exception.FlashcardBlueprintExceptionConfiguration.FLASHCARD_BLUEPRINT_HAS_NO_LOCALIZATION;
 
 @Service
 class CreateFlashcardBlueprintUseCase {
@@ -30,16 +33,17 @@ class CreateFlashcardBlueprintUseCase {
                     .stream()
                     .map(this::mapToFlashcardLocalization)
                     .toList();
+
             try {
                 FlashcardBlueprint blueprint = new FlashcardBlueprint(categoryId,
                         localizations,
                         new FlashcardMetadata(dto.getSource(), dto.getTags()));
-            }
-            catch (FlashcardBlueprintWithoutLocalizationDomainException ex) {
 
+                flashcardBlueprintRepository.save(blueprint.generateSnapshot());
+                
+            } catch (FlashcardBlueprintWithoutLocalizationDomainException ex) {
+                throw new ApplicationException(FLASHCARD_BLUEPRINT_HAS_NO_LOCALIZATION, ex.getMessage());
             }
-
-            flashcardBlueprintRepository.save(blueprint.generateSnapshot());
         }
 
         flashcardBlueprintIdCache.invalidate();
