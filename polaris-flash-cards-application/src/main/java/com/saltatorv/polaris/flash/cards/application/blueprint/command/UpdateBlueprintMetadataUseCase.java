@@ -1,6 +1,7 @@
 package com.saltatorv.polaris.flash.cards.application.blueprint.command;
 
 import com.saltatorv.polaris.flash.cards.application.blueprint.command.dto.FlashcardBlueprintMetadataUpdateDto;
+import com.saltatorv.polaris.flash.cards.application.shared.exception.ApplicationException;
 import com.saltatorv.polaris.flash.cards.domain.FlashcardBlueprint;
 import com.saltatorv.polaris.flash.cards.domain.FlashcardBlueprintRepository;
 import com.saltatorv.polaris.flash.cards.domain.FlashcardMetadata;
@@ -9,6 +10,8 @@ import com.saltatorv.polaris.flash.cards.domain.snapshot.FlashcardBlueprintSnaps
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+
+import static com.saltatorv.polaris.flash.cards.application.blueprint.command.exception.FlashcardBlueprintExceptionConfiguration.FLASHCARD_BLUEPRINT_NOT_FOUND;
 
 @Service
 class UpdateBlueprintMetadataUseCase {
@@ -24,7 +27,8 @@ class UpdateBlueprintMetadataUseCase {
         Optional<FlashcardBlueprintSnapshot> optional = flashcardBlueprintRepository.findById(new FlashcardBlueprintId(blueprintId));
 
         if (optional.isEmpty()) {
-            throw new IllegalArgumentException("Flashcard blueprint with id " + blueprintId + " does not exist.");
+            throw new ApplicationException(FLASHCARD_BLUEPRINT_NOT_FOUND,
+                    "Flashcard blueprint with id: %s does not exist.".formatted(blueprintId));
         }
 
         FlashcardBlueprint blueprint = FlashcardBlueprint.restore(optional.get());
