@@ -40,7 +40,7 @@ class CreateFlashcardBlueprintUseCase {
                         new FlashcardMetadata(dto.getSource(), dto.getTags()));
 
                 flashcardBlueprintRepository.save(blueprint.generateSnapshot());
-                
+
             } catch (FlashcardBlueprintWithoutLocalizationDomainException ex) {
                 throw new ApplicationException(FLASHCARD_BLUEPRINT_HAS_NO_LOCALIZATION, ex.getMessage());
             }
