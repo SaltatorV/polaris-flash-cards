@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Locale;
 
-import static com.saltatorv.polaris.flash.cards.application.blueprint.command.exception.FlashcardBlueprintExceptionConfiguration.FLASHCARD_BLUEPRINT_HAS_NO_LOCALIZATION;
+import static com.saltatorv.polaris.flash.cards.application.blueprint.exception.FlashcardBlueprintExceptionConfiguration.FLASHCARD_BLUEPRINT_HAS_NO_LOCALIZATION;
 
 @Service
 class CreateFlashcardBlueprintUseCase {

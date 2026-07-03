@@ -1,4 +1,4 @@
-package com.saltatorv.polaris.flash.cards.application.blueprint.command.exception;
+package com.saltatorv.polaris.flash.cards.application.blueprint.exception;
 
 import com.saltatorv.polaris.flash.cards.application.shared.exception.ExceptionConfiguration;
 

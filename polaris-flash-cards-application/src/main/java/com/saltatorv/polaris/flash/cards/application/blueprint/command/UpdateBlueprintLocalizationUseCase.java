@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.Locale;
 import java.util.Optional;
 
-import static com.saltatorv.polaris.flash.cards.application.blueprint.command.exception.FlashcardBlueprintExceptionConfiguration.FLASHCARD_BLUEPRINT_NOT_FOUND;
+import static com.saltatorv.polaris.flash.cards.application.blueprint.exception.FlashcardBlueprintExceptionConfiguration.FLASHCARD_BLUEPRINT_NOT_FOUND;
 
 @Service
 class UpdateBlueprintLocalizationUseCase {
