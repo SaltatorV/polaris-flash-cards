@@ -3,7 +3,9 @@ package com.saltatorv.polaris.flash.cards.application.review.exception;
 import com.saltatorv.polaris.flash.cards.application.shared.exception.ExceptionConfiguration;
 
 public enum FlashcardReviewExceptionConfiguration implements ExceptionConfiguration {
-    NO_FLASHCARD_RECEIVED(409);
+    NO_FLASHCARD_RECEIVED(409),
+    REVIEW_ALREADY_STARTED(409),
+    REVIEW_ALREADY_FINISHED(409);
 
     private final int statusCode;
 
