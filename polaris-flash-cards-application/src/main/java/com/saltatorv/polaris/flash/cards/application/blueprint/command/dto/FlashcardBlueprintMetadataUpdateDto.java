@@ -1,9 +1,15 @@
 package com.saltatorv.polaris.flash.cards.application.blueprint.command.dto;
 
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
+
 import java.util.Set;
 
 public class FlashcardBlueprintMetadataUpdateDto {
+    @NotEmpty(message = "Source cannot be empty")
     private String source;
+    @NotEmpty(message = "Tags cannot be empty")
+    @Size(min = 1, message = "At least one tag is required")
     private Set<String> tags;
 
     public FlashcardBlueprintMetadataUpdateDto() {
