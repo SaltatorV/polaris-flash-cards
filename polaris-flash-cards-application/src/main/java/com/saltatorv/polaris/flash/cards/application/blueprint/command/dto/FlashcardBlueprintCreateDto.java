@@ -14,10 +14,13 @@ public class FlashcardBlueprintCreateDto {
     @NotEmpty(message = "Category id cannot be empty")
     private String categoryId;
     @NotEmpty(message = "Source cannot be empty")
+    @Size(min = 3, max = 100, message = "Source must be between {min} and {max} characters")
     private String source;
     @NotEmpty(message = "Tags cannot be empty")
     @Size(min = 1, message = "At least one tag is required")
-    private Set<@NotBlank(message = "Tag cannot be empty") String> tags;
+    private Set<@NotBlank(message = "Tag cannot be empty")
+                @Size(min = 2, max = 15, message = "Tag must be between {min} and {max} characters")
+            String> tags;
     @NotEmpty(message = "Localizations cannot be empty")
     @Size(min = 1, message = "At least one localization is required")
     private List<@Valid FlashcardLocalizationCreateDto> localizations;
