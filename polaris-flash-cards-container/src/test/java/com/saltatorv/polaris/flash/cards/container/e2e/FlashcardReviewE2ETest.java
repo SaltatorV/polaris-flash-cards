@@ -2,6 +2,7 @@ package com.saltatorv.polaris.flash.cards.container.e2e;
 
 import com.saltatorv.polaris.flash.cards.application.blueprint.command.dto.FlashcardBlueprintCreateDto;
 import com.saltatorv.polaris.flash.cards.application.blueprint.command.dto.FlashcardLocalizationCreateDto;
+import com.saltatorv.polaris.flash.cards.application.blueprint.command.dto.Locale;
 import com.saltatorv.polaris.flash.cards.application.review.query.dto.FlashcardReviewDataDto;
 import com.saltatorv.polaris.flash.cards.container.caller.blueprint.command.FlashcardBlueprintCreationEndpointCaller;
 import com.saltatorv.polaris.flash.cards.container.caller.review.command.FlashcardReviewLifecycleCommandEndpointCaller;
@@ -16,7 +17,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -132,7 +132,7 @@ class FlashcardReviewE2ETest extends BaseE2ETest {
         for (int i = 0; i < times; i++) {
 
             List<FlashcardLocalizationCreateDto> localizationCreateDtos =
-                    List.of(new FlashcardLocalizationCreateDto(Locale.ENGLISH.toLanguageTag(), String.format("Question-%d", i),
+                    List.of(new FlashcardLocalizationCreateDto(Locale.fromCode("en"), String.format("Question-%d", i),
                             String.format("Definition-%d", i)));
 
             dtos.add(new FlashcardBlueprintCreateDto(
