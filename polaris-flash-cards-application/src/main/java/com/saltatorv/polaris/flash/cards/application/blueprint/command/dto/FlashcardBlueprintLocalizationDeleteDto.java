@@ -1,18 +1,19 @@
 package com.saltatorv.polaris.flash.cards.application.blueprint.command.dto;
 
-public class FlashcardBlueprintLocalizationDeleteDto {
+import jakarta.validation.constraints.NotNull;
 
-    private String locale;
+public class FlashcardBlueprintLocalizationDeleteDto {
+    @NotNull(message = "Locale cannot be empty")
+    private Locale locale;
 
     public FlashcardBlueprintLocalizationDeleteDto() {
     }
 
-
-    public FlashcardBlueprintLocalizationDeleteDto(String locale) {
+    public FlashcardBlueprintLocalizationDeleteDto(Locale locale) {
         this.locale = locale;
     }
 
-    public String getLocale() {
+    public Locale getLocale() {
         return locale;
     }
 }
