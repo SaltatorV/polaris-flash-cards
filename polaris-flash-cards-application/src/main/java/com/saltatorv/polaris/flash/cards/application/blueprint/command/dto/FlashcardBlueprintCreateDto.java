@@ -1,13 +1,24 @@
 package com.saltatorv.polaris.flash.cards.application.blueprint.command.dto;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
+
 import java.util.List;
 import java.util.Set;
 
 public class FlashcardBlueprintCreateDto {
+    @NotEmpty(message = "Category id cannot be empty")
     private String categoryId;
+    @NotEmpty(message = "Source cannot be empty")
     private String source;
-    private Set<String> tags;
-    private List<FlashcardLocalizationCreateDto> localizations;
+    @NotEmpty(message = "Tags cannot be empty")
+    @Size(min = 1, message = "At least one tag is required")
+    private Set<@NotBlank(message = "Tag cannot be empty") String> tags;
+    @NotEmpty(message = "Localizations cannot be empty")
+    @Size(min = 1, message = "At least one localization is required")
+    private List<@Valid FlashcardLocalizationCreateDto> localizations;
 
     public FlashcardBlueprintCreateDto(String categoryId, String source,
                                        Set<String> tags, List<FlashcardLocalizationCreateDto> localizations) {
