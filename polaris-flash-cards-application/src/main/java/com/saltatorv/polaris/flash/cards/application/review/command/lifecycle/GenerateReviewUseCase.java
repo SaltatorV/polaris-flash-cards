@@ -26,11 +26,6 @@ class GenerateReviewUseCase {
     }
 
     FlashcardReviewId generateReview(List<FlashcardBlueprintId> flashcardIds) {
-
-        if(flashcardIds.isEmpty()){
-            throw new IllegalArgumentException("The selected flashcard collection cannot be empty.");
-        }
-
         List<FlashcardBlueprintSnapshot> flashcardBlueprintsSnapshots = flashcardBlueprintRepository.findByIds(flashcardIds);
         List<FlashcardBlueprint> flashcardBlueprints = flashcardBlueprintsSnapshots
                 .stream()
