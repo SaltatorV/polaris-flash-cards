@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Set;
 
 public class FlashcardBlueprintCreateDto {
-    @ValidId
+    @ValidId(message = "Category ID must be a valid UUID")
     @NotEmpty(message = "Category id cannot be empty")
     private String categoryId;
     @NotEmpty(message = "Source cannot be empty")
