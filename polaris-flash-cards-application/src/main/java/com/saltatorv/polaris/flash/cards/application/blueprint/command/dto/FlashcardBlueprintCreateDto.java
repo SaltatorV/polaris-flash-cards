@@ -1,5 +1,6 @@
 package com.saltatorv.polaris.flash.cards.application.blueprint.command.dto;
 
+import com.saltatorv.polaris.flash.cards.application.shared.validation.ValidId;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
@@ -9,6 +10,7 @@ import java.util.List;
 import java.util.Set;
 
 public class FlashcardBlueprintCreateDto {
+    @ValidId
     @NotEmpty(message = "Category id cannot be empty")
     private String categoryId;
     @NotEmpty(message = "Source cannot be empty")
