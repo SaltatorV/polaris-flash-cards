@@ -27,7 +27,6 @@ class CreateFlashcardBlueprintUseCase {
     void addFlashcardBlueprints(List<FlashcardBlueprintCreateDto> dtos) {
         for (FlashcardBlueprintCreateDto dto : dtos) {
 
-            dto.getLocalizations().forEach(l -> System.out.println(l.getLocale() + " " + l.getQuestion() + " " + l.getAnswer()));
             CategoryId categoryId = new CategoryId(dto.getCategoryId());
             List<FlashcardLocalization> localizations = dto.getLocalizations()
                     .stream()
@@ -50,7 +49,7 @@ class CreateFlashcardBlueprintUseCase {
     }
 
     private FlashcardLocalization mapToFlashcardLocalization(FlashcardLocalizationCreateDto dto) {
-        return new FlashcardLocalization(Locale.forLanguageTag(dto.getLocale()),
+        return new FlashcardLocalization(Locale.forLanguageTag(dto.getLocale().code()),
                 new FlashcardContent(dto.getQuestion(), dto.getAnswer()));
     }
 }
