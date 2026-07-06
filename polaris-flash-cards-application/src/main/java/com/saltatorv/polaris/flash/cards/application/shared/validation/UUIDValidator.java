@@ -5,9 +5,9 @@ import jakarta.validation.ConstraintValidatorContext;
 
 import java.util.UUID;
 
-class UUIDValidator implements ConstraintValidator<ValidId, String> {
+class UUIDValidator implements ConstraintValidator<ValidUUID, String> {
     @Override
-    public void initialize(ValidId constraintAnnotation) {
+    public void initialize(ValidUUID constraintAnnotation) {
         ConstraintValidator.super.initialize(constraintAnnotation);
     }
 

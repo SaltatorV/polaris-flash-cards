@@ -9,7 +9,7 @@ import java.lang.annotation.Target;
 @Documented
 @Constraint(validatedBy = UUIDValidator.class)
 @Target({java.lang.annotation.ElementType.FIELD})
-public @interface ValidId {
+public @interface ValidUUID {
     String message() default "Provided ID must be a valid UUID";
 
     Class<?>[] groups() default {};
