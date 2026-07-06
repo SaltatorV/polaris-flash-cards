@@ -3,6 +3,7 @@ package com.saltatorv.polaris.flash.cards.web.controller.command.review;
 import com.saltatorv.polaris.flash.cards.application.review.command.lifecycle.FlashcardReviewLifecycleFacade;
 import com.saltatorv.polaris.flash.cards.domain.shared.FlashcardReviewId;
 import com.saltatorv.polaris.flash.cards.web.BaseController;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,13 +22,13 @@ public class FlashcardReviewLifecycleController extends BaseController {
     }
 
     @PostMapping(FLASHCARD_REVIEW_GENERATE_RANDOM_ENDPOINT)
-    public String generateRandomReview(@RequestBody int size) {
+    public String generateRandomReview(@Valid @RequestBody int size) {
         FlashcardReviewId id = flashcardReviewLifecycleFacade.generateRandomReview(size);
         return id.getId();
     }
 
     @PostMapping(FLASHCARD_REVIEW_DELETE_ENDPOINT)
-    public void deleteReview(@RequestBody String id) {
+    public void deleteReview(@Valid @RequestBody String id) {
         flashcardReviewLifecycleFacade.deleteReview(new FlashcardReviewId(id));
     }
 }

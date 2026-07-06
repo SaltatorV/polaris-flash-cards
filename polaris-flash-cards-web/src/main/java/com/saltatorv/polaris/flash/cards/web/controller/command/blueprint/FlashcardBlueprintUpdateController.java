@@ -4,6 +4,7 @@ import com.saltatorv.polaris.flash.cards.application.blueprint.command.Flashcard
 import com.saltatorv.polaris.flash.cards.application.blueprint.command.dto.FlashcardBlueprintMetadataUpdateDto;
 import com.saltatorv.polaris.flash.cards.application.blueprint.command.dto.FlashcardLocalizationUpdateDto;
 import com.saltatorv.polaris.flash.cards.web.BaseController;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,13 +25,13 @@ public class FlashcardBlueprintUpdateController extends BaseController {
 
     @PatchMapping(FLASHCARD_BLUEPRINT_UPDATE_METADATA_ENDPOINT)
     public void updateFlashcardBlueprintMetadata(@PathVariable("id") String id,
-                                                 @RequestBody FlashcardBlueprintMetadataUpdateDto dto) {
+                                                 @Valid @RequestBody FlashcardBlueprintMetadataUpdateDto dto) {
         flashcardBlueprintUpdateCommandFacade.updateBlueprintMetadata(id, dto);
     }
 
     @PatchMapping(FLASHCARD_BLUEPRINT_UPDATE_LOCALIZATION_ENDPOINT)
     public void updateFlashcardLocalizations(@PathVariable("id") String id, @PathVariable("locale") String locale,
-                                             @RequestBody FlashcardLocalizationUpdateDto dto) {
+                                             @Valid @RequestBody FlashcardLocalizationUpdateDto dto) {
         flashcardBlueprintUpdateCommandFacade.updateLocalization(id, locale, dto);
     }
 

@@ -3,6 +3,7 @@ package com.saltatorv.polaris.flash.cards.web.controller.command.category;
 import com.saltatorv.polaris.flash.cards.application.category.command.CategoryCreateCommandFacade;
 import com.saltatorv.polaris.flash.cards.application.category.command.dto.CategoryDto;
 import com.saltatorv.polaris.flash.cards.web.BaseController;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,7 +21,7 @@ public class CategoryCreationController extends BaseController {
     }
 
     @PostMapping(CATEGORY_CREATE_ENDPOINT)
-    public void createCategory(@RequestBody CategoryDto dto) {
+    public void createCategory(@Valid @RequestBody CategoryDto dto) {
         categoryCreateCommandFacade.addNewCategory(dto);
     }
 }
