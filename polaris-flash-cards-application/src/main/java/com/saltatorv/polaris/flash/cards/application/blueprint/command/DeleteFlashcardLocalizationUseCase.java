@@ -36,7 +36,7 @@ class DeleteFlashcardLocalizationUseCase {
 
         dtos.forEach(dto -> {
             try {
-                blueprint.removeLocalization(dto.getLocale());
+                blueprint.removeLocalization(dto.getLocale().code());
             } catch (FlashcardBlueprintWithoutLocalizationDomainException ex) {
                 throw new ApplicationException(FLASHCARD_BLUEPRINT_LAST_LOCALIZATION, ex.getMessage());
             }
