@@ -74,7 +74,8 @@ class FlashcardReviewE2ETest extends BaseE2ETest {
         reviewOperationCommandCaller.begin();
 
         for (Boolean answer : predictedResult.answers()) {
-            reviewOperationCommandCaller.drawNext(drewQuestions);
+            var next = reviewOperationCommandCaller.drawNext();
+            drewQuestions.add(next);
             if (answer) {
                 reviewOperationCommandCaller.markAsCorrect();
             } else {
