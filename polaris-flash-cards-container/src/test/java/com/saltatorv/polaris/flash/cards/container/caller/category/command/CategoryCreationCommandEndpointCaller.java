@@ -2,7 +2,6 @@ package com.saltatorv.polaris.flash.cards.container.caller.category.command;
 
 import com.saltatorv.polaris.flash.cards.application.category.command.dto.CategoryDto;
 import com.saltatorv.polaris.flash.cards.container.caller.EndpointCaller;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
 import static com.saltatorv.polaris.flash.cards.web.BaseController.BASE_API_ENDPOINT;
