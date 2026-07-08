@@ -1,15 +1,13 @@
 package com.saltatorv.polaris.flash.cards.container.caller.review.command;
 
-import org.springframework.http.HttpStatus;
+import com.saltatorv.polaris.flash.cards.container.caller.EndpointCaller;
 import org.springframework.http.MediaType;
-
-import java.util.List;
 
 import static com.saltatorv.polaris.flash.cards.web.BaseController.BASE_API_ENDPOINT;
 import static com.saltatorv.polaris.flash.cards.web.controller.command.review.FlashcardReviewOperationController.*;
 import static io.restassured.RestAssured.given;
 
-public class FlashcardReviewOperationCommandEndpointCaller {
+public class FlashcardReviewOperationCommandEndpointCaller extends EndpointCaller {
     String flashcardReviewId;
 
     public static FlashcardReviewOperationCommandEndpointCaller build() {
@@ -17,64 +15,66 @@ public class FlashcardReviewOperationCommandEndpointCaller {
     }
 
     public FlashcardReviewOperationCommandEndpointCaller begin() {
-        given()
+        response = given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .when()
                 .pathParam("reviewId", flashcardReviewId)
                 .post(BASE_API_ENDPOINT + FLASHCARD_REVIEW_BEGIN_ENDPOINT)
                 .then()
-                .statusCode(HttpStatus.OK.value());
+                .extract()
+                .response();
 
         return this;
     }
 
     public FlashcardReviewOperationCommandEndpointCaller finish() {
-        given()
+        response = given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .when()
                 .pathParam("reviewId", flashcardReviewId)
                 .post(BASE_API_ENDPOINT + FLASHCARD_REVIEW_FINISH_ENDPOINT)
                 .then()
-                .statusCode(HttpStatus.OK.value());
+                .extract()
+                .response();
 
         return this;
     }
 
-    public FlashcardReviewOperationCommandEndpointCaller drawNext(List<String> drewQuestions) {
-        String question = given()
+    public String drawNext() {
+        response = given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .when()
                 .pathParam("reviewId", flashcardReviewId)
                 .post(BASE_API_ENDPOINT + FLASHCARD_REVIEW_DRAW_NEXT_ENDPOINT)
                 .then()
                 .extract()
-                .asString();
+                .response();
 
-        drewQuestions.add(question);
-
-        return this;
+        return response.asString();
     }
 
     public FlashcardReviewOperationCommandEndpointCaller markAsIncorrect() {
-        given()
+        response = given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .when()
                 .pathParam("reviewId", flashcardReviewId)
                 .post(BASE_API_ENDPOINT + FLASHCARD_REVIEW_MARK_INCORRECT_ENDPOINT)
                 .then()
-                .statusCode(HttpStatus.OK.value());
+                .extract()
+                .response();
 
         return this;
     }
 
     public FlashcardReviewOperationCommandEndpointCaller markAsCorrect() {
-        given()
+        response = given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .when()
                 .pathParam("reviewId", flashcardReviewId)
                 .post(BASE_API_ENDPOINT + FLASHCARD_REVIEW_MARK_CORRECT_ENDPOINT)
                 .then()
-                .statusCode(HttpStatus.OK.value());
+                .extract()
+                .response();
 
         return this;
     }
