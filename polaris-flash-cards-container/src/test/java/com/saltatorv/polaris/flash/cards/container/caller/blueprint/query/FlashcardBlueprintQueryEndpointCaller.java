@@ -2,6 +2,7 @@ package com.saltatorv.polaris.flash.cards.container.caller.blueprint.query;
 
 import com.saltatorv.polaris.flash.cards.application.blueprint.query.dto.FlashcardBlueprintQueryDto;
 import com.saltatorv.polaris.flash.cards.application.blueprint.query.dto.FlashcardBlueprintSummaryQueryDto;
+import com.saltatorv.polaris.flash.cards.container.caller.EndpointCaller;
 import org.springframework.http.MediaType;
 
 import java.util.List;
@@ -11,32 +12,34 @@ import static com.saltatorv.polaris.flash.cards.web.controller.query.blueprint.F
 import static com.saltatorv.polaris.flash.cards.web.controller.query.blueprint.FlashcardBlueprintQueryController.FLASHCARD_BLUEPRINT_GET_ENDPOINT;
 import static io.restassured.RestAssured.given;
 
-public class FlashcardBlueprintQueryEndpointCaller {
+public class FlashcardBlueprintQueryEndpointCaller extends EndpointCaller {
 
     public static FlashcardBlueprintQueryEndpointCaller build() {
         return new FlashcardBlueprintQueryEndpointCaller();
     }
 
     public FlashcardBlueprintQueryDto getFlashcardBlueprint(String blueprintId) {
-        return given()
+        response = given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .when()
                 .get(configureGetBlueprintEndpoint(blueprintId))
                 .then()
-                .statusCode(200)
                 .extract()
-                .as(FlashcardBlueprintQueryDto.class);
+                .response();
+
+        return response.as(FlashcardBlueprintQueryDto.class);
     }
 
     public List<FlashcardBlueprintSummaryQueryDto> getFlashcardBlueprintByCategory(String categoryId) {
-        return given()
+        response = given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .when()
                 .get(configureGetAllBlueprintSummariesForCategory(categoryId))
                 .then()
-                .statusCode(200)
                 .extract()
-                .jsonPath()
+                .response();
+
+        return response.jsonPath()
                 .getList(".", FlashcardBlueprintSummaryQueryDto.class);
     }
 
