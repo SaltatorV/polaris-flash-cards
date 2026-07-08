@@ -4,7 +4,8 @@ import com.saltatorv.polaris.flash.cards.application.shared.exception.ExceptionC
 
 public enum CategoryExceptionConfiguration implements ExceptionConfiguration {
     CATEGORY_NOT_FOUND(404),
-    CATEGORY_DUPLICATED(409);
+    CATEGORY_DUPLICATED(409),
+    CATEGORY_IS_TOO_DEEP(409);
 
     private final int statusCode;
 

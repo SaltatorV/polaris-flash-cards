@@ -4,14 +4,14 @@ import com.saltatorv.polaris.flash.cards.application.category.command.dto.Catego
 import com.saltatorv.polaris.flash.cards.application.shared.exception.ApplicationException;
 import com.saltatorv.polaris.flash.cards.domain.Category;
 import com.saltatorv.polaris.flash.cards.domain.CategoryRepository;
+import com.saltatorv.polaris.flash.cards.domain.exception.category.CategoryMaxDepthReachedDomainException;
 import com.saltatorv.polaris.flash.cards.domain.shared.CategoryId;
 import com.saltatorv.polaris.flash.cards.domain.snapshot.CategorySnapshot;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-import static com.saltatorv.polaris.flash.cards.application.category.exception.CategoryExceptionConfiguration.CATEGORY_DUPLICATED;
-import static com.saltatorv.polaris.flash.cards.application.category.exception.CategoryExceptionConfiguration.CATEGORY_NOT_FOUND;
+import static com.saltatorv.polaris.flash.cards.application.category.exception.CategoryExceptionConfiguration.*;
 
 @Service
 class AddCategoryUseCase {
@@ -39,7 +39,12 @@ class AddCategoryUseCase {
         if (parentCategory == null) {
             categoryToSave = new Category(categoryDto.getCategoryName());
         } else {
-            categoryToSave = parentCategory.createChild(categoryDto.getCategoryName());
+            try {
+                categoryToSave = parentCategory.createChild(categoryDto.getCategoryName());
+            }
+            catch (CategoryMaxDepthReachedDomainException ex ) {
+                throw new ApplicationException(CATEGORY_IS_TOO_DEEP, ex.getMessage());
+            }
         }
 
         Optional<CategorySnapshot> duplicatedCategory = categoryRepository.findByNameAndDepth(categoryToSave.getCategoryName(), categoryToSave.getDepth());
