@@ -1,7 +1,8 @@
 package com.saltatorv.polaris.flash.cards.container.caller.blueprint.command;
 
 import com.saltatorv.polaris.flash.cards.application.blueprint.command.dto.FlashcardBlueprintLocalizationDeleteDto;
-import org.springframework.http.HttpStatus;
+import com.saltatorv.polaris.flash.cards.application.blueprint.command.dto.Locale;
+import com.saltatorv.polaris.flash.cards.container.caller.EndpointCaller;
 import org.springframework.http.MediaType;
 
 import java.util.Arrays;
@@ -12,31 +13,33 @@ import static com.saltatorv.polaris.flash.cards.web.controller.command.blueprint
 import static com.saltatorv.polaris.flash.cards.web.controller.command.blueprint.FlashcardBlueprintDeletionController.FLASHCARD_BLUEPRINT_LOCALIZATIONS_DELETE_ENDPOINT;
 import static io.restassured.RestAssured.given;
 
-public class FlashcardBlueprintDeletionEndpointCaller {
+public class FlashcardBlueprintDeletionEndpointCaller extends EndpointCaller {
 
     public static FlashcardBlueprintDeletionEndpointCaller build() {
         return new FlashcardBlueprintDeletionEndpointCaller();
     }
 
     public FlashcardBlueprintDeletionEndpointCaller deleteFlashcardBlueprint(String blueprintId) {
-        given()
+        response = given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .when()
                 .delete(configureDeleteEndpointForBlueprint(blueprintId))
                 .then()
-                .statusCode(HttpStatus.OK.value());
+                .extract()
+                .response();
 
         return this;
     }
 
     public FlashcardBlueprintDeletionEndpointCaller deleteFlashcardLocalizations(String blueprintId, String... locales) {
-        given()
+        response = given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .body(createDtosForLocales(locales))
                 .when()
                 .delete(configureDeleteEndpointForBlueprintLocalization(blueprintId))
                 .then()
-                .statusCode(HttpStatus.OK.value());
+                .extract()
+                .response();
 
         return this;
     }
@@ -50,7 +53,9 @@ public class FlashcardBlueprintDeletionEndpointCaller {
     }
 
     private List<FlashcardBlueprintLocalizationDeleteDto> createDtosForLocales(String... locales) {
-        return Arrays.stream(locales).map(FlashcardBlueprintLocalizationDeleteDto::new).toList();
+        return Arrays.stream(locales)
+                .map(locale -> new FlashcardBlueprintLocalizationDeleteDto(Locale.fromCode(locale)))
+                .toList();
     }
 
 }
