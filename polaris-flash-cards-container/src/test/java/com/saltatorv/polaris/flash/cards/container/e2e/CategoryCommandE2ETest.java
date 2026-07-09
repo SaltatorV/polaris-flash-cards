@@ -45,7 +45,7 @@ class CategoryCommandE2ETest extends BaseE2ETest {
         var response = categoryCreationCommandEndpointCaller.createCategory(category).getLastResponse();
         assertTrue(response.getStatusCode() == 409);
         var expectedErrorResponse = new ErrorResponse("CATEGORY_DUPLICATED", "Category with name: Programming already exists on depth level: 1");
-        assertEquals(createJsonFrom(expectedErrorResponse), response.getBody().asString());
+        assertExpectedErrorIsEqualToResponse(expectedErrorResponse, response);
 
 
         //when
@@ -91,7 +91,7 @@ class CategoryCommandE2ETest extends BaseE2ETest {
         assertTrue(response.getStatusCode() == 409);
         expectedErrorResponse = new ErrorResponse("CATEGORY_IS_TOO_DEEP", "Max depth reached when create category with name: %s from parent: %s"
                 .formatted(fifthCategory.getCategoryName(), fifthCategory.getParentCategoryId()));
-        assertEquals(createJsonFrom(expectedErrorResponse), response.getBody().asString());
+        assertExpectedErrorIsEqualToResponse(expectedErrorResponse, response);
 
         //when
         var sixthCategory = new CategoryDto("Many-Categories-1", buildingBlocks.get().getId());
