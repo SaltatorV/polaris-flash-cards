@@ -50,7 +50,7 @@ public class Category {
     public Category createChild(String categoryName) {
 
         if (depth + 1 > MAX_AVAILABLE_DEPTH) {
-            throw new CategoryMaxDepthReachedDomainException(categoryName, parent);
+            throw new CategoryMaxDepthReachedDomainException(categoryName, id);
         }
 
         return new Category(depth + 1, categoryName, id);
