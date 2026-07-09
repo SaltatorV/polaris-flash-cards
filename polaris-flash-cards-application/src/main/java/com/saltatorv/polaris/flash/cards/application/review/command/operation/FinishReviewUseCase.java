@@ -9,8 +9,7 @@ import com.saltatorv.polaris.flash.cards.domain.exception.review.FlashcardReview
 import com.saltatorv.polaris.flash.cards.domain.shared.FlashcardReviewId;
 import org.springframework.stereotype.Service;
 
-import static com.saltatorv.polaris.flash.cards.application.review.exception.FlashcardReviewExceptionConfiguration.REVIEW_ALREADY_FINISHED;
-import static com.saltatorv.polaris.flash.cards.application.review.exception.FlashcardReviewExceptionConfiguration.REVIEW_ALREADY_STARTED;
+import static com.saltatorv.polaris.flash.cards.application.review.exception.FlashcardReviewExceptionConfiguration.*;
 
 @Service
 class FinishReviewUseCase extends FlashcardReviewUseCaseBase {
@@ -26,7 +25,7 @@ class FinishReviewUseCase extends FlashcardReviewUseCaseBase {
         try {
             review.finish();
         } catch (FlashcardReviewNotStartedDomainException ex) {
-            throw new ApplicationException(REVIEW_ALREADY_STARTED, ex.getMessage());
+            throw new ApplicationException(REVIEW_NOT_STARTED, ex.getMessage());
         } catch (FlashcardReviewAlreadyFinishedDomainException ex) {
             throw new ApplicationException(REVIEW_ALREADY_FINISHED, ex.getMessage());
         }
