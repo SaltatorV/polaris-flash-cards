@@ -29,7 +29,8 @@ public class BaseE2ETest extends RestAssuredConfiguration {
         jdbcTemplate.execute("INSERT INTO category_entity (id, category_name, depth) values ('01976e3e-6c52-7000-8c3f-2c4e5d6f7a8b', 'Java', 1)");
     }
 
-    public void assertExpectedErrorIsEqualToResponse(ErrorResponse expectedError, Response response) {
+    public void assertExpectedErrorIsEqualToResponse(ErrorResponse expectedError, int expectedErrorCode, Response response) {
+        assertEquals(expectedErrorCode, response.getStatusCode());
         assertEquals(expectedError, response.as(ErrorResponse.class));
     }
 }
