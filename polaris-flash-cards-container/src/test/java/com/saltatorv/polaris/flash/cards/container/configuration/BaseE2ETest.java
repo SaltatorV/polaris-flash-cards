@@ -10,6 +10,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.shaded.com.fasterxml.jackson.databind.ObjectMapper;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 @Testcontainers
@@ -29,8 +30,24 @@ public class BaseE2ETest extends RestAssuredConfiguration {
         jdbcTemplate.execute("INSERT INTO category_entity (id, category_name, depth) values ('01976e3e-6c52-7000-8c3f-2c4e5d6f7a8b', 'Java', 1)");
     }
 
+    public void assertResponseBodyIsEmpty(Response response) {
+        assertEquals("", response.asString());
+    }
+
+    public void assertResponseCodeIs200(Response response) {
+        assertEquals(200, response.getStatusCode());
+    }
+
+    public void assertResponseCodeIs201(Response response) {
+        assertEquals(201, response.getStatusCode());
+    }
+
     public void assertExpectedErrorIsEqualToResponse(ErrorResponse expectedError, int expectedErrorCode, Response response) {
         assertEquals(expectedErrorCode, response.getStatusCode());
         assertEquals(expectedError, response.as(ErrorResponse.class));
+    }
+
+    public void assertResponseBodyMatchRegex(Response response, String regex) {
+        assertTrue(response.asString().matches(regex));
     }
 }
