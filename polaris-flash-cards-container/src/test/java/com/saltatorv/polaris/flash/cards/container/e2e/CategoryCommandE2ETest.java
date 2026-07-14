@@ -8,115 +8,188 @@ import com.saltatorv.polaris.flash.cards.web.handler.ErrorResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.Optional;
+import java.util.ArrayList;
+import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class CategoryCommandE2ETest extends BaseE2ETest {
     // category caller
     CategoryQueryEndpointCaller categoryQueryEndpointCaller;
     CategoryCreationCommandEndpointCaller categoryCreationCommandEndpointCaller;
 
+    List<com.saltatorv.polaris.flash.cards.application.category.query.dto.CategoryDto> listOfCategories;
+
     @BeforeEach
     public void setup() {
         categoryQueryEndpointCaller = CategoryQueryEndpointCaller.build();
         categoryCreationCommandEndpointCaller = CategoryCreationCommandEndpointCaller.build();
+        listOfCategories = new ArrayList<>();
     }
 
-
     @Test
-    void testShouldManageCompleteCategoryLifecycle() {
+    void shouldCreateRootCategory() {
         // given
         var category = new CategoryDto("Programming", null);
 
         // when
-        categoryCreationCommandEndpointCaller.createCategory(category);
+        var response = categoryCreationCommandEndpointCaller.createCategory(category).getLastResponse();
+        assertResponseCodeIs201(response);
+        assertResponseBodyIsEmpty(response);
 
         // then
-        var listOfCategories = categoryQueryEndpointCaller.getCategory(null);
-        assertEquals(2, listOfCategories.size());
+        listOfCategories = categoryQueryEndpointCaller.getCategory(null);
+        assertResponseCodeIs200(categoryQueryEndpointCaller.getLastResponse());
+        assertListOfCategoriesContainsOnly("Java", "Programming");
+    }
 
-        var programmingCategory = listOfCategories.stream().filter(c -> c.getCategoryName().equals("Programming")).findFirst();
-        var javaCategory = listOfCategories.stream().filter(c -> c.getCategoryName().equals("Java")).findFirst();
-        assertCategoryNameIsEqualTo(programmingCategory, "Programming");
-        assertCategoryNameIsEqualTo(javaCategory, "Java");
+    @Test
+    void shouldCreateNestedCategoriesAndReturnThemByParentId() {
+        // Get the root category defined in the database migration
+        listOfCategories = categoryQueryEndpointCaller.getCategory(null);
+        assertResponseCodeIs200(categoryQueryEndpointCaller.getLastResponse());
+        assertListOfCategoriesContainsOnly("Java");
 
-        // when && then
+        // Create child for root category and ensure it is created
+        var firstId = listOfCategories.getFirst().getId();
+        var second = new CategoryDto("Second", firstId);
+        var response = categoryCreationCommandEndpointCaller.createCategory(second).getLastResponse();
+        assertResponseCodeIs201(response);
+        assertResponseBodyIsEmpty(response);
+
+        listOfCategories = categoryQueryEndpointCaller.getCategory(firstId);
+        assertResponseCodeIs200(categoryQueryEndpointCaller.getLastResponse());
+        assertListOfCategoriesContainsOnly("Second");
+
+        // Create a child category under "Second" and verify it was created
+        var secondId = listOfCategories.getFirst().getId();
+        var third = new CategoryDto("Third", secondId);
+        response = categoryCreationCommandEndpointCaller.createCategory(third).getLastResponse();
+        assertResponseCodeIs201(response);
+        assertResponseBodyIsEmpty(response);
+
+        // Verify that all categories are available under the correct parent
+        listOfCategories = categoryQueryEndpointCaller.getCategory(null);
+        assertResponseCodeIs200(categoryQueryEndpointCaller.getLastResponse());
+        assertListOfCategoriesContainsOnly("Java");
+
+        listOfCategories = categoryQueryEndpointCaller.getCategory(firstId);
+        assertResponseCodeIs200(categoryQueryEndpointCaller.getLastResponse());
+        assertListOfCategoriesContainsOnly("Second");
+
+        listOfCategories = categoryQueryEndpointCaller.getCategory(secondId);
+        assertResponseCodeIs200(categoryQueryEndpointCaller.getLastResponse());
+        assertListOfCategoriesContainsOnly("Third");
+        var thirdId = listOfCategories.getFirst().getId();
+
+        listOfCategories = categoryQueryEndpointCaller.getCategory(thirdId);
+        assertResponseCodeIs200(categoryQueryEndpointCaller.getLastResponse());
+        assertListOfCategoriesIsEmpty();
+    }
+
+    @Test
+    void testShouldReturnAnErrorWhenCreationDuplicateCategory() {
+        // given
+        var category = new CategoryDto("Programming", null);
         var response = categoryCreationCommandEndpointCaller.createCategory(category).getLastResponse();
-        assertTrue(response.getStatusCode() == 409);
+        assertResponseCodeIs201(response);
+        assertResponseBodyIsEmpty(response);
+
+        // when
+        response = categoryCreationCommandEndpointCaller.createCategory(category).getLastResponse();
+
+        // then
         var expectedErrorResponse = new ErrorResponse("CATEGORY_DUPLICATED", "Category with name: Programming already exists on depth level: 1");
-        assertExpectedErrorIsEqualToResponse(expectedErrorResponse, response);
-
-
-        //when
-        var parentCategoryId = programmingCategory.get().getId();
-        var secondCategory = new CategoryDto("Domain-Driven-Design", parentCategoryId);
-        categoryCreationCommandEndpointCaller.createCategory(secondCategory);
-        listOfCategories = categoryQueryEndpointCaller.getCategory(parentCategoryId);
-
-        //then
-        assertEquals(1, listOfCategories.size());
-        var dddCategory = listOfCategories.stream().filter(c -> c.getCategoryName().equals("Domain-Driven-Design")).findFirst();
-        assertCategoryNameIsEqualTo(dddCategory, "Domain-Driven-Design");
-
-        //when
-        parentCategoryId = dddCategory.get().getId();
-        var thirdCategory = new CategoryDto("Building blocks", parentCategoryId);
-        categoryCreationCommandEndpointCaller.createCategory(thirdCategory);
-        listOfCategories = categoryQueryEndpointCaller.getCategory(parentCategoryId);
-
-        //then
-        assertEquals(1, listOfCategories.size());
-        var buildingBlocks = listOfCategories.stream().filter(c -> c.getCategoryName().equals("Building blocks")).findFirst();
-        assertCategoryNameIsEqualTo(buildingBlocks, "Building blocks");
-
-        //when
-        parentCategoryId = buildingBlocks.get().getId();
-        var fourthCategory = new CategoryDto("Aggregates", parentCategoryId);
-        categoryCreationCommandEndpointCaller.createCategory(fourthCategory);
-        listOfCategories = categoryQueryEndpointCaller.getCategory(parentCategoryId);
-
-        //then
-        assertEquals(1, listOfCategories.size());
-        var aggregates = listOfCategories.stream().filter(c -> c.getCategoryName().equals("Aggregates")).findFirst();
-        assertCategoryNameIsEqualTo(aggregates, "Aggregates");
-
-        //when
-        parentCategoryId = aggregates.get().getId();
-        var fifthCategory = new CategoryDto("TOO-DEEP", parentCategoryId);
-
-
-        //then
-        response = categoryCreationCommandEndpointCaller.createCategory(fifthCategory).getLastResponse();
-        assertTrue(response.getStatusCode() == 409);
-        expectedErrorResponse = new ErrorResponse("CATEGORY_IS_TOO_DEEP", "Max depth reached when create category with name: %s from parent: %s"
-                .formatted(fifthCategory.getCategoryName(), fifthCategory.getParentCategoryId()));
-        assertExpectedErrorIsEqualToResponse(expectedErrorResponse, response);
-
-        //when
-        var sixthCategory = new CategoryDto("Many-Categories-1", buildingBlocks.get().getId());
-        var seventhCategory = new CategoryDto("Many-Categories-2", buildingBlocks.get().getId());
-        var eighthCategory = new CategoryDto("Many-Categories-3", buildingBlocks.get().getId());
-        var ninthCategory = new CategoryDto("Many-Categories-4", buildingBlocks.get().getId());
-        var tenthCategory = new CategoryDto("Many-Categories-5", buildingBlocks.get().getId());
-
-        categoryCreationCommandEndpointCaller.createCategory(sixthCategory);
-        categoryCreationCommandEndpointCaller.createCategory(seventhCategory);
-        categoryCreationCommandEndpointCaller.createCategory(eighthCategory);
-        categoryCreationCommandEndpointCaller.createCategory(ninthCategory);
-        categoryCreationCommandEndpointCaller.createCategory(tenthCategory);
-
-        //then
-        listOfCategories = categoryQueryEndpointCaller.getCategory(buildingBlocks.get().getId());
-        assertEquals(6, listOfCategories.size());
+        assertExpectedErrorIsEqualToResponse(expectedErrorResponse, 409, response);
     }
 
-    private void assertCategoryNameIsEqualTo(Optional<com.saltatorv.polaris.flash.cards.application.category.query.dto.CategoryDto> category, String expectedName) {
-        assertTrue(category.isPresent());
-        assertCategoryNameIsEqualTo(category.get(), expectedName);
+    @Test
+    void testShouldReturnAnErrorWhenCreationCategoryTooDeeply() {
+        // Prepare a category hierarchy to reach last depth level
+        listOfCategories = categoryQueryEndpointCaller.getCategory(null);
+        assertResponseCodeIs200(categoryQueryEndpointCaller.getLastResponse());
+        assertListOfCategoriesContainsOnly("Java");
+
+        var second = new CategoryDto("Second", listOfCategories.getFirst().getId());
+        var response = categoryCreationCommandEndpointCaller.createCategory(second).getLastResponse();
+        assertResponseCodeIs201(response);
+        assertResponseBodyIsEmpty(response);
+        listOfCategories = categoryQueryEndpointCaller.getCategory(listOfCategories.getFirst().getId());
+        assertResponseCodeIs200(categoryQueryEndpointCaller.getLastResponse());
+        assertListOfCategoriesContainsOnly("Second");
+
+        var third = new CategoryDto("Third", listOfCategories.getFirst().getId());
+        response = categoryCreationCommandEndpointCaller.createCategory(third).getLastResponse();
+        assertResponseCodeIs201(response);
+        assertResponseBodyIsEmpty(response);
+        listOfCategories = categoryQueryEndpointCaller.getCategory(listOfCategories.getFirst().getId());
+        assertResponseCodeIs200(categoryQueryEndpointCaller.getLastResponse());
+        assertListOfCategoriesContainsOnly("Third");
+
+        var fourth = new CategoryDto("Fourth", listOfCategories.getFirst().getId());
+        response = categoryCreationCommandEndpointCaller.createCategory(fourth).getLastResponse();
+        assertResponseCodeIs201(response);
+        assertResponseBodyIsEmpty(response);
+        listOfCategories = categoryQueryEndpointCaller.getCategory(listOfCategories.getFirst().getId());
+        assertResponseCodeIs200(categoryQueryEndpointCaller.getLastResponse());
+        assertListOfCategoriesContainsOnly("Fourth");
+
+        // when
+        var fifth = new CategoryDto("Fifth", listOfCategories.getFirst().getId());
+        response = categoryCreationCommandEndpointCaller.createCategory(fifth).getLastResponse();
+
+        // then
+        var expectedErrorResponse = new ErrorResponse("CATEGORY_IS_TOO_DEEP", "Max depth reached when create category with name: %s from parent: %s"
+                .formatted(fifth.getCategoryName(), fifth.getParentCategoryId()));
+        assertExpectedErrorIsEqualToResponse(expectedErrorResponse, 409, response);
     }
 
-    private void assertCategoryNameIsEqualTo(com.saltatorv.polaris.flash.cards.application.category.query.dto.CategoryDto category, String expectedName) {
-        assertEquals(expectedName, category.getCategoryName());
+    @Test
+    public void testShouldCreateASetOfSubCategoriesUnderSpecificDepth() {
+
+        //given
+        listOfCategories = categoryQueryEndpointCaller.getCategory(null);
+        assertResponseCodeIs200(categoryQueryEndpointCaller.getLastResponse());
+        assertListOfCategoriesContainsOnly("Java");
+        var firstId = listOfCategories.getFirst().getId();
+
+        var first = new CategoryDto("Many-Categories-1", firstId);
+        var second = new CategoryDto("Many-Categories-2", firstId);
+        var third = new CategoryDto("Many-Categories-3", firstId);
+        var fourth = new CategoryDto("Many-Categories-4", firstId);
+        var fifth = new CategoryDto("Many-Categories-5", firstId);
+
+        //when
+        var response = categoryCreationCommandEndpointCaller.createCategory(first).getLastResponse();
+        assertResponseCodeIs201(response);
+        assertResponseBodyIsEmpty(response);
+        response = categoryCreationCommandEndpointCaller.createCategory(second).getLastResponse();
+        assertResponseCodeIs201(response);
+        assertResponseBodyIsEmpty(response);
+        response = categoryCreationCommandEndpointCaller.createCategory(third).getLastResponse();
+        assertResponseCodeIs201(response);
+        assertResponseBodyIsEmpty(response);
+        response = categoryCreationCommandEndpointCaller.createCategory(fourth).getLastResponse();
+        assertResponseCodeIs201(response);
+        assertResponseBodyIsEmpty(response);
+        response = categoryCreationCommandEndpointCaller.createCategory(fifth).getLastResponse();
+        assertResponseCodeIs201(response);
+        assertResponseBodyIsEmpty(response);
+
+        //then
+        listOfCategories = categoryQueryEndpointCaller.getCategory(firstId);
+        assertResponseCodeIs200(categoryQueryEndpointCaller.getLastResponse());
+        assertListOfCategoriesContainsOnly("Many-Categories-1", "Many-Categories-2",
+                "Many-Categories-3", "Many-Categories-4", "Many-Categories-5");
+    }
+
+    private void assertListOfCategoriesContainsOnly(String... categories) {
+        List<String> expectedCategories = List.of(categories);
+        assertTrue(listOfCategories.stream().map(dto -> dto.getCategoryName())
+                .allMatch(expectedCategories::contains));
+    }
+
+    private void assertListOfCategoriesIsEmpty() {
+        assertTrue(listOfCategories.isEmpty());
     }
 }
