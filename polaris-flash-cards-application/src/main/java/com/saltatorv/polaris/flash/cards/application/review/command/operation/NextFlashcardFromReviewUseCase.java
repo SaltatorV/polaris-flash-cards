@@ -36,7 +36,7 @@ class NextFlashcardFromReviewUseCase extends FlashcardReviewUseCaseBase {
 
             return dto;
         } catch (FlashcardReviewNotStartedDomainException ex) {
-            throw new ApplicationException(REVIEW_ALREADY_STARTED, ex.getMessage());
+            throw new ApplicationException(REVIEW_NOT_STARTED, ex.getMessage());
         } catch (FlashcardReviewAlreadyFinishedDomainException ex) {
             throw new ApplicationException(REVIEW_ALREADY_FINISHED, ex.getMessage());
         } catch (NoMoreQuestionsInFlashcardReviewDomainException ex) {
