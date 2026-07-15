@@ -6,8 +6,8 @@ import com.saltatorv.polaris.flash.cards.data.access.entity.FlashcardRevisionEnt
 import com.saltatorv.polaris.flash.cards.data.access.repository.SqlFlashcardBlueprintRepository;
 import com.saltatorv.polaris.flash.cards.data.access.repository.SqlFlashcardReviewRepository;
 import com.saltatorv.polaris.flash.cards.domain.FlashcardReviewRepository;
-import com.saltatorv.polaris.flash.cards.domain.snapshot.FlashcardReviewSnapshot;
 import com.saltatorv.polaris.flash.cards.domain.shared.FlashcardReviewId;
+import com.saltatorv.polaris.flash.cards.domain.snapshot.FlashcardReviewSnapshot;
 import com.saltatorv.polaris.flash.cards.domain.snapshot.FlashcardSnapshot;
 import org.springframework.stereotype.Repository;
 
@@ -35,7 +35,7 @@ class FlashcardReviewRepositoryImpl implements FlashcardReviewRepository {
                 sqlFlashcardReviewRepository.findById(id.getId());
 
         if (foundReview.isEmpty()) {
-            throw new IllegalArgumentException("Review not found");
+            return Optional.empty();
         }
 
         FlashcardReviewEntity flashcardReviewEntity = foundReview.get();
@@ -124,10 +124,8 @@ class FlashcardReviewRepositoryImpl implements FlashcardReviewRepository {
         Optional<FlashcardReviewEntity> foundReview =
                 sqlFlashcardReviewRepository.findById(id.getId());
 
-        if (foundReview.isEmpty()) {
-            throw new IllegalArgumentException("Review not found");
+        if (foundReview.isPresent()) {
+            sqlFlashcardReviewRepository.deleteById(id.getId());
         }
-
-        sqlFlashcardReviewRepository.deleteById(id.getId());
     }
 }
