@@ -35,19 +35,27 @@ public class BaseE2ETest extends RestAssuredConfiguration {
     }
 
     public void assertResponseCodeIs200(Response response) {
-        assertEquals(200, response.getStatusCode());
+        assertResponseCodeIsInResponse(200, response);
     }
 
     public void assertResponseCodeIs201(Response response) {
-        assertEquals(201, response.getStatusCode());
+        assertResponseCodeIsInResponse(201, response);
+    }
+
+    public void assertResponseCodeIs204(Response response) {
+        assertResponseCodeIsInResponse(204, response);
     }
 
     public void assertResponseCodeIs409(Response response) {
-        assertEquals(409, response.getStatusCode());
+        assertResponseCodeIsInResponse(409, response);
     }
 
     public void assertExpectedErrorIsEqualToResponse(ErrorResponse expectedError, int expectedErrorCode, Response response) {
         assertEquals(expectedErrorCode, response.getStatusCode());
         assertEquals(expectedError, response.as(ErrorResponse.class));
+    }
+
+    private void assertResponseCodeIsInResponse(int responseCode, Response response) {
+        assertEquals(responseCode, response.getStatusCode());
     }
 }
