@@ -79,12 +79,12 @@ class FlashcardReviewE2ETest extends BaseE2ETest {
         assertResponseBodyIsEmpty(response);
 
         //when
-        var createdReviewId = reviewLifecycleCommandCaller.generateRandomFlashcardReview(predictedResult.answers().size());
+        var reviewId = reviewLifecycleCommandCaller.generateRandomFlashcardReview(predictedResult.answers().size());
         response = reviewLifecycleCommandCaller.getLastResponse();
         assertResponseCodeIs201(response);
         assertResponseBodyMatchRegex(response, UUID_V7_REGEX);
 
-        reviewOperationCommandCaller.setupReview(createdReviewId);
+        reviewOperationCommandCaller.setupReview(reviewId);
 
         response = reviewOperationCommandCaller.begin().getLastResponse();
         assertResponseCodeIs200(response);
@@ -114,7 +114,7 @@ class FlashcardReviewE2ETest extends BaseE2ETest {
         assertResponseCodeIs200(response);
         assertResponseBodyIsEmpty(response);
 
-        FlashcardReviewDataDto reviewResult = reviewQueryCaller.getReview(reviewOperationCommandCaller.getCurrentFlashcardReviewId());
+        FlashcardReviewDataDto reviewResult = reviewQueryCaller.getReview(reviewId);
 
         assertResponseCodeIs200(response);
         assertDrewQuestionCount(predictedResult, drewQuestions);
@@ -123,6 +123,17 @@ class FlashcardReviewE2ETest extends BaseE2ETest {
         assertCorrectAnswerCountIs(predictedResult, reviewResult);
         assertIncorrectAnswerCountIs(predictedResult, reviewResult);
         assertReviewIsInitialized(reviewResult, startTime);
+
+        response = reviewLifecycleCommandCaller.deleteFlashcardReview(reviewId).getLastResponse();
+        assertResponseCodeIs204(response);
+        assertResponseBodyIsEmpty(response);
+
+        reviewQueryCaller.getReview(reviewId);
+        response = reviewQueryCaller.getLastResponse();
+
+        var expectedErrorResponse = new ErrorResponse("REVIEW_NOT_FOUND", "Review with id: %s do not exists."
+                .formatted(reviewId));
+        assertExpectedErrorIsEqualToResponse(expectedErrorResponse, 404, response);
     }
 
 
