@@ -4,6 +4,7 @@ import com.saltatorv.polaris.flash.cards.container.caller.EndpointCaller;
 import org.springframework.http.MediaType;
 
 import static com.saltatorv.polaris.flash.cards.web.BaseController.BASE_API_ENDPOINT;
+import static com.saltatorv.polaris.flash.cards.web.controller.command.review.FlashcardReviewLifecycleController.FLASHCARD_REVIEW_DELETE_ENDPOINT;
 import static com.saltatorv.polaris.flash.cards.web.controller.command.review.FlashcardReviewLifecycleController.FLASHCARD_REVIEW_GENERATE_RANDOM_ENDPOINT;
 import static io.restassured.RestAssured.given;
 
@@ -24,5 +25,18 @@ public class FlashcardReviewLifecycleCommandEndpointCaller extends EndpointCalle
                 .response();
 
         return response.asString();
+    }
+
+    public FlashcardReviewLifecycleCommandEndpointCaller deleteFlashcardReview(String flashcardReviewId) {
+        response = given()
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .when()
+                .pathParam("reviewId", flashcardReviewId)
+                .delete(BASE_API_ENDPOINT + FLASHCARD_REVIEW_DELETE_ENDPOINT)
+                .then()
+                .extract()
+                .response();
+
+        return this;
     }
 }
