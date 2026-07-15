@@ -5,10 +5,7 @@ import com.saltatorv.polaris.flash.cards.domain.shared.FlashcardReviewId;
 import com.saltatorv.polaris.flash.cards.web.BaseController;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class FlashcardReviewLifecycleController extends BaseController {
@@ -30,8 +27,9 @@ public class FlashcardReviewLifecycleController extends BaseController {
         return id.getId();
     }
 
-    @PostMapping(FLASHCARD_REVIEW_DELETE_ENDPOINT)
-    public void deleteReview(@Valid @RequestBody String id) {
-        flashcardReviewLifecycleFacade.deleteReview(new FlashcardReviewId(id));
+    @DeleteMapping(FLASHCARD_REVIEW_DELETE_ENDPOINT)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteReview(@Valid @PathVariable("reviewId") String reviewId) {
+        flashcardReviewLifecycleFacade.deleteReview(new FlashcardReviewId(reviewId));
     }
 }
