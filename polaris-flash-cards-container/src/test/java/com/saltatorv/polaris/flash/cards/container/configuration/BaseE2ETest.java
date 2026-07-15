@@ -42,12 +42,12 @@ public class BaseE2ETest extends RestAssuredConfiguration {
         assertEquals(201, response.getStatusCode());
     }
 
+    public void assertResponseCodeIs409(Response response) {
+        assertEquals(409, response.getStatusCode());
+    }
+
     public void assertExpectedErrorIsEqualToResponse(ErrorResponse expectedError, int expectedErrorCode, Response response) {
         assertEquals(expectedErrorCode, response.getStatusCode());
         assertEquals(expectedError, response.as(ErrorResponse.class));
-    }
-
-    public void assertResponseBodyMatchRegex(Response response, String regex) {
-        assertTrue(response.asString().matches(regex));
     }
 }
