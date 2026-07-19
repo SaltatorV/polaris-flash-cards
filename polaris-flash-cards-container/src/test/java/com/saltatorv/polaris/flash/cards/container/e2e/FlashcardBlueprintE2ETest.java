@@ -12,6 +12,7 @@ import com.saltatorv.polaris.flash.cards.container.model.FlashcardBlueprintCreat
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
 class FlashcardBlueprintE2ETest extends BaseE2ETest {
@@ -37,10 +38,9 @@ class FlashcardBlueprintE2ETest extends BaseE2ETest {
         flashcardBlueprintUpdateEndpointCaller = FlashcardBlueprintUpdateEndpointCaller.build();
         flashcardBlueprintQueryEndpointCaller = FlashcardBlueprintQueryEndpointCaller.build();
 
-        CategoryQueryEndpointCaller categoryQueryEndpointCaller;
-        CategoryCreationCommandEndpointCaller categoryCreationCommandEndpointCaller;
-
-        List<CategoryDto> listOfCategories;
+        categoryQueryEndpointCaller = CategoryQueryEndpointCaller.build();
+        categoryCreationCommandEndpointCaller = CategoryCreationCommandEndpointCaller.build();
+        listOfCategories = new ArrayList<>();
     }
 
     @Test
