@@ -140,7 +140,21 @@ class FlashcardBlueprintRepositoryImpl implements FlashcardBlueprintRepository {
 
     @Override
     public List<FlashcardBlueprintSnapshot> findAllByCategoryId(CategoryId categoryId) {
-        return List.of();
+        Iterable<FlashcardBlueprintEntity> entities = sqlFlashcardBlueprintRepository.findByCategoryId(categoryId.getId());
+        List<FlashcardBlueprintSnapshot> snapshots = new ArrayList<>();
+
+        entities.forEach(entity -> {
+            List<FlashcardLocalization> localizations = new ArrayList<>();
+            entity.getFlashcardLocalizations().forEach(flashcardLocalizationEntity -> {
+                localizations.add(new FlashcardLocalization(
+                        Locale.of(flashcardLocalizationEntity.getLanguage()),
+                        new FlashcardContent(flashcardLocalizationEntity.getQuestion(), flashcardLocalizationEntity.getDefinition())
+                ));
+            });
+            snapshots.add(new FlashcardBlueprintSnapshot(entity.getId(), categoryId.getId(), localizations, entity.getSource(), Set.of(entity.getTags().split(","))));
+        });
+
+        return snapshots;
     }
 
     @Override

@@ -16,4 +16,6 @@ public interface SqlFlashcardBlueprintRepository extends Repository<FlashcardBlu
     Iterable<FlashcardBlueprintEntity> findAll();
 
     Iterable<FlashcardBlueprintEntity> findByIdIn(List<String> ids);
+
+    Iterable<FlashcardBlueprintEntity> findByCategoryId(String categoryId);
 }
