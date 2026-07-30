@@ -44,10 +44,10 @@ public class FlashcardBlueprintQueryEndpointCaller extends EndpointCaller {
     }
 
     private String configureGetBlueprintEndpoint(String blueprintId) {
-        return BASE_API_ENDPOINT + FLASHCARD_BLUEPRINT_GET_ENDPOINT.replace("{id}", blueprintId);
+        return BASE_API_ENDPOINT + FLASHCARD_BLUEPRINT_GET_ENDPOINT.replace("{categoryId}", blueprintId);
     }
 
     private String configureGetAllBlueprintSummariesForCategory(String categoryId) {
-        return BASE_API_ENDPOINT + FLASHCARD_BLUEPRINT_GET_BY_CATEGORY_ENDPOINT.replace("{id}", categoryId);
+        return BASE_API_ENDPOINT + FLASHCARD_BLUEPRINT_GET_BY_CATEGORY_ENDPOINT.replace("{categoryId}", categoryId);
     }
 }
