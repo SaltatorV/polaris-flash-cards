@@ -25,13 +25,13 @@ public class FlashcardBlueprintQueryController extends BaseController {
 
 
     @GetMapping(FLASHCARD_BLUEPRINT_GET_ENDPOINT)
-    public FlashcardBlueprintQueryDto getFlashcardBlueprint(@PathVariable String id) {
+    public FlashcardBlueprintQueryDto getFlashcardBlueprint(@PathVariable("id") String id) {
         return flashcardBlueprintQueryFacade.getFlashcardBlueprint(id);
     }
 
 
     @GetMapping(FLASHCARD_BLUEPRINT_GET_BY_CATEGORY_ENDPOINT)
-    public List<FlashcardBlueprintSummaryQueryDto> getFlashcardBlueprintByCategory(@PathVariable String categoryId) {
+    public List<FlashcardBlueprintSummaryQueryDto> getFlashcardBlueprintByCategory(@PathVariable("categoryId") String categoryId) {
         return flashcardBlueprintQueryFacade.getFlashcardBlueprintSummariesForCategory(categoryId);
     }
 }
