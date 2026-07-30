@@ -9,8 +9,8 @@ import com.saltatorv.polaris.flash.cards.domain.snapshot.FlashcardReviewSnapshot
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 
 @Service
 class GenerateReviewUseCase {
@@ -27,6 +27,7 @@ class GenerateReviewUseCase {
 
     FlashcardReviewId generateReview(List<FlashcardBlueprintId> flashcardIds) {
         List<FlashcardBlueprintSnapshot> flashcardBlueprintsSnapshots = flashcardBlueprintRepository.findByIds(flashcardIds);
+
         List<FlashcardBlueprint> flashcardBlueprints = flashcardBlueprintsSnapshots
                 .stream()
                 .map(FlashcardBlueprint::restore)
@@ -40,39 +41,12 @@ class GenerateReviewUseCase {
 
     public FlashcardReviewId generateRandomReview(int reviewSize) {
         List<FlashcardBlueprintId> cachedIds = flashcardBlueprintIdCache.getAll();
-
         if (cachedIds.size() < reviewSize) {
             return generateReview(cachedIds);
         }
-
-        List<FlashcardBlueprintId> reservoir = fillUpWithFirstNElements(cachedIds, reviewSize);
-        reservoirSampling(reservoir, cachedIds, reviewSize);
-
-        return generateReview(reservoir);
-    }
-
-    private List<FlashcardBlueprintId> fillUpWithFirstNElements(List<FlashcardBlueprintId> cachedIds,
-                                                                int reviewSize) {
-        List<FlashcardBlueprintId> reservoir = new ArrayList<>(reviewSize);
-
-        for (int i = 0; i < reviewSize; i++) {
-            reservoir.add(cachedIds.get(i));
+        else {
+            Collections.shuffle(cachedIds);
+            return generateReview(new ArrayList<>(cachedIds.subList(0, reviewSize)));
         }
-
-        return reservoir;
-    }
-
-    private void reservoirSampling(List<FlashcardBlueprintId> reservoir,
-                                   List<FlashcardBlueprintId> cachedIds,
-                                   int reviewSize) {
-        Random random = new Random();
-
-        for (int indexAfterNElements = reviewSize; indexAfterNElements < cachedIds.size(); indexAfterNElements++) {
-            int replaceIndex = random.nextInt(indexAfterNElements + 1);
-            if (replaceIndex < reviewSize) {
-                reservoir.set(replaceIndex, cachedIds.get(indexAfterNElements));
-            }
-        }
-
     }
 }
