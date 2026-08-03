@@ -1,5 +1,6 @@
 package com.saltatorv.polaris.flash.cards.container.e2e;
 
+import com.saltatorv.polaris.flash.cards.application.blueprint.command.dto.Locale;
 import com.saltatorv.polaris.flash.cards.application.category.query.dto.CategoryDto;
 import com.saltatorv.polaris.flash.cards.container.caller.blueprint.command.FlashcardBlueprintCreationEndpointCaller;
 import com.saltatorv.polaris.flash.cards.container.caller.blueprint.command.FlashcardBlueprintDeletionEndpointCaller;
@@ -14,6 +15,8 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class FlashcardBlueprintE2ETest extends BaseE2ETest {
 
@@ -45,7 +48,31 @@ class FlashcardBlueprintE2ETest extends BaseE2ETest {
 
     @Test
     public void testShouldCreateBlueprintWithMultipleLocalizations() {
+        // given
+        // Get the root category defined in the database migration
+        listOfCategories = categoryQueryEndpointCaller.getCategory(null);
+        assertResponseCodeIs200(categoryQueryEndpointCaller.getLastResponse());
+        assertListOfCategoriesContainsOnly("Java");
 
+        // Create child for root category and ensure it is created
+        var categoryId = listOfCategories.getFirst().getId();
+        var blueprint = buildBlueprint()
+                .withCategoryId(categoryId)
+                .withSource("E2E-Test")
+                .addTags("Test", "E2E")
+                .defineLocalization()
+                .withLocale(Locale.PL)
+                .withQuestion("Question-1")
+                .withAnswer("Answer-1")
+                .createLocalization().createDto();
+
+        // when
+        var response = flashcardBlueprintCreationEndpointCaller.executeCreateAPICall(List.of(blueprint)).getLastResponse();
+        assertResponseCodeIs201(response);
+        assertResponseBodyIsEmpty(response);
+
+        // then
+        flashcardBlueprintQueryEndpointCaller.getFlashcardBlueprintByCategory(categoryId);
     }
 
     @Test
@@ -82,5 +109,9 @@ class FlashcardBlueprintE2ETest extends BaseE2ETest {
         return new FlashcardBlueprintCreationDtoBuilder();
     }
 
-
+    private void assertListOfCategoriesContainsOnly(String... categories) {
+        List<String> expectedCategories = List.of(categories);
+        assertTrue(listOfCategories.stream().map(dto -> dto.getCategoryName())
+                .allMatch(expectedCategories::contains));
+    }
 }
