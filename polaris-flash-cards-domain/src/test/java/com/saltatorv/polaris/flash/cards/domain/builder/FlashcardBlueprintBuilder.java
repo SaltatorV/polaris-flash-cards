@@ -78,6 +78,7 @@ public class FlashcardBlueprintBuilder implements FlashcardBlueprintBuilderSourc
 
     @Override
     public FlashcardBlueprintLocalizationBuilderStep defineLocalization(FlashcardLocalization localization) {
+        this.localizations.add(localization);
         return this;
     }
 
