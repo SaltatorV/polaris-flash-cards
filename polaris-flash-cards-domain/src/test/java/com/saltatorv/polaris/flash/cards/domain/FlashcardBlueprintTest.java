@@ -3,6 +3,7 @@ package com.saltatorv.polaris.flash.cards.domain;
 import com.saltatorv.polaris.flash.cards.domain.exception.blueprint.FlashcardBlueprintLocalizationAlreadyExistsDomainException;
 import com.saltatorv.polaris.flash.cards.domain.exception.blueprint.FlashcardBlueprintLocalizationDoNotExistsDomainException;
 import com.saltatorv.polaris.flash.cards.domain.exception.blueprint.FlashcardBlueprintWithoutLocalizationDomainException;
+import com.saltatorv.polaris.flash.cards.domain.object.mother.FlashcardBlueprints;
 import com.saltatorv.polaris.flash.cards.domain.snapshot.FlashcardBlueprintSnapshot;
 import org.junit.jupiter.api.Test;
 
@@ -103,15 +104,7 @@ class FlashcardBlueprintTest {
     @Test
     void testShouldAllowToAddMultipleAdditionalLocalization() {
         // given
-        var blueprint = buildFlashcardBlueprint()
-                .fromSource("Java OCP")
-                .withTags("JAVA", "OCP", "Basic")
-                .defineLocalization()
-                .forLanguage("EN")
-                .attachQuestion("Question?")
-                .withAnswer("Answer")
-                .done()
-                .create();
+        var blueprint = FlashcardBlueprints.withSingleLocalization();
 
         var first = createNewLocalization("PL", "Pytanie?", "Odpowiedz");
         var second = createNewLocalization("DE", "Frage?", "Antwort");
@@ -132,15 +125,7 @@ class FlashcardBlueprintTest {
     @Test
     public void testShouldThrowExceptionWhenTryToAddLocalizationWithSameLocale() {
         // given
-        var blueprint = buildFlashcardBlueprint()
-                .fromSource("Java OCP")
-                .withTags("JAVA", "OCP", "Basic")
-                .defineLocalization()
-                .forLanguage("EN")
-                .attachQuestion("Question?")
-                .withAnswer("Answer")
-                .done()
-                .create();
+        var blueprint = FlashcardBlueprints.withSingleLocalization();
 
         var newLocalization = createNewLocalization("EN", "Question?", "Answer?");
 
@@ -151,20 +136,7 @@ class FlashcardBlueprintTest {
     @Test
     void testShouldAllowToRemoveLocalization() {
         // given
-        var blueprint = buildFlashcardBlueprint()
-                .fromSource("Java OCP")
-                .withTags("JAVA", "OCP", "Basic")
-                .defineLocalization()
-                .forLanguage("EN")
-                .attachQuestion("Question?")
-                .withAnswer("Answer")
-                .done()
-                .defineLocalization()
-                .forLanguage("PL")
-                .attachQuestion("Pytanie?")
-                .withAnswer("Odpowiedz")
-                .done()
-                .create();
+        var blueprint = FlashcardBlueprints.withTwoLocalizations();
 
         //when
         blueprint.removeLocalization("PL");
@@ -177,20 +149,7 @@ class FlashcardBlueprintTest {
     @Test
     void testShouldNotAllowToRemoveSameLocalizationTwice() {
         // given
-        var blueprint = buildFlashcardBlueprint()
-                .fromSource("Java OCP")
-                .withTags("JAVA", "OCP", "Basic")
-                .defineLocalization()
-                .forLanguage("EN")
-                .attachQuestion("Question?")
-                .withAnswer("Answer")
-                .done()
-                .defineLocalization()
-                .forLanguage("PL")
-                .attachQuestion("Pytanie?")
-                .withAnswer("Odpowiedz")
-                .done()
-                .create();
+        var blueprint = FlashcardBlueprints.withTwoLocalizations();
 
         blueprint.removeLocalization("PL");
 
@@ -201,15 +160,7 @@ class FlashcardBlueprintTest {
     @Test
     public void testShouldNotAllowToRemoveLastLocalization() {
         // given
-        var blueprint = buildFlashcardBlueprint()
-                .fromSource("Java OCP")
-                .withTags("JAVA", "OCP", "Basic")
-                .defineLocalization()
-                .forLanguage("EN")
-                .attachQuestion("Question?")
-                .withAnswer("Answer")
-                .done()
-                .create();
+        var blueprint = FlashcardBlueprints.withSingleLocalization();
 
         //when
         assertThrows(FlashcardBlueprintWithoutLocalizationDomainException.class, () -> blueprint.removeLocalization("EN"));
@@ -218,15 +169,7 @@ class FlashcardBlueprintTest {
     @Test
     void testShouldAllowToUpdateLocalization() {
         // given
-        var blueprint = buildFlashcardBlueprint()
-                .fromSource("Java OCP")
-                .withTags("JAVA", "OCP", "Basic")
-                .defineLocalization()
-                .forLanguage("EN")
-                .attachQuestion("Question?")
-                .withAnswer("Answer")
-                .done()
-                .create();
+        var blueprint = FlashcardBlueprints.withSingleLocalization();
 
         // when
         updateLocalization(blueprint, "EN", "Question2?", "Answer");
@@ -237,15 +180,7 @@ class FlashcardBlueprintTest {
     @Test
     public void testShouldNotAllowToUpdateNotExistingLocalization() {
         // given
-        var blueprint = buildFlashcardBlueprint()
-                .fromSource("Java OCP")
-                .withTags("JAVA", "OCP", "Basic")
-                .defineLocalization()
-                .forLanguage("EN")
-                .attachQuestion("Question?")
-                .withAnswer("Answer")
-                .done()
-                .create();
+        var blueprint = FlashcardBlueprints.withSingleLocalization();
 
         // when
         assertThrows(FlashcardBlueprintLocalizationDoNotExistsDomainException.class, () -> updateLocalization(blueprint, "PL", "Pytanie?", "Odpowiedz"));
@@ -254,15 +189,7 @@ class FlashcardBlueprintTest {
     @Test
     public void testShouldGenerateBlueprintSnapshot() {
         // given
-        var blueprint = buildFlashcardBlueprint()
-                .fromSource("Java OCP")
-                .withTags("JAVA", "OCP", "Basic")
-                .defineLocalization()
-                .forLanguage("EN")
-                .attachQuestion("Question?")
-                .withAnswer("Answer")
-                .done()
-                .create();
+        var blueprint = FlashcardBlueprints.withSingleLocalization();
 
         var first = createNewLocalization("PL", "Pytanie?", "Odpowiedz");
         var second = createNewLocalization("DE", "Frage?", "Antwort");
@@ -282,15 +209,7 @@ class FlashcardBlueprintTest {
     @Test
     public void testShouldNotModifyLocalizationsViaSnapshot() {
         //given
-        var blueprint = buildFlashcardBlueprint()
-                .fromSource("Java OCP")
-                .withTags("JAVA", "OCP", "Basic")
-                .defineLocalization()
-                .forLanguage("EN")
-                .attachQuestion("Question?")
-                .withAnswer("Answer")
-                .done()
-                .create();
+        var blueprint = FlashcardBlueprints.withSingleLocalization();
 
         var snapshot = blueprint.generateSnapshot();
 
@@ -304,15 +223,7 @@ class FlashcardBlueprintTest {
     @Test
     public void testShouldNotModifyTagsViaSnapshot() {
         //given
-        var blueprint = buildFlashcardBlueprint()
-                .fromSource("Java OCP")
-                .withTags("JAVA", "OCP", "Basic")
-                .defineLocalization()
-                .forLanguage("EN")
-                .attachQuestion("Question?")
-                .withAnswer("Answer")
-                .done()
-                .create();
+        var blueprint = FlashcardBlueprints.withSingleLocalization();
 
         var snapshot = blueprint.generateSnapshot();
 
