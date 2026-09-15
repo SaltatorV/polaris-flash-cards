@@ -45,7 +45,7 @@ public class Flashcard {
         this.activityWindow = activityWindow.finish();
     }
 
-    public void markAsReviewed() {
+    void markAsReviewed() {
         this.answer = Answer.REVIEWED;
         this.activityWindow = activityWindow.begin();
     }
