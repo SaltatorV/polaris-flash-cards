@@ -4,11 +4,11 @@ import com.saltatorv.polaris.flash.cards.domain.exception.blueprint.FlashcardBlu
 import com.saltatorv.polaris.flash.cards.domain.exception.blueprint.FlashcardBlueprintLocalizationDoNotExistsDomainException;
 import com.saltatorv.polaris.flash.cards.domain.exception.blueprint.FlashcardBlueprintWithoutLocalizationDomainException;
 import com.saltatorv.polaris.flash.cards.domain.object.mother.FlashcardBlueprints;
+import com.saltatorv.polaris.flash.cards.domain.object.mother.FlashcardLocalizations;
 import com.saltatorv.polaris.flash.cards.domain.snapshot.FlashcardBlueprintSnapshot;
 import org.junit.jupiter.api.Test;
 
 import java.util.Locale;
-import java.util.Set;
 
 import static com.saltatorv.polaris.flash.cards.domain.builder.FlashcardBlueprintBuilder.buildFlashcardBlueprint;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -34,10 +34,10 @@ class FlashcardBlueprintTest {
         // given
         var blueprint = FlashcardBlueprints.withSingleLocalization();
 
-        var newLocalization = createNewLocalization("PL", "Pytanie?", "Odpowiedz");
+        var polishLocalization = FlashcardLocalizations.polishLocalization();
 
         // when
-        blueprint.addNewLocalization(newLocalization);
+        blueprint.addNewLocalization(polishLocalization);
 
         // then
         assertBlueprintHaveLocalizationFor(blueprint, "EN", "Question?", "Answer");
@@ -49,14 +49,14 @@ class FlashcardBlueprintTest {
         // given
         var blueprint = FlashcardBlueprints.withSingleLocalization();
 
-        var first = createNewLocalization("PL", "Pytanie?", "Odpowiedz");
-        var second = createNewLocalization("DE", "Frage?", "Antwort");
-        var third = createNewLocalization("FR", "Question?", "Reponse");
+        var polishLocalization = FlashcardLocalizations.polishLocalization();
+        var germanLocalization = FlashcardLocalizations.germanLocalization();
+        var frenchLocalization = FlashcardLocalizations.frenchLocalization();
 
         // when
-        blueprint.addNewLocalization(first);
-        blueprint.addNewLocalization(second);
-        blueprint.addNewLocalization(third);
+        blueprint.addNewLocalization(polishLocalization);
+        blueprint.addNewLocalization(germanLocalization);
+        blueprint.addNewLocalization(frenchLocalization);
 
         // then
         assertBlueprintHaveLocalizationFor(blueprint, "EN", "Question?", "Answer");
@@ -70,10 +70,10 @@ class FlashcardBlueprintTest {
         // given
         var blueprint = FlashcardBlueprints.withSingleLocalization();
 
-        var newLocalization = createNewLocalization("EN", "Question?", "Answer?");
+        var englishLocalization = FlashcardLocalizations.englishLocalization();
 
         //when
-        assertThrows(FlashcardBlueprintLocalizationAlreadyExistsDomainException.class, () -> blueprint.addNewLocalization(newLocalization));
+        assertThrows(FlashcardBlueprintLocalizationAlreadyExistsDomainException.class, () -> blueprint.addNewLocalization(englishLocalization));
     }
 
     @Test
@@ -134,11 +134,11 @@ class FlashcardBlueprintTest {
         // given
         var blueprint = FlashcardBlueprints.withSingleLocalization();
 
-        var first = createNewLocalization("PL", "Pytanie?", "Odpowiedz");
-        var second = createNewLocalization("DE", "Frage?", "Antwort");
+        var polishLocalization = FlashcardLocalizations.polishLocalization();
+        var germanLocalization = FlashcardLocalizations.germanLocalization();
 
-        blueprint.addNewLocalization(first);
-        blueprint.addNewLocalization(second);
+        blueprint.addNewLocalization(polishLocalization);
+        blueprint.addNewLocalization(germanLocalization);
         blueprint.removeLocalization("EN");
 
         // when
@@ -177,21 +177,8 @@ class FlashcardBlueprintTest {
         assertBlueprintHaveLocalizationFor(blueprint, "EN", "Question?", "Answer");
     }
 
-    private FlashcardLocalization createNewLocalization(String locale, String question, String answer) {
-        return new FlashcardLocalization(Locale.of(locale), new FlashcardContent(question, answer));
-    }
-
     private void updateLocalization(FlashcardBlueprint blueprint, String locale, String question, String answer) {
         blueprint.updateLocalization(locale, new FlashcardContent(question, answer));
-    }
-
-
-    private void assertBlueprintIsFrom(FlashcardBlueprint blueprint, String source) {
-        assertEquals(blueprint.generateSnapshot().getSource(), source);
-    }
-
-    private void assertBlueprintContainTags(FlashcardBlueprint blueprint, String... tags) {
-        assertEquals(blueprint.generateSnapshot().getTags(), Set.of(tags));
     }
 
     private void assertBlueprintHaveLocalizationFor(FlashcardBlueprint blueprint, String locale, String question, String answer) {
