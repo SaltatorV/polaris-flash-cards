@@ -23,10 +23,13 @@ public class FlashcardBlueprintBuilder implements FlashcardBlueprintBuilderSourc
     private List<String> questions;
     private List<String> answers;
 
+    private List<FlashcardLocalization> localizations;
+
     private FlashcardBlueprintBuilder() {
         languages = new ArrayList<>();
         questions = new ArrayList<>();
         answers = new ArrayList<>();
+        localizations = new ArrayList<>();
     }
 
     public static FlashcardBlueprintBuilderSourceStep buildFlashcardBlueprint() {
@@ -74,8 +77,13 @@ public class FlashcardBlueprintBuilder implements FlashcardBlueprintBuilderSourc
     }
 
     @Override
+    public FlashcardBlueprintLocalizationBuilderStep defineLocalization(FlashcardLocalization localization) {
+        return this;
+    }
+
+    @Override
     public FlashcardBlueprint create() {
-        List<FlashcardLocalization> localizations = new ArrayList<>();
+        List<FlashcardLocalization> localizations = new ArrayList<>(this.localizations);
         for (int i = 0; i < languages.size(); i++) {
             localizations.add(
                     new FlashcardLocalization(
