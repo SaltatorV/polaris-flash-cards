@@ -13,7 +13,7 @@ class CategoryTest {
         //given
 
         //when
-        var category = new Category("Programming");
+        var category = createBaseCategory();
 
         //then
         assertCategoryDepthIs(1, category);
@@ -22,7 +22,7 @@ class CategoryTest {
     @Test
     public void testShouldCreateSubCategory() {
         //given
-        var category = new Category("Programming");
+        var category = createBaseCategory();
 
         //when
         var child = category.createChild("Java");
@@ -35,7 +35,7 @@ class CategoryTest {
     @Test
     public void testShouldCreateSubCategoriesToMaxDepth() {
         //given
-        var firstGeneration = new Category("Programming");
+        var firstGeneration = createBaseCategory();
         var secondGeneration = firstGeneration.createChild("Java");
 
         //when
@@ -52,7 +52,7 @@ class CategoryTest {
     @Test
     public void testShouldThrowExceptionWhenSubCategoryIsTooDeep() {
         //given
-        var firstGeneration = new Category("Programming");
+        var firstGeneration = createBaseCategory();
         var secondGeneration = firstGeneration.createChild("Java");
         var thirdGeneration = secondGeneration.createChild("Collection");
         var fourthGeneration = thirdGeneration.createChild("Map");
@@ -61,6 +61,10 @@ class CategoryTest {
         assertThrows(CategoryMaxDepthReachedDomainException.class, () -> fourthGeneration.createChild("HashMap"));
 
         //then
+    }
+    
+    private Category createBaseCategory() {
+        return new Category("Programming");
     }
 
     private void assertCategoryDepthIs(int depth, Category category) {
