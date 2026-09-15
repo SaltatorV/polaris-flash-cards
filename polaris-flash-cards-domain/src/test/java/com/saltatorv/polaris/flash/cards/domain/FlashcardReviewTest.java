@@ -151,12 +151,12 @@ class FlashcardReviewTest {
         FlashcardReview review = prepareAndBeginReview();
 
         //when
-        Flashcard flashcard = review.next();
+        FlashcardSnapshot flashcard = review.next();
 
         //then
         assertEquals("Question-1", flashcard.getQuestion());
         assertEquals("Answer-1", flashcard.getDefinition());
-        assertEquals(REVIEWED.name(), flashcard.generateSnapshot().getAnswer());
+        assertEquals(REVIEWED.name(), flashcard.getAnswer());
     }
 
     @Test
@@ -165,15 +165,15 @@ class FlashcardReviewTest {
         FlashcardReview review = prepareAndBeginReview();
 
         //when
-        Flashcard first = review.next();
-        Flashcard second = review.next();
+        FlashcardSnapshot first = review.next();
+        FlashcardSnapshot second = review.next();
 
         //then
-        assertTrue(first.isIncorrectAnswer());
+        assertEquals(first.getAnswer(), REVIEWED.name());
 
         assertEquals("Question-2", second.getQuestion());
         assertEquals("Answer-2", second.getDefinition());
-        assertEquals(REVIEWED.name(), second.generateSnapshot().getAnswer());
+        assertEquals(REVIEWED.name(), second.getAnswer());
     }
 
     @Test
