@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 
 import static com.saltatorv.polaris.flash.cards.domain.Answer.*;
-import static com.saltatorv.polaris.flash.cards.domain.FlashcardReviewBuilder.buildFlashcardReview;
+import static com.saltatorv.polaris.flash.cards.domain.builder.FlashcardReviewBuilder.buildFlashcardReview;
 import static org.junit.jupiter.api.Assertions.*;
 
 class FlashcardReviewTest {

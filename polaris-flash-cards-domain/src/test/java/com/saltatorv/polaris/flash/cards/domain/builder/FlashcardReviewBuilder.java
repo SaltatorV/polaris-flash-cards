@@ -1,5 +1,6 @@
-package com.saltatorv.polaris.flash.cards.domain;
+package com.saltatorv.polaris.flash.cards.domain.builder;
 
+import com.saltatorv.polaris.flash.cards.domain.*;
 import com.saltatorv.polaris.flash.cards.domain.shared.CategoryId;
 
 import java.util.ArrayList;

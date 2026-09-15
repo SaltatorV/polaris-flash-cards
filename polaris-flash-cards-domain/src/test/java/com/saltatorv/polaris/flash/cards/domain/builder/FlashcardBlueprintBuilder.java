@@ -1,5 +1,9 @@
-package com.saltatorv.polaris.flash.cards.domain;
+package com.saltatorv.polaris.flash.cards.domain.builder;
 
+import com.saltatorv.polaris.flash.cards.domain.FlashcardBlueprint;
+import com.saltatorv.polaris.flash.cards.domain.FlashcardContent;
+import com.saltatorv.polaris.flash.cards.domain.FlashcardLocalization;
+import com.saltatorv.polaris.flash.cards.domain.FlashcardMetadata;
 import com.saltatorv.polaris.flash.cards.domain.builder.step.flashcard.blueprint.FlashcardBlueprintBuilderSourceStep;
 import com.saltatorv.polaris.flash.cards.domain.builder.step.flashcard.blueprint.FlashcardBlueprintBuilderTagsStep;
 import com.saltatorv.polaris.flash.cards.domain.builder.step.flashcard.blueprint.FlashcardBlueprintLocalizationBuilderDataStep;

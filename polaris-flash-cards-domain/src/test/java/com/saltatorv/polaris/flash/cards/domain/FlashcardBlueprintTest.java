@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 import java.util.Locale;
 import java.util.Set;
 
-import static com.saltatorv.polaris.flash.cards.domain.FlashcardBlueprintBuilder.buildFlashcardBlueprint;
+import static com.saltatorv.polaris.flash.cards.domain.builder.FlashcardBlueprintBuilder.buildFlashcardBlueprint;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
