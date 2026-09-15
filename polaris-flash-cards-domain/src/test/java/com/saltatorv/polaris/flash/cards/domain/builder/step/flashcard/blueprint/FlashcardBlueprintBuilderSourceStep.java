@@ -1,4 +1,4 @@
-package com.saltatorv.polaris.flash.cards.domain.creator;
+package com.saltatorv.polaris.flash.cards.domain.builder.step.flashcard.blueprint;
 
 public interface FlashcardBlueprintBuilderSourceStep {
 

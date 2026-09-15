@@ -1,9 +1,9 @@
 package com.saltatorv.polaris.flash.cards.domain;
 
-import com.saltatorv.polaris.flash.cards.domain.creator.FlashcardBlueprintBuilderSourceStep;
-import com.saltatorv.polaris.flash.cards.domain.creator.FlashcardBlueprintBuilderTagsStep;
-import com.saltatorv.polaris.flash.cards.domain.creator.FlashcardBlueprintLocalizationDataStep;
-import com.saltatorv.polaris.flash.cards.domain.creator.FlashcardBlueprintLocalizationStep;
+import com.saltatorv.polaris.flash.cards.domain.builder.step.flashcard.blueprint.FlashcardBlueprintBuilderSourceStep;
+import com.saltatorv.polaris.flash.cards.domain.builder.step.flashcard.blueprint.FlashcardBlueprintBuilderTagsStep;
+import com.saltatorv.polaris.flash.cards.domain.builder.step.flashcard.blueprint.FlashcardBlueprintLocalizationBuilderDataStep;
+import com.saltatorv.polaris.flash.cards.domain.builder.step.flashcard.blueprint.FlashcardBlueprintLocalizationBuilderStep;
 import com.saltatorv.polaris.flash.cards.domain.shared.CategoryId;
 
 import java.util.ArrayList;
@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
-class FlashcardBlueprintBuilder implements FlashcardBlueprintBuilderSourceStep, FlashcardBlueprintBuilderTagsStep, FlashcardBlueprintLocalizationStep, FlashcardBlueprintLocalizationDataStep {
+class FlashcardBlueprintBuilder implements FlashcardBlueprintBuilderSourceStep, FlashcardBlueprintBuilderTagsStep, FlashcardBlueprintLocalizationBuilderStep, FlashcardBlueprintLocalizationBuilderDataStep {
     private String source;
     private Set<String> tags;
 
@@ -36,36 +36,36 @@ class FlashcardBlueprintBuilder implements FlashcardBlueprintBuilderSourceStep, 
     }
 
     @Override
-    public FlashcardBlueprintLocalizationStep withTags(String... tags) {
+    public FlashcardBlueprintLocalizationBuilderStep withTags(String... tags) {
         this.tags = Set.of(tags);
         return this;
     }
 
     @Override
-    public FlashcardBlueprintLocalizationDataStep forLanguage(String language) {
+    public FlashcardBlueprintLocalizationBuilderDataStep forLanguage(String language) {
         this.languages.add(language);
         return this;
     }
 
     @Override
-    public FlashcardBlueprintLocalizationDataStep attachQuestion(String question) {
+    public FlashcardBlueprintLocalizationBuilderDataStep attachQuestion(String question) {
         this.questions.add(question);
         return this;
     }
 
     @Override
-    public FlashcardBlueprintLocalizationDataStep withAnswer(String answer) {
+    public FlashcardBlueprintLocalizationBuilderDataStep withAnswer(String answer) {
         this.answers.add(answer);
         return this;
     }
 
     @Override
-    public FlashcardBlueprintLocalizationStep done() {
+    public FlashcardBlueprintLocalizationBuilderStep done() {
         return this;
     }
 
     @Override
-    public FlashcardBlueprintLocalizationDataStep defineLocalization() {
+    public FlashcardBlueprintLocalizationBuilderDataStep defineLocalization() {
         return this;
     }
 
