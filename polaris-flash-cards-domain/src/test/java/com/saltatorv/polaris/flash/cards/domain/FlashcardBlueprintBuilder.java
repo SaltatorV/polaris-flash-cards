@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
-class FlashcardBlueprintBuilder implements FlashcardBlueprintBuilderSourceStep, FlashcardBlueprintBuilderTagsStep, FlashcardBlueprintLocalizationBuilderStep, FlashcardBlueprintLocalizationBuilderDataStep {
+public class FlashcardBlueprintBuilder implements FlashcardBlueprintBuilderSourceStep, FlashcardBlueprintBuilderTagsStep, FlashcardBlueprintLocalizationBuilderStep, FlashcardBlueprintLocalizationBuilderDataStep {
     private String source;
     private Set<String> tags;
 
@@ -25,7 +25,7 @@ class FlashcardBlueprintBuilder implements FlashcardBlueprintBuilderSourceStep, 
         answers = new ArrayList<>();
     }
 
-    static FlashcardBlueprintBuilderSourceStep buildFlashcardBlueprint() {
+    public static FlashcardBlueprintBuilderSourceStep buildFlashcardBlueprint() {
         return new FlashcardBlueprintBuilder();
     }
 

@@ -7,18 +7,18 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
-class FlashcardReviewBuilder {
+public class FlashcardReviewBuilder {
     private List<FlashcardBlueprint> flashcardBlueprints;
 
     private FlashcardReviewBuilder() {
         flashcardBlueprints = new ArrayList<>();
     }
 
-    static FlashcardReviewBuilder buildFlashcardReview() {
+    public static FlashcardReviewBuilder buildFlashcardReview() {
         return new FlashcardReviewBuilder();
     }
 
-    FlashcardReviewBuilder addFlashcard(String question, String answer) {
+    public FlashcardReviewBuilder addFlashcard(String question, String answer) {
 
         List<FlashcardLocalization> localizations = new ArrayList<>();
         localizations.add(new FlashcardLocalization(Locale.of("EN"),
@@ -29,7 +29,7 @@ class FlashcardReviewBuilder {
         return this;
     }
 
-    FlashcardReview create() {
+    public FlashcardReview create() {
         return new FlashcardReview(flashcardBlueprints);
     }
 }
