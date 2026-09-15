@@ -21,15 +21,7 @@ class FlashcardBlueprintTest {
         // given
 
         // when
-        var blueprint = buildFlashcardBlueprint()
-                .fromSource("Java OCP")
-                .withTags("JAVA", "OCP", "Basic")
-                .defineLocalization()
-                .forLanguage("EN")
-                .attachQuestion("Question?")
-                .withAnswer("Answer")
-                .done()
-                .create();
+        var blueprint = FlashcardBlueprints.withSingleLocalization();
 
         // then
         assertBlueprintIsFrom(blueprint, "Java OCP");
@@ -43,20 +35,7 @@ class FlashcardBlueprintTest {
         // when
 
         // given
-        var blueprint = buildFlashcardBlueprint()
-                .fromSource("Java OCP")
-                .withTags("JAVA", "OCP", "Basic")
-                .defineLocalization()
-                .forLanguage("EN")
-                .attachQuestion("Question?")
-                .withAnswer("Answer")
-                .done()
-                .defineLocalization()
-                .forLanguage("PL")
-                .attachQuestion("Pytanie?")
-                .withAnswer("Odpowiedz")
-                .done()
-                .create();
+        var blueprint = FlashcardBlueprints.withTwoLocalizations();
 
         // then
         assertBlueprintIsFrom(blueprint, "Java OCP");
@@ -81,15 +60,7 @@ class FlashcardBlueprintTest {
     @Test
     void testShouldAllowToAddAdditionalLocalization() {
         // given
-        var blueprint = buildFlashcardBlueprint()
-                .fromSource("Java OCP")
-                .withTags("JAVA", "OCP", "Basic")
-                .defineLocalization()
-                .forLanguage("EN")
-                .attachQuestion("Question?")
-                .withAnswer("Answer")
-                .done()
-                .create();
+        var blueprint = FlashcardBlueprints.withSingleLocalization();
 
         var newLocalization = createNewLocalization("PL", "Pytanie?", "Odpowiedz");
 
