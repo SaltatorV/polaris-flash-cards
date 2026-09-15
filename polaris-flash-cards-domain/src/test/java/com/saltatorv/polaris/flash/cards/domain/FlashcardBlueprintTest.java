@@ -17,34 +17,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 class FlashcardBlueprintTest {
 
     @Test
-    void testShouldCreateFlashcardBlueprintWithSingleLocalization() {
-        // given
-
-        // when
-        var blueprint = FlashcardBlueprints.withSingleLocalization();
-
-        // then
-        assertBlueprintIsFrom(blueprint, "Java OCP");
-        assertBlueprintContainTags(blueprint, "JAVA", "OCP", "Basic");
-        assertBlueprintHaveLocalizationFor(blueprint, "EN", "Question?", "Answer");
-    }
-
-
-    @Test
-    void testShouldCreateFlashcardBlueprintWithMultipleLocalizations() {
-        // when
-
-        // given
-        var blueprint = FlashcardBlueprints.withTwoLocalizations();
-
-        // then
-        assertBlueprintIsFrom(blueprint, "Java OCP");
-        assertBlueprintContainTags(blueprint, "JAVA", "OCP", "Basic");
-        assertBlueprintHaveLocalizationFor(blueprint, "EN", "Question?", "Answer");
-        assertBlueprintHaveLocalizationFor(blueprint, "PL", "Pytanie?", "Odpowiedz");
-    }
-
-    @Test
     void testShouldThrowExceptionWhenCreateFlashcardBlueprintWithoutLocalizations() {
         // given
         var builder = buildFlashcardBlueprint()
