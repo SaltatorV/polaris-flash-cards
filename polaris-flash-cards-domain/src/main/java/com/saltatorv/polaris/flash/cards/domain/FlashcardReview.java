@@ -90,7 +90,7 @@ public class FlashcardReview {
         activityWindow = activityWindow.finish();
     }
 
-    public Flashcard next() {
+    public FlashcardSnapshot next() {
         ensureReviewIsStarted();
         ensureReviewIsNotFinished();
         ensureThereAreFlashcardsLeft();
@@ -102,7 +102,7 @@ public class FlashcardReview {
         flashcard.markAsReviewed();
 
         currentFlashcardIndex++;
-        return flashcard;
+        return flashcard.generateSnapshot();
     }
 
     public void markFlashcardAsCorrect() {
