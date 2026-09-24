@@ -151,7 +151,7 @@ class FlashcardBlueprintRepositoryImpl implements FlashcardBlueprintRepository {
                         new FlashcardContent(flashcardLocalizationEntity.getQuestion(), flashcardLocalizationEntity.getDefinition())
                 ));
             });
-            snapshots.add(new FlashcardBlueprintSnapshot(entity.getId(), categoryId.getId(), localizations, entity.getSource(), Set.of(entity.getTags().split(","))));
+            snapshots.add(new FlashcardBlueprintSnapshot(entity.getId(), categoryId.getId(), localizations, entity.getSource(), Set.of(entity.getTags().split(";"))));
         });
 
         return snapshots;
