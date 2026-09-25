@@ -26,7 +26,7 @@ public class FlashcardBlueprintCreationController extends BaseController {
 
     @PostMapping(FLASHCARD_BLUEPRINT_CREATE_ENDPOINT)
     @ResponseStatus(HttpStatus.CREATED)
-    public void createFlashcardBlueprints(@Valid @RequestBody List<FlashcardBlueprintCreateDto> requests) {
+    public void createFlashcardBlueprints(@RequestBody List<@Valid FlashcardBlueprintCreateDto> requests) {
         flashcardBlueprintCreateCommandFacade.addFlashcardBlueprints(requests);
     }
 
