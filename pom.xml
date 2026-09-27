@@ -5,7 +5,7 @@
 
     <groupId>com.saltatorv</groupId>
     <artifactId>polaris-flash-cards</artifactId>
-    <version>1.1.1-SNAPSHOT</version>
+    <version>1.1.2-SNAPSHOT</version>
     <name>polaris-flash-cards</name>
     <description>polaris-flash-cards</description>
 
@@ -21,7 +21,7 @@
 
     <properties>
         <!-- CORE -->
-        <polaris-flash-cards.version>1.1.1-SNAPSHOT</polaris-flash-cards.version>
+        <polaris-flash-cards.version>1.1.2-SNAPSHOT</polaris-flash-cards.version>
         <java.version>21</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
