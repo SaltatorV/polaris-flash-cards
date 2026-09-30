@@ -13,14 +13,14 @@ import java.util.stream.Collectors;
 class GlobalValidationExceptionHandler {
 
     @ExceptionHandler(HandlerMethodValidationException.class)
-    public ResponseEntity<ErrorListResponse> handleValidation(
+    public ResponseEntity<ValidationErrorResponse> handleValidation(
             HandlerMethodValidationException exception) {
 
         List<String> errors = exception.getAllErrors().stream()
                 .map(MessageSourceResolvable::getDefaultMessage)
                 .collect(Collectors.toList());
 
-        ErrorListResponse errorResponse = new ErrorListResponse("400", errors);
+        ValidationErrorResponse errorResponse = new ValidationErrorResponse("400", errors);
         return ResponseEntity
                 .status(400)
                 .body(errorResponse);
