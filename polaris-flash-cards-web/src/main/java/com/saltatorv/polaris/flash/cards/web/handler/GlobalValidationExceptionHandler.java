@@ -27,7 +27,7 @@ class GlobalValidationExceptionHandler {
                 })
                 .toList();
 
-        ValidationErrorResponse errorResponse = new ValidationErrorResponse("400", errors);
+        ValidationErrorResponse errorResponse = new ValidationErrorResponse(422, errors);
         return ResponseEntity
                 .status(400)
                 .body(errorResponse);
