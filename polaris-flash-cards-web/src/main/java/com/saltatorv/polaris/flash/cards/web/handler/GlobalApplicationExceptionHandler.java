@@ -11,7 +11,7 @@ class GlobalApplicationExceptionHandler {
 
     @ExceptionHandler(ApplicationException.class)
     public ResponseEntity<ErrorResponse> handlerApplicationException(ApplicationException ex) {
-        ErrorResponse errorResponse = new ErrorResponse(ex.getErrorCode(), ex.getMessage());
+        ErrorResponse errorResponse = ErrorResponse.businessRuleViolation(ex.getErrorCode(), ex.getMessage());
 
         return ResponseEntity
                 .status(ex.getHttpStatusCode())
