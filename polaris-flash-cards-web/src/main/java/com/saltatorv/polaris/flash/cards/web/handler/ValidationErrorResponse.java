@@ -4,7 +4,7 @@ import java.util.List;
 
 public class ValidationErrorResponse extends ErrorResponse {
     private static final String MESSAGE = "Validation error";
-    private List<ValidationError> errors;
+    private final List<ValidationError> errors;
 
     ValidationErrorResponse(String type, int status, String code, List<ValidationError> errors) {
         super(type, status, code, MESSAGE);
