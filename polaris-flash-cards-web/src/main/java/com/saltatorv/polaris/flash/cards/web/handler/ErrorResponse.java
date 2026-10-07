@@ -6,7 +6,7 @@ public class ErrorResponse {
     private String code;
     private String message;
 
-    private ErrorResponse(String type, int status, String code, String message) {
+    ErrorResponse(String type, int status, String code, String message) {
         this.type = type;
         this.status = status;
         this.code = code;

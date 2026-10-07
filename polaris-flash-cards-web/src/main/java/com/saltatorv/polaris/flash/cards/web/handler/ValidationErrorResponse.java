@@ -2,8 +2,15 @@ package com.saltatorv.polaris.flash.cards.web.handler;
 
 import java.util.List;
 
-public record ValidationErrorResponse(int code, List<ValidationError> errors) {
-    public static ValidationErrorResponse create(int code, List<ValidationError> errors) {
-        return new ValidationErrorResponse(code, errors);
+public class ValidationErrorResponse extends ErrorResponse {
+    private List<ValidationError> errors;
+
+    ValidationErrorResponse(String type, int status, String code, String message, List<ValidationError> errors) {
+        super(type, status, code, message);
+        this.errors = errors;
+    }
+
+    public List<ValidationError> getErrors() {
+        return errors;
     }
 }
