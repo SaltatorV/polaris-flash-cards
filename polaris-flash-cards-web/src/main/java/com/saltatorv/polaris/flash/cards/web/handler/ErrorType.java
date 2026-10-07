@@ -1,11 +1,35 @@
 package com.saltatorv.polaris.flash.cards.web.handler;
 
-public class ErrorType {
+import static com.saltatorv.polaris.flash.cards.web.handler.ErrorCode.BUSINESS_RULE_VIOLATION_CODE;
+import static com.saltatorv.polaris.flash.cards.web.handler.ErrorCode.VALIDATION_ERROR_CODE;
 
-    private static final String URI_PREFIX = "urn:polaris-flash-cards:problem:%s";
-    private static final String VALIDATION = "validation-error";
-    private static final String BUSINESS = "business-rule-violation";
+class ErrorType {
 
-    public static final String VALIDATION_ERROR = String.format(URI_PREFIX, VALIDATION);
-    public static final String BUSINESS_RULE_VIOLATION = String.format(URI_PREFIX, BUSINESS);
+    private static final String ERROR_TYPE_URI_PATTERN = "urn:polaris-flash-cards:problem:%s";
+
+    private final String code;
+
+    ErrorType(ErrorCode code) {
+        this.code = code.getCode();
+    }
+
+    ErrorType(ErrorCode code, String businessViolationCode) {
+        this.code = code.getCode() + ":" + businessViolationCode;
+    }
+
+    static final ErrorType createValidationTypeError() {
+        return new ErrorType(VALIDATION_ERROR_CODE);
+    }
+
+    static final ErrorType createBusinessRuleViolationError(String businessViolationCode) {
+        return new ErrorType(BUSINESS_RULE_VIOLATION_CODE, businessViolationCode);
+    }
+
+    String getType() {
+        return ERROR_TYPE_URI_PATTERN.formatted(code));
+    }
+
+    String getCode() {
+        return code;
+    }
 }
