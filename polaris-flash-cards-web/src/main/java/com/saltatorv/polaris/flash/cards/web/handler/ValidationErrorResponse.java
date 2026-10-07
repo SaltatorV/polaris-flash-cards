@@ -3,10 +3,11 @@ package com.saltatorv.polaris.flash.cards.web.handler;
 import java.util.List;
 
 public class ValidationErrorResponse extends ErrorResponse {
+    private static final String MESSAGE = "Validation error";
     private List<ValidationError> errors;
 
-    ValidationErrorResponse(String type, int status, String code, String message, List<ValidationError> errors) {
-        super(type, status, code, message);
+    ValidationErrorResponse(String type, int status, String code, List<ValidationError> errors) {
+        super(type, status, code, MESSAGE);
         this.errors = errors;
     }
 
