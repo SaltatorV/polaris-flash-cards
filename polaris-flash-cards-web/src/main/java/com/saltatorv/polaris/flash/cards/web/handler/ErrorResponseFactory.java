@@ -8,7 +8,7 @@ class ErrorResponseFactory {
         return new ErrorResponse(ErrorType.BUSINESS_RULE_VIOLATION, 422, code, message);
     }
 
-    static ValidationErrorResponse businessRuleViolation(String code, String message, List<ValidationError> errors) {
+    static ValidationErrorResponse validationRuleViolation(String code, String message, List<ValidationError> errors) {
         return new ValidationErrorResponse(ErrorType.VALIDATION_ERROR, 422, code, message, errors);
     }
 
