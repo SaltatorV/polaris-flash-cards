@@ -4,7 +4,7 @@ import com.saltatorv.polaris.flash.cards.application.category.command.dto.Catego
 import com.saltatorv.polaris.flash.cards.container.caller.category.command.CategoryCreationCommandEndpointCaller;
 import com.saltatorv.polaris.flash.cards.container.caller.category.query.CategoryQueryEndpointCaller;
 import com.saltatorv.polaris.flash.cards.container.configuration.BaseE2ETest;
-import com.saltatorv.polaris.flash.cards.web.handler.ErrorResponse;
+import com.saltatorv.polaris.flash.cards.web.handler.ErrorResponseFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -99,7 +99,7 @@ class CategoryCommandE2ETest extends BaseE2ETest {
         response = categoryCreationCommandEndpointCaller.createCategory(category).getLastResponse();
 
         // then
-        var expectedErrorResponse = new ErrorResponse("CATEGORY_DUPLICATED", "Category with name: Programming already exists on depth level: 1");
+        var expectedErrorResponse = ErrorResponseFactory.businessRuleViolation("CATEGORY_DUPLICATED", "Category with name: Programming already exists on depth level: 1");
         assertExpectedErrorIsEqualToResponse(expectedErrorResponse, 409, response);
     }
 
@@ -139,7 +139,7 @@ class CategoryCommandE2ETest extends BaseE2ETest {
         response = categoryCreationCommandEndpointCaller.createCategory(fifth).getLastResponse();
 
         // then
-        var expectedErrorResponse = new ErrorResponse("CATEGORY_IS_TOO_DEEP", "Max depth reached when create category with name: %s from parent: %s"
+        var expectedErrorResponse = ErrorResponseFactory.businessRuleViolation("CATEGORY_IS_TOO_DEEP", "Max depth reached when create category with name: %s from parent: %s"
                 .formatted(fifth.getCategoryName(), fifth.getParentCategoryId()));
         assertExpectedErrorIsEqualToResponse(expectedErrorResponse, 409, response);
     }

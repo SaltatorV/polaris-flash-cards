@@ -4,18 +4,16 @@ import com.saltatorv.polaris.flash.cards.application.blueprint.command.dto.Flash
 import com.saltatorv.polaris.flash.cards.application.blueprint.command.dto.FlashcardLocalizationCreateDto;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class FlashcardBlueprintCreationDtoBuilder {
     private String categoryId;
     private String source;
-    private Set<String> tags;
+    private List<String> tags;
     private List<FlashcardLocalizationCreateDto> localizations;
 
     public FlashcardBlueprintCreationDtoBuilder() {
-        tags = new HashSet<>();
+        tags = new ArrayList<>();
         localizations = new ArrayList<>();
     }
 

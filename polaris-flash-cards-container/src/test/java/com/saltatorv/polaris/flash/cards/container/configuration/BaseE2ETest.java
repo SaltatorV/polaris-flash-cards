@@ -46,6 +46,14 @@ public class BaseE2ETest extends RestAssuredConfiguration {
         assertResponseCodeIsInResponse(204, response);
     }
 
+    public void assertResponseCodeIs400(Response response) {
+        assertResponseCodeIsInResponse(400, response);
+    }
+
+    public void assertResponseCodeIs422(Response response) {
+        assertResponseCodeIsInResponse(422, response);
+    }
+
     public void assertResponseCodeIs409(Response response) {
         assertResponseCodeIsInResponse(409, response);
     }
