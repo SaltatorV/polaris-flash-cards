@@ -1,5 +1,6 @@
 package com.saltatorv.polaris.flash.cards.web.handler;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -7,7 +8,6 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.HandlerMethodValidationException;
 
 import java.util.List;
-import java.util.Objects;
 
 @RestControllerAdvice
 class GlobalValidationExceptionHandler {
@@ -19,17 +19,17 @@ class GlobalValidationExceptionHandler {
             HandlerMethodValidationException exception) {
 
         List<ValidationError> errors = exception.getAllErrors().stream()
-                .map(error -> {
-                    String field = error instanceof FieldError fieldError ? fieldError.getField() : UNKNOWN_FIELD_TYPE;
-                    String[] errorCodes = error.getCodes();
-                    String code = Objects.requireNonNull(errorCodes).length > 0 ? errorCodes[errorCodes.length - 1] : UNKNOWN_ERROR_CODE;
-                    return ValidationError.create(field, code, error.getDefaultMessage());
-                })
+                .map(error -> (FieldError) error)
+                .map(this::mapValidationError)
                 .toList();
 
-        ValidationErrorResponse errorResponse = new ValidationErrorResponse(422, errors);
+        ValidationErrorResponse errorResponse = ErrorResponseFactory.validationRuleViolation(errors);
         return ResponseEntity
-                .status(400)
+                .status(HttpStatus.UNPROCESSABLE_CONTENT)
                 .body(errorResponse);
+    }
+
+    private ValidationError mapValidationError(FieldError error) {
+        return ValidationError.create(error.getField(), error.getCode(), error.getDefaultMessage());
     }
 }
