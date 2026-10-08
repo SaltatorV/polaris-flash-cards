@@ -9,6 +9,7 @@ import com.saltatorv.polaris.flash.cards.domain.exception.blueprint.FlashcardBlu
 import com.saltatorv.polaris.flash.cards.domain.shared.CategoryId;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 
@@ -36,7 +37,7 @@ class CreateFlashcardBlueprintUseCase {
             try {
                 FlashcardBlueprint blueprint = new FlashcardBlueprint(categoryId,
                         localizations,
-                        new FlashcardMetadata(dto.getSource(), dto.getTags()));
+                        new FlashcardMetadata(dto.getSource(), new HashSet<>(dto.getTags())));
 
                 flashcardBlueprintRepository.save(blueprint.generateSnapshot());
 

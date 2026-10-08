@@ -17,7 +17,7 @@ public class FlashcardBlueprintCreateDto {
     private String source;
     @NotEmpty(message = "Tags cannot be empty")
     @Size(min = 1, message = "At least one tag is required")
-    private Set<@NotBlank(message = "Tag cannot be empty")
+    private List<@NotBlank(message = "Tag cannot be empty")
                 @Size(min = 2, max = 15, message = "Tag must be between {min} and {max} characters")
             String> tags;
     @NotEmpty(message = "Localizations cannot be empty")
@@ -25,7 +25,7 @@ public class FlashcardBlueprintCreateDto {
     private List<@Valid FlashcardLocalizationCreateDto> localizations;
 
     public FlashcardBlueprintCreateDto(String categoryId, String source,
-                                       Set<String> tags, List<FlashcardLocalizationCreateDto> localizations) {
+                                       List<String> tags, List<FlashcardLocalizationCreateDto> localizations) {
         this.categoryId = categoryId;
         this.source = source;
         this.tags = tags;
@@ -43,7 +43,7 @@ public class FlashcardBlueprintCreateDto {
         return source;
     }
 
-    public Set<String> getTags() {
+    public List<String> getTags() {
         return tags;
     }
 
