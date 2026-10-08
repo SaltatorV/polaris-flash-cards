@@ -26,7 +26,7 @@ class ErrorType {
     }
 
     String getType() {
-        return ERROR_TYPE_URI_PATTERN.formatted(code));
+        return ERROR_TYPE_URI_PATTERN.formatted(code);
     }
 
     String getCode() {

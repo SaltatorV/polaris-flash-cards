@@ -6,8 +6,8 @@ public class ValidationErrorResponse extends ErrorResponse {
     private static final String MESSAGE = "Validation error";
     private final List<ValidationError> errors;
 
-    ValidationErrorResponse(String type, int status, String code, List<ValidationError> errors) {
-        super(type, status, code, MESSAGE);
+    ValidationErrorResponse(ErrorType type, int status, List<ValidationError> errors) {
+        super(type, status, MESSAGE);
         this.errors = errors;
     }
 
