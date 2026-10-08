@@ -2,14 +2,14 @@ package com.saltatorv.polaris.flash.cards.web.handler;
 
 import java.util.List;
 
-class ErrorResponseFactory {
+public class ErrorResponseFactory {
 
-    static ErrorResponse businessRuleViolation(String code, String message) {
-        return new ErrorResponse(ErrorType.BUSINESS_RULE_VIOLATION, 422, code, message);
+    public static ErrorResponse businessRuleViolation(String code, String message) {
+        return new ErrorResponse(ErrorType.createBusinessRuleViolationError(code), Integer.parseInt(code), message);
     }
 
-    static ValidationErrorResponse validationRuleViolation(String code, List<ValidationError> errors) {
-        return new ValidationErrorResponse(ErrorType.VALIDATION_ERROR, 422, code, errors);
+    public static ValidationErrorResponse validationRuleViolation(List<ValidationError> errors) {
+        return new ValidationErrorResponse(ErrorType.createValidationTypeError(), 422, errors);
     }
 
 
