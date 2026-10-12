@@ -1,4 +1,4 @@
-package com.saltatorv.polaris.flash.cards.container.e2e.model;
+package com.saltatorv.polaris.flash.cards.container.model;
 
 import java.util.Arrays;
 import java.util.List;
