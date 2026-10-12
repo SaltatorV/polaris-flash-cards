@@ -9,8 +9,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.shaded.com.fasterxml.jackson.databind.ObjectMapper;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 @Testcontainers
@@ -60,7 +60,11 @@ public class BaseE2ETest extends RestAssuredConfiguration {
 
     public void assertExpectedErrorIsEqualToResponse(ErrorResponse expectedError, int expectedErrorCode, Response response) {
         assertEquals(expectedErrorCode, response.getStatusCode());
-        assertEquals(expectedError, response.as(ErrorResponse.class));
+        var actualError = response.as(ErrorResponse.class);
+
+        assertThat(actualError)
+                .usingRecursiveComparison()
+                .isEqualTo(expectedError);
     }
 
     private void assertResponseCodeIsInResponse(int responseCode, Response response) {
