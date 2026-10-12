@@ -17,6 +17,10 @@ public class ApplicationException extends RuntimeException {
         return exceptionConfiguration.name();
     }
 
+    public int getStatusCode() {
+        return exceptionConfiguration.getStatusCode();
+    }
+
     public String getMessage() {
         return message;
     }
