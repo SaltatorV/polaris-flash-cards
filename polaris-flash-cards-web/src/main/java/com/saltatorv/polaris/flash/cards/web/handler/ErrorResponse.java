@@ -1,14 +1,17 @@
 package com.saltatorv.polaris.flash.cards.web.handler;
 
 public class ErrorResponse {
-    private final ErrorType type;
-    private final int status;
-    private final String message;
+    private ErrorType type;
+    private int status;
+    private String message;
 
     public ErrorResponse(ErrorType type, int status, String message) {
         this.type = type;
         this.status = status;
         this.message = message;
+    }
+
+    private ErrorResponse() {
     }
 
     public String getType() {

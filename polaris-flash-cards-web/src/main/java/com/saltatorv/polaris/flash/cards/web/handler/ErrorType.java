@@ -7,7 +7,9 @@ class ErrorType {
 
     private static final String ERROR_TYPE_URI_PATTERN = "urn:polaris-flash-cards:problem:%s";
 
-    private final String code;
+    private String code;
+
+    private ErrorType() {}
 
     ErrorType(ErrorCode code) {
         this.code = code.getCode();
@@ -15,6 +17,10 @@ class ErrorType {
 
     ErrorType(ErrorCode code, String businessViolationCode) {
         this.code = code.getCode() + ":" + businessViolationCode;
+    }
+
+    ErrorType(String code) {
+        this.code = code;
     }
 
     static final ErrorType createValidationTypeError() {
