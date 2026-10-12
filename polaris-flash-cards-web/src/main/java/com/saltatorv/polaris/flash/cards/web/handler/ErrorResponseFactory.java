@@ -4,8 +4,8 @@ import java.util.List;
 
 public class ErrorResponseFactory {
 
-    public static ErrorResponse businessRuleViolation(String code, String message) {
-        return new ErrorResponse(ErrorType.createBusinessRuleViolationError(code), Integer.parseInt(code), message);
+    public static ErrorResponse businessRuleViolation(String code, int statusCode, String message) {
+        return new ErrorResponse(ErrorType.createBusinessRuleViolationError(code), statusCode, message);
     }
 
     public static ValidationErrorResponse validationRuleViolation(List<ValidationError> errors) {
