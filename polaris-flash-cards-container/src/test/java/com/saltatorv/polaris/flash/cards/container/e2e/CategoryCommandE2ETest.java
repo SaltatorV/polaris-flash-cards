@@ -1,6 +1,5 @@
 package com.saltatorv.polaris.flash.cards.container.e2e;
 
-import com.saltatorv.polaris.flash.cards.application.category.command.dto.CategoryDto;
 import com.saltatorv.polaris.flash.cards.container.caller.category.command.CategoryCreationCommandEndpointCaller;
 import com.saltatorv.polaris.flash.cards.container.caller.category.query.CategoryQueryEndpointCaller;
 import com.saltatorv.polaris.flash.cards.container.configuration.BaseE2ETest;
@@ -16,15 +15,15 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class CategoryCommandE2ETest extends BaseE2ETest {
     // category caller
-    CategoryQueryEndpointCaller categoryQueryEndpointCaller;
-    CategoryCreationCommandEndpointCaller categoryCreationCommandEndpointCaller;
+    CategoryQueryEndpointCaller categoryQueryEndpoint;
+    CategoryCreationCommandEndpointCaller categoryCommandEndpoint;
 
     List<com.saltatorv.polaris.flash.cards.application.category.query.dto.CategoryDto> listOfCategories;
 
     @BeforeEach
     public void setup() {
-        categoryQueryEndpointCaller = CategoryQueryEndpointCaller.build();
-        categoryCreationCommandEndpointCaller = CategoryCreationCommandEndpointCaller.build();
+        categoryQueryEndpoint = CategoryQueryEndpointCaller.build();
+        categoryCommandEndpoint = CategoryCreationCommandEndpointCaller.build();
         listOfCategories = new ArrayList<>();
     }
 
@@ -34,57 +33,57 @@ class CategoryCommandE2ETest extends BaseE2ETest {
         var category = rootCategory();
 
         // when
-        var response = categoryCreationCommandEndpointCaller.createCategory(category).getLastResponse();
+        var response = categoryCommandEndpoint.createCategory(category).getLastResponse();
         assertResponseCodeIs201(response);
         assertResponseBodyIsEmpty(response);
 
         // then
-        listOfCategories = categoryQueryEndpointCaller.getCategory(null);
-        assertResponseCodeIs200(categoryQueryEndpointCaller.getLastResponse());
+        listOfCategories = categoryQueryEndpoint.getCategory(null);
+        assertResponseCodeIs200(categoryQueryEndpoint.getLastResponse());
         assertListOfCategoriesContainsOnly(DEFAULT_CATEGORY, ROOT_CATEGORY);
     }
 
     @Test
     void shouldCreateNestedCategoriesAndReturnThemByParentId() {
         // Get the root category defined in the database migration
-        listOfCategories = categoryQueryEndpointCaller.getCategory(null);
-        assertResponseCodeIs200(categoryQueryEndpointCaller.getLastResponse());
+        listOfCategories = categoryQueryEndpoint.getCategory(null);
+        assertResponseCodeIs200(categoryQueryEndpoint.getLastResponse());
         assertListOfCategoriesContainsOnly(DEFAULT_CATEGORY);
 
         // Create child for root category and ensure it is created
         var firstId = listOfCategories.getFirst().getId();
         var second = childCategory("Second", firstId);
-        var response = categoryCreationCommandEndpointCaller.createCategory(second).getLastResponse();
+        var response = categoryCommandEndpoint.createCategory(second).getLastResponse();
         assertResponseCodeIs201(response);
         assertResponseBodyIsEmpty(response);
 
-        listOfCategories = categoryQueryEndpointCaller.getCategory(firstId);
-        assertResponseCodeIs200(categoryQueryEndpointCaller.getLastResponse());
+        listOfCategories = categoryQueryEndpoint.getCategory(firstId);
+        assertResponseCodeIs200(categoryQueryEndpoint.getLastResponse());
         assertListOfCategoriesContainsOnly("Second");
 
         // Create a child category under "Second" and verify it was created
         var secondId = listOfCategories.getFirst().getId();
         var third = childCategory("Third", secondId);
-        response = categoryCreationCommandEndpointCaller.createCategory(third).getLastResponse();
+        response = categoryCommandEndpoint.createCategory(third).getLastResponse();
         assertResponseCodeIs201(response);
         assertResponseBodyIsEmpty(response);
 
         // Verify that all categories are available under the correct parent
-        listOfCategories = categoryQueryEndpointCaller.getCategory(null);
-        assertResponseCodeIs200(categoryQueryEndpointCaller.getLastResponse());
+        listOfCategories = categoryQueryEndpoint.getCategory(null);
+        assertResponseCodeIs200(categoryQueryEndpoint.getLastResponse());
         assertListOfCategoriesContainsOnly("Java");
 
-        listOfCategories = categoryQueryEndpointCaller.getCategory(firstId);
-        assertResponseCodeIs200(categoryQueryEndpointCaller.getLastResponse());
+        listOfCategories = categoryQueryEndpoint.getCategory(firstId);
+        assertResponseCodeIs200(categoryQueryEndpoint.getLastResponse());
         assertListOfCategoriesContainsOnly("Second");
 
-        listOfCategories = categoryQueryEndpointCaller.getCategory(secondId);
-        assertResponseCodeIs200(categoryQueryEndpointCaller.getLastResponse());
+        listOfCategories = categoryQueryEndpoint.getCategory(secondId);
+        assertResponseCodeIs200(categoryQueryEndpoint.getLastResponse());
         assertListOfCategoriesContainsOnly("Third");
         var thirdId = listOfCategories.getFirst().getId();
 
-        listOfCategories = categoryQueryEndpointCaller.getCategory(thirdId);
-        assertResponseCodeIs200(categoryQueryEndpointCaller.getLastResponse());
+        listOfCategories = categoryQueryEndpoint.getCategory(thirdId);
+        assertResponseCodeIs200(categoryQueryEndpoint.getLastResponse());
         assertListOfCategoriesIsEmpty();
     }
 
@@ -92,12 +91,12 @@ class CategoryCommandE2ETest extends BaseE2ETest {
     void testShouldReturnAnErrorWhenCreationDuplicateCategory() {
         // given
         var category = rootCategory();
-        var response = categoryCreationCommandEndpointCaller.createCategory(category).getLastResponse();
+        var response = categoryCommandEndpoint.createCategory(category).getLastResponse();
         assertResponseCodeIs201(response);
         assertResponseBodyIsEmpty(response);
 
         // when
-        response = categoryCreationCommandEndpointCaller.createCategory(category).getLastResponse();
+        response = categoryCommandEndpoint.createCategory(category).getLastResponse();
 
         // then
         var expectedErrorResponse = ErrorResponseFactory.businessRuleViolation("CATEGORY_DUPLICATED", 409, "Category with name: Programming already exists on depth level: 1");
@@ -107,37 +106,37 @@ class CategoryCommandE2ETest extends BaseE2ETest {
     @Test
     void testShouldReturnAnErrorWhenCreationCategoryTooDeeply() {
         // Prepare a category hierarchy to reach last depth level
-        listOfCategories = categoryQueryEndpointCaller.getCategory(null);
-        assertResponseCodeIs200(categoryQueryEndpointCaller.getLastResponse());
+        listOfCategories = categoryQueryEndpoint.getCategory(null);
+        assertResponseCodeIs200(categoryQueryEndpoint.getLastResponse());
         assertListOfCategoriesContainsOnly(DEFAULT_CATEGORY);
 
         var second = childCategory("Second", listOfCategories.getFirst().getId());
-        var response = categoryCreationCommandEndpointCaller.createCategory(second).getLastResponse();
+        var response = categoryCommandEndpoint.createCategory(second).getLastResponse();
         assertResponseCodeIs201(response);
         assertResponseBodyIsEmpty(response);
-        listOfCategories = categoryQueryEndpointCaller.getCategory(listOfCategories.getFirst().getId());
-        assertResponseCodeIs200(categoryQueryEndpointCaller.getLastResponse());
+        listOfCategories = categoryQueryEndpoint.getCategory(listOfCategories.getFirst().getId());
+        assertResponseCodeIs200(categoryQueryEndpoint.getLastResponse());
         assertListOfCategoriesContainsOnly("Second");
 
         var third = childCategory("Third", listOfCategories.getFirst().getId());
-        response = categoryCreationCommandEndpointCaller.createCategory(third).getLastResponse();
+        response = categoryCommandEndpoint.createCategory(third).getLastResponse();
         assertResponseCodeIs201(response);
         assertResponseBodyIsEmpty(response);
-        listOfCategories = categoryQueryEndpointCaller.getCategory(listOfCategories.getFirst().getId());
-        assertResponseCodeIs200(categoryQueryEndpointCaller.getLastResponse());
+        listOfCategories = categoryQueryEndpoint.getCategory(listOfCategories.getFirst().getId());
+        assertResponseCodeIs200(categoryQueryEndpoint.getLastResponse());
         assertListOfCategoriesContainsOnly("Third");
 
         var fourth = childCategory("Fourth", listOfCategories.getFirst().getId());
-        response = categoryCreationCommandEndpointCaller.createCategory(fourth).getLastResponse();
+        response = categoryCommandEndpoint.createCategory(fourth).getLastResponse();
         assertResponseCodeIs201(response);
         assertResponseBodyIsEmpty(response);
-        listOfCategories = categoryQueryEndpointCaller.getCategory(listOfCategories.getFirst().getId());
-        assertResponseCodeIs200(categoryQueryEndpointCaller.getLastResponse());
+        listOfCategories = categoryQueryEndpoint.getCategory(listOfCategories.getFirst().getId());
+        assertResponseCodeIs200(categoryQueryEndpoint.getLastResponse());
         assertListOfCategoriesContainsOnly("Fourth");
 
         // when
         var fifth = childCategory("Fifth", listOfCategories.getFirst().getId());
-        response = categoryCreationCommandEndpointCaller.createCategory(fifth).getLastResponse();
+        response = categoryCommandEndpoint.createCategory(fifth).getLastResponse();
 
         // then
         var expectedErrorResponse = ErrorResponseFactory.businessRuleViolation("CATEGORY_IS_TOO_DEEP", 409, "Max depth reached when create category with name: %s from parent: %s"
@@ -149,8 +148,8 @@ class CategoryCommandE2ETest extends BaseE2ETest {
     public void testShouldCreateASetOfSubCategoriesUnderSpecificDepth() {
 
         //given
-        listOfCategories = categoryQueryEndpointCaller.getCategory(null);
-        assertResponseCodeIs200(categoryQueryEndpointCaller.getLastResponse());
+        listOfCategories = categoryQueryEndpoint.getCategory(null);
+        assertResponseCodeIs200(categoryQueryEndpoint.getLastResponse());
         assertListOfCategoriesContainsOnly(DEFAULT_CATEGORY);
         var firstId = listOfCategories.getFirst().getId();
 
@@ -161,25 +160,25 @@ class CategoryCommandE2ETest extends BaseE2ETest {
         var fifth = childCategory("Many-Categories-5", firstId);
 
         //when
-        var response = categoryCreationCommandEndpointCaller.createCategory(first).getLastResponse();
+        var response = categoryCommandEndpoint.createCategory(first).getLastResponse();
         assertResponseCodeIs201(response);
         assertResponseBodyIsEmpty(response);
-        response = categoryCreationCommandEndpointCaller.createCategory(second).getLastResponse();
+        response = categoryCommandEndpoint.createCategory(second).getLastResponse();
         assertResponseCodeIs201(response);
         assertResponseBodyIsEmpty(response);
-        response = categoryCreationCommandEndpointCaller.createCategory(third).getLastResponse();
+        response = categoryCommandEndpoint.createCategory(third).getLastResponse();
         assertResponseCodeIs201(response);
         assertResponseBodyIsEmpty(response);
-        response = categoryCreationCommandEndpointCaller.createCategory(fourth).getLastResponse();
+        response = categoryCommandEndpoint.createCategory(fourth).getLastResponse();
         assertResponseCodeIs201(response);
         assertResponseBodyIsEmpty(response);
-        response = categoryCreationCommandEndpointCaller.createCategory(fifth).getLastResponse();
+        response = categoryCommandEndpoint.createCategory(fifth).getLastResponse();
         assertResponseCodeIs201(response);
         assertResponseBodyIsEmpty(response);
 
         //then
-        listOfCategories = categoryQueryEndpointCaller.getCategory(firstId);
-        assertResponseCodeIs200(categoryQueryEndpointCaller.getLastResponse());
+        listOfCategories = categoryQueryEndpoint.getCategory(firstId);
+        assertResponseCodeIs200(categoryQueryEndpoint.getLastResponse());
         assertListOfCategoriesContainsOnly("Many-Categories-1", "Many-Categories-2",
                 "Many-Categories-3", "Many-Categories-4", "Many-Categories-5");
     }
