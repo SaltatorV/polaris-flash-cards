@@ -10,8 +10,7 @@ import com.saltatorv.polaris.flash.cards.container.caller.review.command.Flashca
 import com.saltatorv.polaris.flash.cards.container.caller.review.command.FlashcardReviewOperationCommandEndpointCaller;
 import com.saltatorv.polaris.flash.cards.container.caller.review.query.FlashcardReviewQueryEndpointCaller;
 import com.saltatorv.polaris.flash.cards.container.configuration.BaseE2ETest;
-import com.saltatorv.polaris.flash.cards.container.e2e.model.FlashcardReviewAnswers;
-import com.saltatorv.polaris.flash.cards.web.handler.ErrorResponse;
+import com.saltatorv.polaris.flash.cards.container.model.FlashcardReviewAnswers;
 import com.saltatorv.polaris.flash.cards.web.handler.ErrorResponseFactory;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,7 +21,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -132,7 +130,7 @@ class FlashcardReviewE2ETest extends BaseE2ETest {
         reviewQueryCaller.getReview(reviewId);
         response = reviewQueryCaller.getLastResponse();
 
-        var expectedErrorResponse = ErrorResponseFactory.businessRuleViolation("REVIEW_NOT_FOUND", "Review with id: %s do not exists."
+        var expectedErrorResponse = ErrorResponseFactory.businessRuleViolation("REVIEW_NOT_FOUND", 422, "Review with id: %s do not exists."
                 .formatted(reviewId));
         assertExpectedErrorIsEqualToResponse(expectedErrorResponse, 404, response);
     }
@@ -155,23 +153,23 @@ class FlashcardReviewE2ETest extends BaseE2ETest {
         //when
         response = reviewOperationCommandCaller.finish().getLastResponse();
         assertResponseCodeIs409(response);
-        var expectedErrorResponse = ErrorResponseFactory.businessRuleViolation("REVIEW_NOT_STARTED", "Review not started");
+        var expectedErrorResponse = ErrorResponseFactory.businessRuleViolation("REVIEW_NOT_STARTED", 409, "Review not started");
         assertExpectedErrorIsEqualToResponse(expectedErrorResponse, 409, response);
 
         reviewOperationCommandCaller.drawNext();
         response = reviewOperationCommandCaller.getLastResponse();
         assertResponseCodeIs409(response);
-        expectedErrorResponse = ErrorResponseFactory.businessRuleViolation("REVIEW_NOT_STARTED", "Review not started");
+        expectedErrorResponse = ErrorResponseFactory.businessRuleViolation("REVIEW_NOT_STARTED", 409, "Review not started");
         assertExpectedErrorIsEqualToResponse(expectedErrorResponse, 409, response);
 
         response = reviewOperationCommandCaller.markAsCorrect().getLastResponse();
         assertResponseCodeIs409(response);
-        expectedErrorResponse = ErrorResponseFactory.businessRuleViolation("NO_FLASHCARD_RECEIVED", "No flashcards were returned from the review process.");
+        expectedErrorResponse = ErrorResponseFactory.businessRuleViolation("NO_FLASHCARD_RECEIVED", 409, "No flashcards were returned from the review process.");
         assertExpectedErrorIsEqualToResponse(expectedErrorResponse, 409, response);
 
         response = reviewOperationCommandCaller.markAsIncorrect().getLastResponse();
         assertResponseCodeIs409(response);
-        expectedErrorResponse = ErrorResponseFactory.businessRuleViolation("NO_FLASHCARD_RECEIVED", "No flashcards were returned from the review process.");
+        expectedErrorResponse = ErrorResponseFactory.businessRuleViolation("NO_FLASHCARD_RECEIVED", 409, "No flashcards were returned from the review process.");
         assertExpectedErrorIsEqualToResponse(expectedErrorResponse, 409, response);
 
         response = reviewOperationCommandCaller.begin().getLastResponse();
@@ -180,17 +178,17 @@ class FlashcardReviewE2ETest extends BaseE2ETest {
 
         response = reviewOperationCommandCaller.begin().getLastResponse();
         assertResponseCodeIs409(response);
-        expectedErrorResponse = ErrorResponseFactory.businessRuleViolation("REVIEW_ALREADY_STARTED", "Review already started");
+        expectedErrorResponse = ErrorResponseFactory.businessRuleViolation("REVIEW_ALREADY_STARTED", 409, "Review already started");
         assertExpectedErrorIsEqualToResponse(expectedErrorResponse, 409, response);
 
         response = reviewOperationCommandCaller.markAsCorrect().getLastResponse();
         assertResponseCodeIs409(response);
-        expectedErrorResponse = ErrorResponseFactory.businessRuleViolation("NO_FLASHCARD_RECEIVED", "No flashcards were returned from the review process.");
+        expectedErrorResponse = ErrorResponseFactory.businessRuleViolation("NO_FLASHCARD_RECEIVED", 409, "No flashcards were returned from the review process.");
         assertExpectedErrorIsEqualToResponse(expectedErrorResponse, 409, response);
 
         response = reviewOperationCommandCaller.markAsIncorrect().getLastResponse();
         assertResponseCodeIs409(response);
-        expectedErrorResponse = ErrorResponseFactory.businessRuleViolation("NO_FLASHCARD_RECEIVED", "No flashcards were returned from the review process.");
+        expectedErrorResponse = ErrorResponseFactory.businessRuleViolation("NO_FLASHCARD_RECEIVED", 409, "No flashcards were returned from the review process.");
         assertExpectedErrorIsEqualToResponse(expectedErrorResponse, 409, response);
 
         reviewOperationCommandCaller.drawNext();
