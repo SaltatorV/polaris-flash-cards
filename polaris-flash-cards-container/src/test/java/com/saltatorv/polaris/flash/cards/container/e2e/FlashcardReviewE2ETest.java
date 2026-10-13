@@ -130,7 +130,7 @@ class FlashcardReviewE2ETest extends BaseE2ETest {
         reviewQueryCaller.getReview(reviewId);
         response = reviewQueryCaller.getLastResponse();
 
-        var expectedErrorResponse = ErrorResponseFactory.businessRuleViolation("REVIEW_NOT_FOUND", 422, "Review with id: %s do not exists."
+        var expectedErrorResponse = ErrorResponseFactory.businessRuleViolation("REVIEW_NOT_FOUND", 404, "Review with id: %s do not exists."
                 .formatted(reviewId));
         assertExpectedErrorIsEqualToResponse(expectedErrorResponse, 404, response);
     }
