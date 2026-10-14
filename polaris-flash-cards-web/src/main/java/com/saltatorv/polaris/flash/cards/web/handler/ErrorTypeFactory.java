@@ -10,10 +10,12 @@ public class ErrorTypeFactory {
     public static ErrorType businessErrorType(String businessStatusCode) {
         return new ErrorType(BUSINESS_ERROR_TYPE_URI_PATTERN
                 .replace(CODE_PLACEHOLDER, ErrorCode.BUSINESS_RULE_VIOLATION_CODE.getCode())
-                .replace(BUSINESS_STATUS_PLACEHOLDER, businessStatusCode));
+                .replace(BUSINESS_STATUS_PLACEHOLDER, businessStatusCode),
+                ErrorCode.BUSINESS_RULE_VIOLATION_CODE.getCode());
     }
 
     public static ErrorType validationErrorType() {
-        return new ErrorType(BASE_ERROR_TYPE_URI_PATTERN.replace(CODE_PLACEHOLDER, ErrorCode.VALIDATION_ERROR_CODE.getCode()));
+        return new ErrorType(BASE_ERROR_TYPE_URI_PATTERN.replace(CODE_PLACEHOLDER, ErrorCode.VALIDATION_ERROR_CODE.getCode()),
+                ErrorCode.VALIDATION_ERROR_CODE.getCode());
     }
 }
