@@ -1,5 +1,6 @@
 package com.saltatorv.polaris.flash.cards.container.configuration;
 
+import com.saltatorv.polaris.flash.cards.container.model.ErrorResponseDto;
 import com.saltatorv.polaris.flash.cards.web.handler.ErrorResponse;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.BeforeEach;
@@ -60,11 +61,21 @@ public class BaseE2ETest extends RestAssuredConfiguration {
 
     public void assertExpectedErrorIsEqualToResponse(ErrorResponse expectedError, int expectedErrorCode, Response response) {
         assertEquals(expectedErrorCode, response.getStatusCode());
-        var actualError = response.as(ErrorResponse.class);
+        var actualError = response.as(ErrorResponseDto.class);
 
         assertThat(actualError)
-                .usingRecursiveComparison()
-                .isEqualTo(expectedError);
+                .extracting(
+                        ErrorResponseDto::type,
+                        ErrorResponseDto::status,
+                        ErrorResponseDto::code,
+                        ErrorResponseDto::message
+                )
+                .containsExactly(
+                        expectedError.getType(),
+                        expectedError.getStatus(),
+                        expectedError.getCode(),
+                        expectedError.getMessage()
+                );
     }
 
     private void assertResponseCodeIsInResponse(int responseCode, Response response) {
