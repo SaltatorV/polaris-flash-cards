@@ -1,4 +1,4 @@
-package com.saltatorv.polaris.flash.cards.container.model;
+package com.saltatorv.polaris.flash.cards.container.builder;
 
 import com.saltatorv.polaris.flash.cards.application.blueprint.command.dto.FlashcardLocalizationCreateDto;
 import com.saltatorv.polaris.flash.cards.application.blueprint.command.dto.Locale;
