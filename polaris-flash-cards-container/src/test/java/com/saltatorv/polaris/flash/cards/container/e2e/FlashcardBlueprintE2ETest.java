@@ -149,8 +149,7 @@ class FlashcardBlueprintE2ETest extends BaseE2ETest {
         assertErrorContainValidationError(error)
                 .elementsToValidate(ValidationErrorDto::field, ValidationErrorDto::errorCode)
                 .expectedErrors(
-                        tuple("localizations", "NotEmpty"),
-                        tuple("localizations", "Size")
+                        tuple("localizations", "NotEmpty")
                 )
                 .validate();
     }

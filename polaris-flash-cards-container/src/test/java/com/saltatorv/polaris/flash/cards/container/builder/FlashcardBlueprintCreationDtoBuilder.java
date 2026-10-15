@@ -13,8 +13,6 @@ public class FlashcardBlueprintCreationDtoBuilder {
     private List<FlashcardLocalizationCreateDto> localizations;
 
     public FlashcardBlueprintCreationDtoBuilder() {
-        tags = new ArrayList<>();
-        localizations = new ArrayList<>();
     }
 
     public FlashcardBlueprintCreationDtoBuilder withCategoryId(String categoryId) {
@@ -27,8 +25,8 @@ public class FlashcardBlueprintCreationDtoBuilder {
         return this;
     }
 
-    public FlashcardBlueprintCreationDtoBuilder addTags(String... tags) {
-        this.tags.addAll(List.of(tags));
+    public FlashcardBlueprintCreationDtoBuilder withTags(String... tags) {
+        this.tags = List.of(tags);
         return this;
     }
 
@@ -46,6 +44,9 @@ public class FlashcardBlueprintCreationDtoBuilder {
     }
 
     void addLocalization(FlashcardLocalizationCreateDto flashcardLocalizationCreateDto) {
+        if (localizations == null) {
+            localizations = new ArrayList<>();
+        }
         localizations.add(flashcardLocalizationCreateDto);
     }
 }

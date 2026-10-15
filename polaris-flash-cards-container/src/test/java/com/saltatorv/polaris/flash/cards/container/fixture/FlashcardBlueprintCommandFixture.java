@@ -9,7 +9,7 @@ public class FlashcardBlueprintCommandFixture {
         return new FlashcardBlueprintCreationDtoBuilder()
                 .withCategoryId(categoryId)
                 .withSource("source")
-                .addTags("tag-1", "tag-2")
+                .withTags("tag-1", "tag-2")
                 .defineLocalization()
                 .withLocale(Locale.EN)
                 .withQuestion("question-1")
