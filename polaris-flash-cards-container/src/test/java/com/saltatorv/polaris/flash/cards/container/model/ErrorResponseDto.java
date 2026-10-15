@@ -7,6 +7,9 @@ public class ErrorResponseDto {
     private String code;
     private String message;
 
+    ErrorResponseDto() {
+    }
+
     public ErrorResponseDto(String type, int status, String code, String message) {
         this.type = type;
         this.status = status;

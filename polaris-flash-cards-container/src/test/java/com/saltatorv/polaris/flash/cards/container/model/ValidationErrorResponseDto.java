@@ -3,7 +3,10 @@ package com.saltatorv.polaris.flash.cards.container.model;
 import java.util.List;
 
 public class ValidationErrorResponseDto extends ErrorResponseDto {
-    List<ValidationErrorDto> errors;
+    private List<ValidationErrorDto> errors;
+
+    ValidationErrorResponseDto() {
+    }
 
     public ValidationErrorResponseDto(String type, int status, String code, String message, List<ValidationErrorDto> errors) {
         super(type, status, code, message);
