@@ -33,5 +33,4 @@ public class FlashcardBlueprintLocalizationDtoBuilder {
         parent.addLocalization(new FlashcardLocalizationCreateDto(locale, question, answer));
         return parent;
     }
-
 }

@@ -40,6 +40,11 @@ public class FlashcardBlueprintCreationDtoBuilder {
         return new FlashcardBlueprintLocalizationDtoBuilder(this);
     }
 
+    public FlashcardBlueprintCreationDtoBuilder nullifyLocalizations() {
+        localizations = null;
+        return this;
+    }
+
     void addLocalization(FlashcardLocalizationCreateDto flashcardLocalizationCreateDto) {
         localizations.add(flashcardLocalizationCreateDto);
     }
