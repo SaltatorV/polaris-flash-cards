@@ -33,7 +33,7 @@ public class ValidationErrorValidator {
     }
 
     public void validate() {
-        assertThat(error.errors())
+        assertThat(error.getErrors())
                 .extracting(extractors)
                 .contains(expectedErrors);
     }
