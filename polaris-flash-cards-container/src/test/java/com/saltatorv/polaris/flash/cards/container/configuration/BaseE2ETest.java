@@ -65,10 +65,10 @@ public class BaseE2ETest extends RestAssuredConfiguration {
 
         assertThat(actualError)
                 .extracting(
-                        ErrorResponseDto::type,
-                        ErrorResponseDto::status,
-                        ErrorResponseDto::code,
-                        ErrorResponseDto::message
+                        ErrorResponseDto::getType,
+                        ErrorResponseDto::getStatus,
+                        ErrorResponseDto::getCode,
+                        ErrorResponseDto::getMessage
                 )
                 .containsExactly(
                         expectedError.getType(),
