@@ -11,7 +11,9 @@ import com.saltatorv.polaris.flash.cards.container.caller.blueprint.query.Flashc
 import com.saltatorv.polaris.flash.cards.container.caller.category.command.CategoryCreationCommandEndpointCaller;
 import com.saltatorv.polaris.flash.cards.container.caller.category.query.CategoryQueryEndpointCaller;
 import com.saltatorv.polaris.flash.cards.container.configuration.BaseE2ETest;
-import com.saltatorv.polaris.flash.cards.container.model.FlashcardBlueprintCreationDtoBuilder;
+import com.saltatorv.polaris.flash.cards.container.model.ErrorResponseDto;
+import com.saltatorv.polaris.flash.cards.container.model.ValidationErrorDto;
+import com.saltatorv.polaris.flash.cards.container.model.ValidationErrorResponseDto;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,6 +22,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static com.saltatorv.polaris.flash.cards.container.fixture.FlashcardBlueprintCommandFixture.defaultBlueprint;
+import static com.saltatorv.polaris.flash.cards.container.validator.ErrorValidator.assertErrorContainError;
+import static com.saltatorv.polaris.flash.cards.container.validator.ValidationErrorValidator.assertErrorContainValidationError;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.groups.Tuple.tuple;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -62,15 +67,7 @@ class FlashcardBlueprintE2ETest extends BaseE2ETest {
 
         // Create child for root category and ensure it is created
         var categoryId = listOfCategories.getFirst().getId();
-        var blueprint = buildBlueprint()
-                .withCategoryId(categoryId)
-                .withSource("E2E-Test")
-                .addTags("Test", "E2E", "E2E2", "E2E3", "E2E4")
-                .defineLocalization()
-                .withLocale(Locale.PL)
-                .withQuestion("Question-1")
-                .withAnswer("Answer-1")
-                .createLocalization().createDto();
+        var blueprint = defaultBlueprint(categoryId).createDto();
 
         // when
         var response = flashcardBlueprintCreationEndpointCaller.executeCreateAPICall(List.of(blueprint)).getLastResponse();
@@ -86,17 +83,76 @@ class FlashcardBlueprintE2ETest extends BaseE2ETest {
 
     @Test
     public void testShouldCreateMultipleBlueprints() {
+        // given
+        // Get the root category defined in the database migration
+        listOfCategories = categoryQueryEndpointCaller.getCategory(null);
+        assertResponseCodeIs200(categoryQueryEndpointCaller.getLastResponse());
+        assertListOfCategoriesContainsOnly("Java");
 
-    }
+        // Create child for root category and ensure it is created
+        var categoryId = listOfCategories.getFirst().getId();
+        var firstBlueprint = defaultBlueprint(categoryId).createDto();
 
-    @Test
-    public void testShouldCreateBlueprintWithSingleLocalizations() {
+        var secondBlueprint = defaultBlueprint(categoryId)
+                .nullifyLocalizations()
+                .defineLocalization()
+                .withLocale(Locale.PL)
+                .withQuestion("pytanie-1")
+                .withAnswer("odpowiedz-1")
+                .createLocalization()
+                .createDto();
 
+        // when
+        var response = flashcardBlueprintCreationEndpointCaller.executeCreateAPICall(List.of(firstBlueprint, secondBlueprint))
+                .getLastResponse();
+        assertResponseCodeIs201(response);
+        assertResponseBodyIsEmpty(response);
+
+        // then
+        flashcardBlueprintQueryEndpointCaller.getFlashcardBlueprintByCategory(categoryId);
+        response = flashcardBlueprintQueryEndpointCaller.getLastResponse();
+        assertResponseCodeIs200(response);
+        assertResponseContainListOfBlueprintSummaries(response, firstBlueprint, secondBlueprint);
     }
 
     @Test
     public void testShouldNotAllowToCreateBlueprintWithoutAtLeastOneLocalization() {
+        // given
+        // Get the root category defined in the database migration
+        listOfCategories = categoryQueryEndpointCaller.getCategory(null);
+        assertResponseCodeIs200(categoryQueryEndpointCaller.getLastResponse());
+        assertListOfCategoriesContainsOnly("Java");
 
+        // Create child for root category and ensure it is created
+        var categoryId = listOfCategories.getFirst().getId();
+        var firstBlueprint = defaultBlueprint(categoryId)
+                .nullifyLocalizations()
+                .createDto();
+
+        // when
+        var response = flashcardBlueprintCreationEndpointCaller.executeCreateAPICall(List.of(firstBlueprint)).getLastResponse();
+
+        // then
+        assertResponseCodeIs422(response);
+        var error = response.as(ValidationErrorResponseDto.class);
+
+        assertErrorContainError(error)
+                .elementsToValidate(
+                        ErrorResponseDto::getCode,
+                        ErrorResponseDto::getType,
+                        ErrorResponseDto::getStatus)
+                .expectedData("validation-error",
+                        "urn:polaris-flash-cards:problem:validation-error",
+                        422)
+                .validate();
+
+        assertErrorContainValidationError(error)
+                .elementsToValidate(ValidationErrorDto::field, ValidationErrorDto::errorCode)
+                .expectedErrors(
+                        tuple("localizations", "NotEmpty"),
+                        tuple("localizations", "Size")
+                )
+                .validate();
     }
 
     @Test
@@ -112,10 +168,6 @@ class FlashcardBlueprintE2ETest extends BaseE2ETest {
     @Test
     public void testShouldNotAllowToCreateBlueprintUnderNonExistingCategory() {
 
-    }
-
-    private FlashcardBlueprintCreationDtoBuilder buildBlueprint() {
-        return new FlashcardBlueprintCreationDtoBuilder();
     }
 
     private void assertListOfCategoriesContainsOnly(String... categories) {
